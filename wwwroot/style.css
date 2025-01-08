@@ -6,6 +6,12 @@ body {
     background-color: #ff7d00;
 }
 
+h1 {
+    font-family: 'Cinzel', serif;
+    color: #ffffff;
+    margin-top: 150px;
+}
+
 body.index-page {
     background-image: url('img/index.jpg');
     background-position: center;
@@ -27,6 +33,7 @@ header {
 .rules {
     max-width: 800px;
     margin: 0 auto;
+    margin-bottom: 400px;
     padding: 20px;
     background: rgba(255, 255, 255, 0.8);
     border: 2px solid #a67c52;
