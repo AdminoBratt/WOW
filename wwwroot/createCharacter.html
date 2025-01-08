@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skapa Din Karaktär</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="createCharacter-page">
+<header>
+  <h1>Skapa Din Karaktär</h1>
+</header>
+<main>
+  <section class="character-selection">
+    <div class="faction alliance">
+      <h2>The Alliance</h2>
+      <p>De ädla folken i Alliansen binds samman av stolta traditioner av ädelt mod, rättvisa, tro och uppoffring.De många olika raserna inom Alliansen bidrar alla med sin tekniska skicklighet, sin arkaniska kunskap och sin andliga visdom för att uppnå fred och en rättvis värld.
+        Tag upp deras fana och representera de höga idealen hos Alliansen över Azeroth och bortom!</p>
+      <input type="text" placeholder="Skriv in ditt namn" class="name-input-alliance" id="player-name-alliance">
+      <button onclick="saveName('alliance')" class="alliance-btn">Join The Alliance</button>
+    </div>
+    <div class="faction horde">
+      <h2>The Horde</h2>
+      <p>De stolta nationerna i Horden är löst förenade i en allians av överlevnad mot en fientlig värld som vill se dem förstörda.Fokuserade, våldsamma och ibland monstruösa värderar Horden styrka och heder, även om de kämpar för att hålla sin aggressivitet i schack.
+        Gå med i Horden och kämpa för att bygga en värld där deras folk kan leva fritt och i frihet.</p>
+      <input type="text" placeholder="Skriv in ditt namn" class="name-input-horde" id="player-name-horde">
+      <button onclick="saveName('horde')" class="horde-btn">Join The Horde</button>
+    </div>
+  </section>
+</main>
+<script src ="app.js"></script>
+</body>
+</html>
