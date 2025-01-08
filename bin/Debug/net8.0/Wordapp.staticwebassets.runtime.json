@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+{"ContentRoots":["C:\\Users\\Shaab\\RiderProjects\\World_Of_WordCraft\\wwwroot\\"],"Root":{"Children":{"app.js":{"Children":null,"Asset":{"ContentRootIndex":0,"SubPath":"app.js"},"Patterns":null},"index.html":{"Children":null,"Asset":{"ContentRootIndex":0,"SubPath":"index.html"},"Patterns":null},"style.css":{"Children":null,"Asset":{"ContentRootIndex":0,"SubPath":"style.css"},"Patterns":null}},"Asset":null,"Patterns":[{"ContentRootIndex":0,"Pattern":"**","Depth":0}]}}
+=======
+{"ContentRoots":["/Users/user/mai24ma/Agil utvecklingskultur, projektledning och kommunikation/World_Of_WordCraft/wwwroot/"],"Root":{"Children":{"app.js":{"Children":null,"Asset":{"ContentRootIndex":0,"SubPath":"app.js"},"Patterns":null},"index.html":{"Children":null,"Asset":{"ContentRootIndex":0,"SubPath":"index.html"},"Patterns":null},"style.css":{"Children":null,"Asset":{"ContentRootIndex":0,"SubPath":"style.css"},"Patterns":null}},"Asset":null,"Patterns":[{"ContentRootIndex":0,"Pattern":"**","Depth":0}]}}
+>>>>>>> ce361ad98409fff51be849270d89f4639c0fb647

@@ -1,0 +1,8 @@
+@Wordapp_HostAddress = http://localhost:5185
+
+# Default route
+GET {{Wordapp_HostAddress}}
+Accept: application/json
+
+
+###
