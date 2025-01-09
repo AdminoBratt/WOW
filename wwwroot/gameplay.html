@@ -8,20 +8,9 @@
 </head>
 <body class="gameplay-page">
 <header>
-  <p id ="playerName"><span id="playerNameDisplay"></span>!</p>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const playerName = localStorage.getItem("playerName");
-      if (playerName) {
-        document.getElementById("playerNameDisplay").innerText = playerName;
-      } else {
-        alert("Namn saknas! Återvänd till startsidan.");
-        window.location.href = "index.html";
-      }
-    });
-  </script>
+  <p id="playerName"><span id="playerNameDisplay"></span>!</p>
   <div id="player-one">
-    <img src="img/character-orc.png" alt="Spelare 1" />
+    <img id="playerImage" alt="Spelare 1" />
   </div>
   <div id="timer">
     <p>45</p>
@@ -44,5 +33,28 @@
   </section>
 </main>
 <script src="js/gameplay.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const playerName = localStorage.getItem("playerName");
+    const faction = localStorage.getItem("faction");
+    const playerImage = document.getElementById("playerImage");
+
+    if (playerName) {
+      document.getElementById("playerNameDisplay").innerText = playerName;
+    } else {
+      alert("Namn saknas! Återvänd till startsidan.");
+      window.location.href = "index.html";
+    }
+
+    // Ändra bilden baserat på fraktion
+    if (faction === "alliance") {
+      playerImage.src = "img/character-female.png";
+      playerImage.alt = "Alliance Character";
+    } else if (faction === "horde") {
+      playerImage.src = "img/character-orc.png";
+      playerImage.alt = "Horde Character";
+    }
+  });
+</script>
 </body>
 </html>
