@@ -23,9 +23,25 @@
   <div id="player-one">
     <img src="img/character-orc.png" alt="Spelare 1" />
   </div>
-  <div id="timer">
+  <div id="timer"></div>
     <p>45</p>
-  </div>
+    <script>
+
+      let startTime = 45; 
+      let endTime = 0;
+      
+      const interval = setInterval(() => {
+        document.getElementById("timer").textContent = startTime;
+        
+        if (startTime < endTime) {
+          clearInterval(interval);
+          alert("Tiden är slut grabben"); 
+        } else {
+          startTime--;
+        }
+      }, 1000);
+    </script>
+  
 </header>
 <main>
   <section class="game">
