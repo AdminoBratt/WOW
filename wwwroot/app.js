@@ -105,9 +105,22 @@ function endGame(won) {
   location.href = "index.html"; // Tillbaka till startsidan
 }
 
-// Kör när sidan laddas
-window.onload = () => {
-  startGame();
-  document.getElementById("checkWordBtn").onclick = checkWord;
-  document.getElementById("useHintBtn").onclick = useHint;
+window.onload = function () {
+  const lettersContainer = document.getElementById("letters");
+
+  lettersContainer.addEventListener("click", function (event) {
+    if (event.target.classList.contains("letter")) {
+      // Om den redan är markerad, avmarkera den
+      if (event.target.classList.contains("clicked")) {
+        event.target.classList.remove("clicked");
+      } else {
+        // Annars avmarkera alla andra och markera den klickade
+        document.querySelectorAll(".letter").forEach(letter => {
+          letter.classList.remove("clicked");
+        });
+        event.target.classList.add("clicked");
+      }
+    }
+  });
 };
+

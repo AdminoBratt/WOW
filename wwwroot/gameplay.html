@@ -20,19 +20,18 @@
   <section class="game">
     <div id="word-box">
       <h2>Ord att lösa</h2>
-      <p>_ _ _ _</p>
+      <p class="underscore">_ _ _ _</p>
     </div>
     <div id="letters">
       <h2>Bokstäver</h2>
-      <p>Tillgängliga bokstäver: <span class="letter">A</span> <span class="letter">G</span> <span class="letter">T</span> <span class="letter">I</span> <span class="letter">L</span> <span class="letter">G</span></p>
+      <p><span class="letter">A</span> <span class="letter">G</span> <span class="letter">T</span> <span class="letter">I</span> <span class="letter">L</span> <span class="letter">G</span></p>
     </div>
-    <input type="text" id="guess" placeholder="Gissa på en bokstav">
     <button id="checkWordBtn">Kontrollera ord</button>
     <button id="useHintBtn">Ledtråd?</button>
     <p id="score">Poäng: 0</p>
   </section>
 </main>
-<script src="js/gameplay.js"></script>
+<script src="app.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const playerName = localStorage.getItem("playerName");
