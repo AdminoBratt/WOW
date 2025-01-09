@@ -112,3 +112,36 @@ window.onload = () => {
   document.getElementById("checkWordBtn").onclick = checkWord;
   document.getElementById("useHintBtn").onclick = useHint;
 };
+
+// Get the button element
+const button = document.getElementById('getword');
+
+// Add an onclick event listener
+button.addEventListener('click', getOneWord);
+
+async function getOneWord() {
+  let response = await fetch("api/getrandomword");
+  let word = await response.json();
+  console.log(word);
+  let shuffledWord = shuffleWord(word);
+  console.log(shuffledWord);
+  
+  const wordContainer = document.getElementById("wordBox");
+  
+  wordContainer.innerHTML = shuffledWord;
+}
+
+function shuffleWord(word) {
+  // todo
+}
+
+// calculate area
+function calc (x,y) {
+  return x * y;
+}
+
+function calculateArea(length, height) {
+  return length * height;
+}
+
+

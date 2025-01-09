@@ -11,20 +11,24 @@ public class Actions
     public Actions(WebApplication app)
     {
         db = database.Connection();
-
-    }
-
-    public async Task<Word> FetchWord()
-    {
-        await using var cmd = db.CreateCommand("Select ord from svenska_ord order by random() limit 1");
-        await using var reader = await cmd.ExecuteReaderAsync();
+        
+        
+        app.MapGet("/api/getrandomword", FetchWord);
+    
+        async Task<Word> FetchWord()
         {
-            if (await reader.ReadAsync())
+            await using var cmd = db.CreateCommand("Select ord from svenska_ord order by random() limit 1");
+            await using var reader = await cmd.ExecuteReaderAsync();
             {
-                return new Word(reader.GetString(0), reader.GetString(1));
+                if (await reader.ReadAsync())
+                {
+                    return new Word(reader.GetString(0));
+                }
             }
-        }
-        throw new InvalidOperationException("Inga ord hittades i databasen."); // Felhantering
+            throw new InvalidOperationException("Inga ord hittades i databasen."); // Felhantering
 
+        }
     }
-}
+    }
+    
+    
