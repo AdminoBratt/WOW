@@ -267,6 +267,22 @@ main {
     border: 2px solid #fff;
     font-size: 1.5em;
     color: #000;
+    
+}
+
+#letters p{
+    cursor: pointer;
+    
+}
+
+#letters p:hover {
+    background-color: cadetblue;
+    color: #000;
+}
+
+#letter p:active{
+    background-color: chartreuse;
+    color: #fff;
 }
 
 #letters h2 {
@@ -311,3 +327,4 @@ h2 {
     margin-bottom: 20px;
     margin-top: 10px;
 }
+

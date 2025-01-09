@@ -112,3 +112,15 @@ window.onload = () => {
   document.getElementById("checkWordBtn").onclick = checkWord;
   document.getElementById("useHintBtn").onclick = useHint;
 };
+// Hämta alla element med klassen 'aLetters'
+const letters = document.querySelectorAll('.aLetters');
+
+// Lägg till en click event listener för varje element
+letters.forEach(letter => {
+  letter.addEventListener('click', function() {
+    // När ett element klickas, ändra dess bakgrundsfärg till grön
+    letter.style.backgroundColor = 'green';
+  });
+});
+
+
