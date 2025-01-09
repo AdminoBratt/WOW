@@ -7,19 +7,18 @@ let timeLeft = 60; // Tidsbegränsning i sekunder
 let timer; // För att hantera tiden
 
 function saveName(faction) {
-  let nameInput;
-  if (faction === 'alliance') {
-    nameInput = document.getElementById('player-name-alliance').value;
-  } else if (faction === 'horde') {
-    nameInput = document.getElementById('player-name-horde').value;
+  const playerName = faction === 'alliance'
+      ? document.getElementById('player-name-alliance').value
+      : document.getElementById('player-name-horde').value;
+
+  if (playerName.trim() === "") {
+    alert("Vänligen ange ett namn.");
+    return;
   }
 
-  if (nameInput.trim() !== "") {
-    localStorage.setItem("playerName", nameInput);
-    window.location.href = "gameplay.html";
-  } else {
-    alert("Vänligen skriv in ett namn");
-  }
+  localStorage.setItem("playerName", playerName);
+  localStorage.setItem("faction", faction); // Spara fraktionen
+  window.location.href = "gameplay.html";
 }
 
 // Starta spelet

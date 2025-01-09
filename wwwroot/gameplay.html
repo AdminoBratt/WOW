@@ -8,7 +8,7 @@
 </head>
 <body class="gameplay-page">
 <header>
-  <p id="playerName"><span id="playerNameDisplay"></span>!</p>
+  <p id ="playerName"><span id="playerNameDisplay"></span>!</p>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const playerName = localStorage.getItem("playerName");
@@ -25,7 +25,6 @@
   </div>
   <div id="timer">
     <p>45</p>
-    <button id="startTimerBtn">Starta Timer</button>
   </div>
 </header>
 <main>
@@ -41,48 +40,11 @@
       <p>Tillgängliga bokstäver : A G T I L G</p>
     </div>
     <input type="text" id="guess" placeholder="Guess a letter">
-    <div id="game-buttons">
-      <button id="checkWordBtn">Check Word</button>
-      <button id="useHintBtn">Use Hint</button>
-    </div>
+    <button id="checkWordBtn">Check Word</button>
+    <button id="useHintBtn">Use Hint</button>
     <p id="score">Poäng: 0</p>
-    <button id="newGameBtn" style="display: none;">Nytt Spel</button>
   </section>
 </main>
-
-<script>
-  let startTime = 45;
-  let timerRunning = false;
-  let interval;
-
-  document.getElementById("startTimerBtn").addEventListener("click", () => {
-    if (!timerRunning) {
-      timerRunning = true;
-      interval = setInterval(() => {
-        document.querySelector("#timer p").textContent = startTime;
-
-        if (startTime <= 0) {
-          clearInterval(interval);
-          alert("Tiden är slut grabben");
-          timerRunning = false;
-          document.getElementById("newGameBtn").style.display = "block";
-        } else {
-          startTime--;
-        }
-      }, 1000);
-    }
-  });
-
-  document.getElementById("newGameBtn").addEventListener("click", () => {
-    // Återställ spelets tillstånd här
-    startTime = 45;
-    document.querySelector("#timer p").textContent = startTime;
-    timerRunning = false;
-    document.getElementById("newGameBtn").style.display = "none";
-    // Lägg till mer kod för att återställa spelet (ex. nollställ poäng och ord)
-  });
-</script>
-
 <script src="js/gameplay.js"></script>
 </body>
 </html>
