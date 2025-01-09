@@ -358,22 +358,50 @@ h2 {
     font-size: 1em;
 }
 
-#timer button {
-    /* Avstånd från timerns siffror */
-    margin-top: -150px;
-    margin-bottom: 300px;
-    padding: 10px 20px; /* Samma padding som de andra knapparna */
-    font-size: 14px; /* Samma textstorlek som de andra knapparna */
-    background-color: #004A9E;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 200px; /* Fixera bredden */
+/* Mäktig Timer */
+#epic-timer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 30px auto;
     text-align: center;
-
 }
 
-#timer button:hover {
-    background-color: #5a2f0c; /* Hover-effekt för bättre interaktivitet */
+#epic-time-left {
+    font-size: 5rem;
+    font-weight: bold;
+    color: gold;
+    text-shadow: 0px 0px 20px rgba(255, 223, 0, 0.8),
+    0px 0px 40px rgba(255, 223, 0, 0.6),
+    0px 0px 60px rgba(255, 223, 0, 0.4);
+    transition: color 0.5s, transform 0.5s;
+}
+
+#startTimerBtn {
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    background: linear-gradient(45deg, #004A9E, #0080FF);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+#startTimerBtn:hover {
+    background: linear-gradient(45deg, #003d80, #0056b3);
+    transform: scale(1.1);
+}
+
+@keyframes flashRed {
+    0%, 100% {
+        color: red;
+        text-shadow: 0px 0px 20px red, 0px 0px 40px red, 0px 0px 60px red;
+    }
+    50% {
+        color: darkred;
+        text-shadow: 0px 0px 10px darkred, 0px 0px 20px darkred, 0px 0px 30px darkred;
+    }
 }
