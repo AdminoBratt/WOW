@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gameplay</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="gameplay-page">
+<header>
+  <p id ="playerName"><span id="playerNameDisplay"></span>!</p>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const playerName = localStorage.getItem("playerName");
+      if (playerName) {
+        document.getElementById("playerNameDisplay").innerText = playerName;
+      } else {
+        alert("Namn saknas! Återvänd till startsidan.");
+        window.location.href = "index.html";
+      }
+    });
+  </script>
+  <div id="player-one">
+    <img src="img/character-orc.png" alt="Spelare 1" />
+  </div>
+  <div id="timer">
+    <p>45</p>
+  </div>
+</header>
+<main>
+  <section class="game">
+    <div id="word-box">
+      <h2>Ord att lösa</h2>
+      <p>_ _ _ _</p>
+      <p>_ _ _ _ _ _</p>
+      <p>_ _ _ _ _ </p>
+    </div>
+    <div id="letters">
+      <h2>Bokstäver</h2>
+      <p>Tillgängliga bokstäver : A G T I L G</p>
+    </div>
+    <input type="text" id="guess" placeholder="Guess a letter">
+    <button id="checkWordBtn">Check Word</button>
+    <button id="useHintBtn">Use Hint</button>
+    <p id="score">Poäng: 0</p>
+  </section>
+</main>
+<script src="js/gameplay.js"></script>
+</body>
+</html>

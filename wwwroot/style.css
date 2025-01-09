@@ -1,8 +1,313 @@
-body{
-    background-color: aquamarine;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Cinzel', serif;
+    color: #2e2e2e;
+    background-color: #ff7d00;
 }
 
-#message{
-    color: darkred;
+h1 {
+    font-family: 'Cinzel', serif;
+    color: #ffffff;
+    margin-top: 150px;
+}
+
+body.index-page {
+    background-image: url('img/index.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #b30000;
+}
+
+
+header {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 3em;
+    color: #2a2a2a;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+
+.rules {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-bottom: 400px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid #a67c52;
+    border-radius: 15px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: left;
+    line-height: 1.8;
+}
+
+.rules p {
+    font-size: 1.2em;
+    color: #3a3a3a;
+}
+
+body.chooseStyle-page {
+    background-image: url('img/choose-style.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #fff;
+}
+
+
+.chooseStyle {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+.style-option {
+    width: 40%;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid gold;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.style-option h2 {
+    color: gold;
+    font-size: 2em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.style-option p {
+    font-size: 1.2em;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: gold;
+    background-color: navy;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: darkgoldenrod;
+    color: white;
+}
+
+body.createCharacter-page {
+    background-image: url('img/create-character.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.character-selection {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px;
+}
+
+.faction {
+    width: 45%;
+    padding: 20px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7); /* Transparent bakgrund */
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Faction-specific Styling */
+.alliance h2 {
+    color: #0056b3;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.horde h2 {
+    color: #b30000;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+p {
+    font-size: 1.2em;
+    line-height: 1.5;
+    color: #e4dcd4;
+}
+
+/* Buttons Styling */
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.alliance-btn {
+    background-color: #0056b3;
+}
+
+.alliance-btn:hover {
+    background-color: #003d80;
+}
+
+.horde-btn {
+    background-color: #b30000;
+}
+
+.horde-btn:hover {
+    background-color: #800000;
+}
+
+/* Name Input */
+.name-input-alliance {
+    margin-top: 15px;
+    padding: 10px;
+    font-size: 1em;
+    width: 80%;
+    border: 2px solid #e4dcd4;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #e4dcd4;
+    text-align: center;
+}
+
+.name-input-horde {
+    margin-top: 45px;
+    padding: 10px;
+    font-size: 1em;
+    width: 80%;
+    border: 2px solid #e4dcd4;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #e4dcd4;
+    text-align: center;
+}
+
+body.gameplay-page {
+    background-image: url('img/gameplay.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#player-one {
+    position: absolute;
+    top: 100px;
+    left: 10px;
+    width: 280px;
+    height: 280px;
+    overflow: hidden;
+}
+
+#player-one img {
+    width: 100%;
+    height: auto;
+}
+
+#playerName {
+    text-align: center;
+    padding: 10px;
+    font-size: 1em;
+    margin-left: -1050px;
+    margin-top: 10px;
+}
+
+#timer {
+    position: absolute;
+    top: -130px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 2em;
     font-weight: bold;
+    color: #fff;
+}
+
+/* Main Section */
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+#word-box {
+    width: 50%;
+    margin-top: 100px;
+    margin-left: 20%;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    border: 2px solid #fff;
+    color: #000;
+}
+
+#letters {
+    margin-top: 20px;
+    margin-left: 20%;
+    padding: 15px;
+    width: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    border: 2px solid #fff;
+    font-size: 1.5em;
+    color: #000;
+}
+
+#letters h2 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #fff;
+}
+
+body.multiplayer-page {
+    background-image: url('img/gameplay.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background: #004A9E;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #5a2f0c;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2em;
+    color: #2a2a2a;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+#guess {
+    margin-bottom: 20px;
+    margin-top: 10px;
 }

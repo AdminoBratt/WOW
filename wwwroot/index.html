@@ -1,32 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="sv">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wordapp</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="app.js" defer></script>
+  <title>World of Wordcraft</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
-<body>
-  <h1>Wordapp - en app som testar ord</h1>
-  
-  <form id="word-check">
-    <label>Skriv ett ord för att se om det finns i databasen</label>
-    <input type="text" name="word" placeholder="type a word">
-    <input type="submit" value="check">
-  </form>
-  
-  <form id="new-word">
-    <label>Skriv ett ord för att lägga till det i databasen</label>
-    <input type="text" name="new-word" placeholder="type a new word">
-    <input type="submit" value="save">
-  </form>
-  
-  <p id="message"></p>
-
+<body class="index-page">
+<header>
+  <h1>World of Wordcraft</h1>
+</header>
+<main>
+  <section class="rules">
+    <p>
+      Spelet inleds med att spelarna får instruktioner om hur det fungerar, och varje spelare får möjlighet att skriva in sitt namn. Spelet kan spelas antingen ensam eller mot en annan spelare.
+      Målet är att bilda så många giltiga ord som möjligt med hjälp av bokstäver.
+    </p>
+    <button onclick="location.href='chooseStyle.html'">Starta</button>
+  </section>
+</main>
 </body>
-
 </html>
