@@ -275,6 +275,22 @@ main {
     color: #fff;
 }
 
+span.letter:hover {
+    background-color: #ffda00;
+    color: #000000;
+    cursor: pointer;
+}
+
+span.letter {
+    color: #ffffff;
+    font-size: 1.2em;
+}
+
+span.letter:active {
+    background-color: green;
+    color: #000000;
+}
+
 body.multiplayer-page {
     background-image: url('img/gameplay.png');
     background-position: center;
