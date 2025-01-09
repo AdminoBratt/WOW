@@ -341,5 +341,14 @@ h2 {
     color: #e4dcd4;
     text-align: center;
     background-size: cover;
-    
+}
+
+@keyframes fadeText {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.soon {
+    animation: fadeText 3s;
 }
