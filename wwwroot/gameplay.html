@@ -8,7 +8,7 @@
 </head>
 <body class="gameplay-page">
 <header>
-  <p id ="playerName"><span id="playerNameDisplay"></span>!</p>
+  <p id="playerName"><span id="playerNameDisplay"></span>!</p>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const playerName = localStorage.getItem("playerName");
@@ -45,6 +45,24 @@
     <p id="score">Poäng: 0</p>
   </section>
 </main>
+
+<!-- Flytta timer-scriptet hit -->
+<script>
+  let startTime = 45;
+  let endTime = 0;
+
+  const interval = setInterval(() => {
+    document.querySelector("#timer p").textContent = startTime;
+
+    if (startTime <= endTime) {
+      clearInterval(interval);
+      alert("Tiden är slut grabben");
+    } else {
+      startTime--;
+    }
+  }, 1000);
+</script>
+
 <script src="js/gameplay.js"></script>
 </body>
 </html>
