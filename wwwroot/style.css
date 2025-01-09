@@ -234,6 +234,7 @@ body.gameplay-page {
     font-size: 2em;
     font-weight: bold;
     color: #fff;
+    margin-bottom: 50px;
 }
 
 /* Main Section */
@@ -310,4 +311,37 @@ h2 {
 #guess {
     margin-bottom: 20px;
     margin-top: 10px;
+}
+
+#game-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#game-buttons button {
+    margin: 5px 0; /* Skapar mellanrum mellan knappar */
+    padding: 10px 15px;
+    font-size: 1em;
+}
+
+#timer button {
+    /* Avstånd från timerns siffror */
+    margin-top: -150px;
+    margin-bottom: 300px;
+    padding: 10px 20px; /* Samma padding som de andra knapparna */
+    font-size: 14px; /* Samma textstorlek som de andra knapparna */
+    background-color: #004A9E;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px; /* Fixera bredden */
+    text-align: center;
+    
+}
+
+#timer button:hover {
+    background-color: #5a2f0c; /* Hover-effekt för bättre interaktivitet */
 }
