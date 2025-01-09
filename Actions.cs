@@ -14,7 +14,7 @@ public class Actions
 
     }
 
-    public async Task<Word> fetchAndGiveLetters()
+    public async Task<Word> FetchWord()
     {
         await using var cmd = db.CreateCommand("Select ord from svenska_ord order by random() limit 1");
         await using var reader = await cmd.ExecuteReaderAsync();
