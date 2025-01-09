@@ -311,3 +311,23 @@ h2 {
     margin-bottom: 20px;
     margin-top: 10px;
 }
+
+
+.popup-container {
+    position: absolute; /* Gör så att img-elementet kan positioneras relativt till containern */
+    width: 10%; /* Gör containern lika bred som sin förälder */
+    height: auto; /* Sätter höjden till 100% av viewportens höjd */
+}
+
+.popup-container img {
+
+    position: relative;
+    padding-left: 100px;
+    padding-right: 100px;
+    left: 50px;
+    top: -750px;
+    width: 800%;
+    height: 300%;
+}
+
+
