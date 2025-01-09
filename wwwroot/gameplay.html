@@ -8,20 +8,9 @@
 </head>
 <body class="gameplay-page">
 <header>
-  <p id ="playerName"><span id="playerNameDisplay"></span>!</p>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const playerName = localStorage.getItem("playerName");
-      if (playerName) {
-        document.getElementById("playerNameDisplay").innerText = playerName;
-      } else {
-        alert("Namn saknas! Återvänd till startsidan.");
-        window.location.href = "index.html";
-      }
-    });
-  </script>
+  <p id="playerName"><span id="playerNameDisplay"></span>!</p>
   <div id="player-one">
-    <img src="img/character-orc.png" alt="Spelare 1" />
+    <img id="playerImage" alt="Spelare 1" />
   </div>
   <div id="timer">
     <p>45</p>
@@ -31,20 +20,40 @@
   <section class="game">
     <div id="word-box">
       <h2>Ord att lösa</h2>
-      <p>_ _ _ _</p>
-      <p>_ _ _ _ _ _</p>
-      <p>_ _ _ _ _ </p>
+      <p class="underscore">_ _ _ _</p>
     </div>
     <div id="letters">
-      <h2>Tillgängliga bokstäver: </h2>
-      <p id="aLetters"> A G T I L G</p>
+      <h2>Bokstäver</h2>
+      <p><span class="letter">A</span> <span class="letter">G</span> <span class="letter">T</span> <span class="letter">I</span> <span class="letter">L</span> <span class="letter">G</span></p>
     </div>
-  
-    <button id="checkWordBtn">Check Word</button>
-    <button id="useHintBtn">Use Hint</button>
+    <button id="checkWordBtn">Kontrollera ord</button>
+    <button id="useHintBtn">Ledtråd?</button>
     <p id="score">Poäng: 0</p>
   </section>
 </main>
-<script src="js/gameplay.js"></script>
+<script src="app.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const playerName = localStorage.getItem("playerName");
+    const faction = localStorage.getItem("faction");
+    const playerImage = document.getElementById("playerImage");
+
+    if (playerName) {
+      document.getElementById("playerNameDisplay").innerText = playerName;
+    } else {
+      alert("Namn saknas! Återvänd till startsidan.");
+      window.location.href = "index.html";
+    }
+
+    // Ändra bilden baserat på fraktion
+    if (faction === "alliance") {
+      playerImage.src = "img/character-female.png";
+      playerImage.alt = "Alliance Character";
+    } else if (faction === "horde") {
+      playerImage.src = "img/character-orc.png";
+      playerImage.alt = "Horde Character";
+    }
+  });
+</script>
 </body>
 </html>

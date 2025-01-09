@@ -7,19 +7,18 @@ let timeLeft = 60; // Tidsbegränsning i sekunder
 let timer; // För att hantera tiden
 
 function saveName(faction) {
-  let nameInput;
-  if (faction === 'alliance') {
-    nameInput = document.getElementById('player-name-alliance').value;
-  } else if (faction === 'horde') {
-    nameInput = document.getElementById('player-name-horde').value;
+  const playerName = faction === 'alliance'
+      ? document.getElementById('player-name-alliance').value
+      : document.getElementById('player-name-horde').value;
+
+  if (playerName.trim() === "") {
+    alert("Vänligen ange ett namn.");
+    return;
   }
 
-  if (nameInput.trim() !== "") {
-    localStorage.setItem("playerName", nameInput);
-    window.location.href = "gameplay.html";
-  } else {
-    alert("Vänligen skriv in ett namn");
-  }
+  localStorage.setItem("playerName", playerName);
+  localStorage.setItem("faction", faction); // Spara fraktionen
+  window.location.href = "gameplay.html";
 }
 
 // Starta spelet
@@ -106,21 +105,21 @@ function endGame(won) {
   location.href = "index.html"; // Tillbaka till startsidan
 }
 
-// Kör när sidan laddas
-window.onload = () => {
-  startGame();
-  document.getElementById("checkWordBtn").onclick = checkWord;
-  document.getElementById("useHintBtn").onclick = useHint;
-};
-// Hämta alla element med klassen 'aLetters'
-const letters = document.querySelectorAll('.aLetters');
+window.onload = function () {
+  const lettersContainer = document.getElementById("letters");
 
-// Lägg till en click event listener för varje element
-letters.forEach(letter => {
-  letter.addEventListener('click', function() {
-    // När ett element klickas, ändra dess bakgrundsfärg till grön
-    letter.style.backgroundColor = 'green';
+  lettersContainer.addEventListener("click", function (event) {
+    if (event.target.classList.contains("letter")) {
+      // Om den redan är markerad, avmarkera den
+      if (event.target.classList.contains("clicked")) {
+        event.target.classList.remove("clicked");
+      } else {
+        // Annars avmarkera alla andra och markera den klickade
+        document.querySelectorAll(".letter").forEach(letter => {
+          letter.classList.remove("clicked");
+        });
+        event.target.classList.add("clicked");
+      }
+    }
   });
-});
-
-
+};
