@@ -178,20 +178,9 @@ button {
 }
 
 /* Name Input */
-.name-input-alliance {
-    margin-top: 15px;
-    padding: 10px;
-    font-size: 1em;
-    width: 80%;
-    border: 2px solid #e4dcd4;
-    border-radius: 5px;
-    background: rgba(0, 0, 0, 0.5);
-    color: #e4dcd4;
-    text-align: center;
-}
-
+.name-input-alliance,
 .name-input-horde {
-    margin-top: 45px;
+    margin-top: 20px; /* Samma margin för båda fälten */
     padding: 10px;
     font-size: 1em;
     width: 80%;
@@ -230,6 +219,8 @@ body.gameplay-page {
     margin-left: -1050px;
     margin-top: 10px;
 }
+
+
 
 #timer {
     position: absolute;
@@ -290,10 +281,11 @@ span.letter {
     font-size: 1.2em;
 }
 
-span.letter:active {
-    background-color: green;
-    color: #000000;
+span.letter.clicked {
+    background-color: darkgoldenrod;
+    color: white;
 }
+
 
 body.multiplayer-page {
     background-image: url('img/gameplay.png');
@@ -351,4 +343,8 @@ h2 {
 
 .soon {
     animation: fadeText 3s;
+}
+
+.underscore {
+    font-size: 4rem;
 }
