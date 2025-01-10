@@ -216,8 +216,18 @@ body.gameplay-page {
     text-align: center;
     padding: 10px;
     font-size: 1em;
-    margin-left: -1050px;
-    margin-top: 10px;
+    border: 3px solid #fff; /* Vit kantlinje */
+    border-radius: 15px;  /* Rundade hörn */
+    background: rgba(0, 0, 0, 0.7); /* Halvtransparent bakgrund */
+    color: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Lätt skugga */
+    margin-top: -10px;
+    margin-left: -75%;
+    display: inline-block; /* Gör rutan anpassningsbar */
+    max-width: 80%; /* Begränsar storleken så att den inte blir för bred */
+    white-space: nowrap; /* Förhindrar att texten bryts */
+    overflow: hidden; /* Döljer eventuell överflödande text */
+    text-overflow: ellipsis; /* Lägger till '...' om texten blir för lång */
 }
 
 
