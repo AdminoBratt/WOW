@@ -1,5 +1,5 @@
-// Globala variabler
-const words = ["apple", "banana", "cherry"];
+// Globala "variabler
+//const words = [];
 let scrambledLetters = ""; // Blandade bokstäver
 let guessedWords = []; // Lista över gissade ord
 let score = 0; // Poäng
@@ -25,7 +25,7 @@ function saveName(faction) {
 // Starta spelet
 function startGame() {
   // Välj ord och mixa bokstäver
-  scrambledLetters = words.join('').split('').sort(() => Math.random() - 0.5).join('');
+  //scrambledLetters = words.join('').split('').sort(() => Math.random() - 0.5).join('');
   // Visa orden och blandade bokstäver
   document.getElementById("letters").innerText = scrambledLetters;
   document.getElementById("words").innerHTML = words.map(word => `<p>_ `.repeat(word.length) + `(${word.length})</p>`).join('');
@@ -142,9 +142,16 @@ lettersContainer.addEventListener("click", function (event) {
         let shuffledWord = shuffleWord(word).toUpperCase();
         console.log(shuffledWord);
 
-        const wordContainer = document.getElementById("wordBox");
+        const wordContainer = document.getElementById("word-box");
+        
+        // Generera understreck för ordet
+        let underlines = generateUnderlines(word);
 
-        wordContainer.innerHTML = shuffledWord;
+        wordContainer.innerHTML = `
+        <h2>Ord att lösa</h2>
+        <p class="underscore">${underlines}</p>
+        <p class="shuffled-word">Shufflade bokstäver: ${shuffledWord}</p>
+        `;
     }
 
     function shuffleWord(word) {
@@ -159,6 +166,10 @@ lettersContainer.addEventListener("click", function (event) {
 
         // returnera det shufflade ordet
         return letters.join("");
+    }
+    
+    function generateUnderlines(word){
+        return word.split("").map(() => "_").join(" ");
     }
 
 // calculate area
