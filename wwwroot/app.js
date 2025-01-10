@@ -6,6 +6,45 @@ let score = 0; // Poäng
 let timeLeft = 60; // Tidsbegränsning i sekunder
 let timer; // För att hantera tiden
 
+async function getOneWord() {
+    let response = await fetch("api/getrandomword");
+    let data = await response.json();
+    let word = data.word.toUpperCase();
+    console.log(word);
+    words = [word];
+    scrambledLetters = shuffleWord(word).toUpperCase();
+    console.log(words, scrambledLetters);
+
+    const wordContainer = document.getElementById("word-box");
+
+    // Generera understreck för ordet
+    let underlines = generateUnderlines(word);
+
+    wordContainer.innerHTML = `
+        <h2>Ord att lösa</h2>
+        <p class="underscore">${underlines}</p>
+        <p class="shuffled-word">Shufflade bokstäver: ${scrambledLetters}</p>
+        `;
+}
+
+function shuffleWord(word) {
+    // Omvandla ordet till en array av bokstäver
+    let letters = word.split("");
+
+    // shuffla bokstäver med Fisher-Yates algoritm
+    for (let i = letters.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1)); // slumpmässigt index
+        [letters[i], letters[j]] = [letters[j], letters[i]]; // Byt plats
+    }
+
+    // returnera det shufflade ordet
+    return letters.join("");
+}
+
+function generateUnderlines(word){
+    return word.split("").map(() => "_").join(" ");
+}
+
 function saveName(faction) {
   let nameInput;
   if (faction === 'alliance') {
@@ -16,6 +55,7 @@ function saveName(faction) {
 
   if (nameInput.trim() !== "") {
     localStorage.setItem("playerName", nameInput);
+    startGame(); // spelet startar
     window.location.href = "gameplay.html";
   } else {
     alert("Vänligen skriv in ett namn");
@@ -23,12 +63,13 @@ function saveName(faction) {
 }
 
 // Starta spelet
-function startGame() {
+async function startGame() {
+   await getOneWord();
   // Välj ord och mixa bokstäver
   //scrambledLetters = words.join('').split('').sort(() => Math.random() - 0.5).join('');
   // Visa orden och blandade bokstäver
   document.getElementById("letters").innerText = scrambledLetters;
-  document.getElementById("words").innerHTML = words.map(word => `<p>_ `.repeat(word.length) + `(${word.length})</p>`).join('');
+  document.getElementById("words").innerHTML = words.map(word => `<p>${"_ ".repeat(word.length)} (${word.length})</p>`).join(''); // Visa ord som ska gissas
   // Starta timer
   startTimer();
 }
@@ -134,43 +175,7 @@ lettersContainer.addEventListener("click", function (event) {
 // Add an onclick event listener
     button.addEventListener('click', getOneWord);
 
-    async function getOneWord() {
-        let response = await fetch("api/getrandomword");
-        let data = await response.json();
-        let word = data.word.toUpperCase();
-        console.log(word);
-        let shuffledWord = shuffleWord(word).toUpperCase();
-        console.log(shuffledWord);
 
-        const wordContainer = document.getElementById("word-box");
-        
-        // Generera understreck för ordet
-        let underlines = generateUnderlines(word);
-
-        wordContainer.innerHTML = `
-        <h2>Ord att lösa</h2>
-        <p class="underscore">${underlines}</p>
-        <p class="shuffled-word">Shufflade bokstäver: ${shuffledWord}</p>
-        `;
-    }
-
-    function shuffleWord(word) {
-        // Omvandla ordet till en array av bokstäver
-        let letters = word.split("");
-
-        // shuffla bokstäver med Fisher-Yates algoritm
-        for (let i = letters.length - 1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i + 1)); // slumpmässigt index
-            [letters[i], letters[j]] = [letters[j], letters[i]]; // Byt plats
-        }
-
-        // returnera det shufflade ordet
-        return letters.join("");
-    }
-    
-    function generateUnderlines(word){
-        return word.split("").map(() => "_").join(" ");
-    }
 
 // calculate area
     function calc(x, y) {
