@@ -30,14 +30,21 @@
     <input type="text" id="guess" placeholder="Gissa på en bokstav">
     <button id="checkWordBtn">Kontrollera ord</button>
     <button id="useHintBtn">Ledtråd?</button>
-    <button id="newGameBtn" style="display: none;">Nytt Spel</button>
     <p id="score">Poäng: 0</p>
     
   </section>
 </main>
 
-<script>
 
+<div class="restartgame">
+  <img src="img/bg.png" alt="popup"/>
+</div>
+<button id="newGameBtn" style="display: none;">Nästa runda</button>
+
+
+
+
+<script>
   document.addEventListener("DOMContentLoaded", () => {
     const playerName = localStorage.getItem("playerName");
     const faction = localStorage.getItem("faction");
@@ -60,41 +67,68 @@
     }
   });
 
-  
-    let startTime = 45;
-    let timerRunning = false;
-    let interval;
+  let startTime = 3;
+  let timerRunning = false;
+  let interval;
 
-    document.getElementById("startTimerBtn").addEventListener("click", () => {
+  document.getElementById("startTimerBtn").addEventListener("click", () => {
     if (!timerRunning) {
-    timerRunning = true;
-    interval = setInterval(() => {
-    document.querySelector("#timer p").textContent = startTime;
+      timerRunning = true;
+      interval = setInterval(() => {
+        document.querySelector("#timer p").textContent = startTime;
 
-    if (startTime <= 0) {
-    clearInterval(interval);
-    alert("Tiden är slut grabben");
-    timerRunning = false;
-    document.getElementById("newGameBtn").style.display = "block";
-  } else {
-    startTime--;
-  }
-  }, 1000);
-  }
+        if (startTime <= 0) {
+          clearInterval(interval);
+          timerRunning = false;
+
+          // Visa restartgame-bilden, knappen och poängen när timern är slut
+          document.querySelector(".restartgame").style.display = "block";
+          document.getElementById("newGameBtn").style.display = "block";
+          document.querySelector("#score").style.display = "block";
+        } else {
+          startTime--;
+        }
+      }, 1000);
+    }
   });
 
-    document.getElementById("newGameBtn").addEventListener("click", () => {
-    // Återställ spelets tillstånd här
+
+  document.getElementById("newGameBtn").addEventListener("click", () => {
+    // Återställ spelets tillstånd
     startTime = 45;
     document.querySelector("#timer p").textContent = startTime;
     timerRunning = false;
+    
     document.getElementById("newGameBtn").style.display = "none";
-    // Lägg till mer kod för att återställa spelet (ex. nollställ poäng och ord)
+
+    // Dölja restartgame-bilden igen
+    const restartImage = document.querySelector(".restartgame");
+    if (restartImage) {
+      restartImage.style.display = "none";
+    } else {
+      console.warn("Restart game image element not found.");
+    }
+
+    // Dölja poäng
+    const scoreElement = document.querySelector("#score");
+    if (scoreElement) {
+      scoreElement.style.display = "none";
+    } else {
+      console.warn("Score element not found.");
+    }
+    
+    
+    
   });
+  
+
+  
   
 
 </script>
 
 <script src="js/gameplay.js"></script>
+
+
 </body>
 </html>

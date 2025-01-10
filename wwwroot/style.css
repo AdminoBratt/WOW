@@ -350,6 +350,7 @@ h2 {
     flex-direction: column;
     align-items: center;
     margin-top: 10px;
+  
 }
 
 #game-buttons button {
@@ -357,6 +358,9 @@ h2 {
     padding: 10px 15px;
     font-size: 1em;
 }
+
+
+
 
 #timer button {
     /* Avstånd från timerns siffror */
@@ -377,3 +381,61 @@ h2 {
 #timer button:hover {
     background-color: #5a2f0c; /* Hover-effekt för bättre interaktivitet */
 }
+
+
+
+
+
+
+
+
+
+#newGameBtn {
+    position: absolute; /* Byt till absolute om inte redan satt */
+    top: 400px; /* Justera till en passande position */
+    left: 50%; /* Centrerar knappen horisontellt */
+    transform: translateX(-50%); /* För att centrera */
+    z-index: 20; /* Gör att knappen ligger ovanför bilden */
+}
+
+
+#score {
+    position: absolute; /* Placera absolut i förhållande till närmaste positionerade element */
+    top: 200px; /* Avstånd från toppen av sidan */
+    left: 50%; /* Centrerar horisontellt */
+    transform: translateX(-50%); /* Gör den helt centrerad */
+    z-index: 50; /* Högre än bilden för att synas ovanpå */
+    display: none; /* Startar som dold */
+    font-size: 2em; /* Gör texten större */
+    font-weight: bold; /* Gör texten mer framträdande */
+    color: gold; /* Matcha med din design */
+    background: rgba(0, 0, 0, 0.7); /* Svart transparent bakgrund */
+    padding: 10px 20px; /* Lite inre marginal */
+    border-radius: 10px; /* Mjukare hörn */
+}
+
+
+.restartgame {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    
+    /* Suddig bakgrundseffekt */
+    display: none; /* Använd flexbox för centrering */
+    justify-content: center; /* Centrera horisontellt */
+    align-items: center; /* Centrera vertikalt */
+    z-index: 10; /* Ligger ovanför andra element */
+    clip-path: circle(200px at center);
+}
+
+.restartgame img {
+    width: 0px;
+    height: auto;
+    z-index: 11; /* Bilden är ovanpå den blurade bakgrunden */
+    border-radius: 15px; /* Rundade hörn */
+}
+
+
+
