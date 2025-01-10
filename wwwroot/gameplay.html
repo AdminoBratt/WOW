@@ -5,41 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gameplay</title>
   <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
 </head>
 <body class="gameplay-page">
 <header>
   <p id="playerName"><span id="playerNameDisplay"></span>!</p>
   <div id="player-one">
-    <img src="img/character-orc.png" alt="Spelare 1" />
+    <img id="playerImage" alt="Spelare 1" />
   </div>
   <div id="timer">
     <p>45</p>
   </div>
 </header>
 <main>
-  <!-- Mäktig Timer -->
-  <div id="epic-timer-container">
-    <p id="epic-time-left">45</p>
-    <button id="startTimerBtn">Starta Timer</button>
-  </div>
-
   <section class="game">
     <div id="word-box">
-      <h2>Skriv ord</h2>
-      <div id="words"></div> <!-- Dynamiskt genererade ord -->
+      <h2>Ord att lösa</h2>
+      <p class="underscore">_ _ _ _</p>
     </div>
     <div id="letters">
       <h2>Bokstäver</h2>
-      <p id="available-letters"></p> <!-- Blandade bokstäver -->
       <p><span class="letter">A</span> <span class="letter">G</span> <span class="letter">T</span> <span class="letter">I</span> <span class="letter">L</span> <span class="letter">G</span></p>
     </div>
-    <input type="text" id="guess" placeholder="Guess a letter">
-    <button id="checkWordBtn">Check Word</button>
-    <button id="useHintBtn">Use Hint</button>
-      <button id="newGameBtn" style="display: none;">Nytt Spel</button>
-      <p id="score">Poäng: 0</p>
+    <button id="checkWordBtn">Kontrollera ord</button>
+    <button id="useHintBtn">Ledtråd?</button>
+    <p id="score">Poäng: 0</p>
   </section>
 </main>
+<script src="app.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const playerName = localStorage.getItem("playerName");
@@ -62,28 +55,6 @@
       playerImage.alt = "Horde Character";
     }
   });
-  document.addEventListener("DOMContentLoaded", () => {
-      const playerName = localStorage.getItem("playerName");
-      const faction = localStorage.getItem("faction");
-      const playerImage = document.getElementById("playerImage");
-
-      if (playerName) {
-          document.getElementById("playerNameDisplay").innerText = playerName;
-      } else {
-          alert("Namn saknas! Återvänd till startsidan.");
-          window.location.href = "index.html";
-      }
-
-      // Ändra bilden baserat på fraktion
-      if (faction === "alliance") {
-          playerImage.src = "img/character-female.png";
-          playerImage.alt = "Alliance Character";
-      } else if (faction === "horde") {
-          playerImage.src = "img/character-orc.png";
-          playerImage.alt = "Horde Character";
-      }
-  });
 </script>
-<script src="app.js"></script>
 </body>
 </html>
