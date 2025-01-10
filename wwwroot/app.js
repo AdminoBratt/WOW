@@ -3,6 +3,7 @@ let scrambledLetters = ""; // Blandade bokstäver
 let guessedWord = ""; // Det spelaren gissar
 let wordToGuess = ""; // Rätt ord
 let score = 0; // Poäng
+let totalScore = 0;
 let timeLeft = 45; // Total tid
 let timer; // Timer-instans
 
@@ -72,9 +73,15 @@ function updateUnderscoreDisplay() {
 
 // Kontrollera om gissningen är korrekt
 function checkWord() {
-    if (guessedWord === wordToGuess) {
-        score += guessedWord.length * 10; // Lägg till poäng
+    if (guessedWord === wordToGuess && timeLeft !== 0) {
+        score += guessedWord.length + 10; // Lägg till poäng
+        totalScore += score; // Uppdatera totalpoängen
+        updateUnderscoreDisplay();
         alert("Rätt ord!");
+        //endGame(true);
+        continueGame(); // fortsätt till nästa ord
+    }else if (timeLeft === 0) {
+        alert("Tiden är slut!");
         endGame(true);
     } else {
         alert("Fel ord!");
@@ -85,9 +92,19 @@ function checkWord() {
 // Starta spelet
 async function startGame() {
     guessedWord = ""; // Töm spelarens gissning
+    totalScore = 0; // starta om totalpoäng
+    updateUnderscoreDisplay(); // visa poäng som 0
     await getOneWord(); // Hämta ett ord från API
     document.querySelector(".underscore").textContent = generateUnderlines(wordToGuess); // Visa understreck
     startTimer(); // Starta timern
+}
+
+async function continueGame() {
+    guessedWord = ""; // Töm spelarens gissning
+    score = 0;
+    await getOneWord(); // Hämta ett ord från API
+    document.querySelector(".underscore").textContent = generateUnderlines(wordToGuess); // Visa understreck
+    updateScoreDisplay();
 }
 
 // Starta timern
@@ -108,20 +125,26 @@ function startTimer() {
         } else {
             clearInterval(timer);
             alert("Tiden är slut!");
-            endGame(false);
+            endGame(true);
         }
     }, 1000);
+}
+
+function updateScoreDisplay() {
+    document.getElementById("score").textContent = `Poäng: ${totalScore}`;
 }
 
 // Avsluta spelet
 function endGame(won) {
     clearInterval(timer);
     if (won) {
-        alert(`Grattis! Du vann med poängen ${score}!`);
+        alert(`Grattis! Du fick ${totalScore} poäng!`);
     } else {
         alert("Tyvärr, du förlorade!");
     }
     resetGame();
+    totalScore = 0;
+    updateScoreDisplay();
 }
 
 // Återställ spelet
