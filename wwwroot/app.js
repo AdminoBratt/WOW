@@ -6,6 +6,7 @@ let score = 0; // Poäng
 let timeLeft = 45; // Total tid
 let timer; // Timer-instans
 
+// Hämta ett ord och visa scrambled letters
 async function getOneWord() {
     const response = await fetch("api/getrandomword");
     const data = await response.json();
@@ -15,21 +16,17 @@ async function getOneWord() {
 
     // Uppdatera gränssnittet
     document.querySelector(".underscore").textContent = generateUnderlines(wordToGuess);
-    document.querySelector(".shuffled-word").textContent = `Shufflade bokstäver: ${scrambledLetters}`;
+
     populateLetterButtons(scrambledLetters);
 }
 
+// Shuffla bokstäverna
 function shuffleWord(word) {
-    // Omvandla ordet till en array av bokstäver
     let letters = word.split("");
-
-    // shuffla bokstäver med Fisher-Yates algoritm
     for (let i = letters.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [letters[i], letters[j]] = [letters[j], letters[i]];
     }
-
-    // returnera det shufflade ordet
     return letters.join("");
 }
 
@@ -84,19 +81,6 @@ function checkWord() {
         resetGame();
     }
 }
-
-function updateGame(word) {
-  // Ta bort bokstäver för det gissade ordet
-  for (let char of word) {
-    scrambledLetters = scrambledLetters.replace(char, '');
-  }
-  document.getElementById("letters").innerText = scrambledLetters;
-
-  // Uppdatera poäng och ordstatus
-  document.getElementById("score").innerText = `Poäng: ${score}`;
-  document.getElementById("words").innerHTML = words.map(w =>
-      guessedWords.includes(w) ? `<p>${w} (${w.length})</p>` : `<p>${"_ ".repeat(w.length)}(${w.length})</p>`
-  ).join('');
 
 // Starta spelet
 async function startGame() {
@@ -178,16 +162,4 @@ function saveName(faction) {
 document.getElementById("startEpicTimerBtn").addEventListener("click", () => {
     document.getElementById("startEpicTimerBtn").style.display = "none"; // Dölj startknappen
     startGame();
-});
-
-
-
-// calculate area
-    function calc(x, y) {
-        return x * y;
-    }
-
-    function calculateArea(length, height) {
-        return length * height;
-    }
 });
