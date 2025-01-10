@@ -16,7 +16,7 @@ async function getOneWord() {
 
     // Uppdatera gränssnittet
     document.querySelector(".underscore").textContent = generateUnderlines(wordToGuess);
-    document.querySelector(".shuffled-word").textContent = `Shufflade bokstäver: ${scrambledLetters}`;
+    
     populateLetterButtons(scrambledLetters);
 }
 
