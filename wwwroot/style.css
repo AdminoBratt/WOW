@@ -358,3 +358,125 @@ h2 {
 .underscore {
     font-size: 4rem;
 }
+#timer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; /* Avstånd från andra element */
+}
+
+#epic-timer {
+    font-size: 3em;
+    font-weight: bold;
+    color: #ffc107; /* Gul färg */
+    margin-bottom: 10px; /* Avstånd mellan timer och knapp */
+}
+
+#startEpicTimerBtn {
+    display: block;
+    margin: 10px auto;
+    padding: 8px 12px; /* Mindre storlek */
+    font-size: 1em; /* Justera textstorleken */
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(135deg, #004A9E, #5a2f0c); /* Gradient för djup */
+    border: 2px solid #ffffff;
+    border-radius: 8px; /* Mjuka hörn */
+    cursor: pointer;
+    width: auto; /* Anpassa bredden efter text */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover-effekter */
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Lätt skugga för dimension */
+}
+
+/* Hover-effekt */
+#startEpicTimerBtn:hover {
+    background: linear-gradient(135deg, #5a2f0c, #004A9E); /* Omvänd gradient vid hover */
+    transform: scale(1.05); /* Gör knappen något större vid hover */
+    box-shadow: 0px 0px 10px 3px rgba(255, 255, 255, 0.6); /* Ljus runt kanterna */
+}
+
+/* Rusande ljuseffekt */
+#startEpicTimerBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%; /* Startposition för ljusstrimma */
+    width: 150%; /* Tillräckligt bred för att täcka knappen */
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: skewX(-45deg);
+    transition: 0.5s;
+}
+
+/* Gör ljusstrimman röra sig över knappen */
+#startEpicTimerBtn:hover::before {
+    left: 150%; /* Flytta ljusstrimman över knappen */
+}
+
+/* Aktiv effekt */
+#startEpicTimerBtn:active {
+    transform: scale(0.95); /* Gör knappen mindre vid klick */
+    box-shadow: 0px 0px 8px 2px rgba(255, 255, 255, 0.4); /* Minskad ljuseffekt */
+}
+
+
+@keyframes pulse {
+    0% {
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.1);
+    }
+    100% {
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+#epic-time-left {
+    font-size: 5rem;
+    color: white;
+    animation: countdownFlash 1s linear infinite;
+}
+
+@keyframes countdownFlash {
+    0% {
+        color: gold;
+    }
+    50% {
+        color: orange;
+    }
+    100% {
+        color: red;
+    }
+}
+
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+#letters {
+    display: flex; /* Gör bokstavsknapparna vågräta */
+    justify-content: center; /* Centrera bokstäverna */
+    gap: 10px; /* Lägg till mellanrum mellan bokstäverna */
+}
+
+button.letter {
+    padding: 10px 15px; /* Ändra storlek på knapparna */
+    font-size: 1.2em; /* Justera textstorlek */
+    border: 2px solid #004A9E; /* Blå kant */
+    border-radius: 5px; /* Rundade hörn */
+    background-color: #fff; /* Vit bakgrund */
+    color: #004A9E; /* Blå text */
+    transition: all 0.3s ease; /* Lägger till mjuk övergång */
+}
+
+button.letter:hover {
+    background-color: #004A9E; /* Blå bakgrund vid hover */
+    color: #fff; /* Vit text vid hover */
+    cursor: pointer;
+}
