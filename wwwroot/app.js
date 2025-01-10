@@ -7,18 +7,19 @@ let timeLeft = 60; // Tidsbegränsning i sekunder
 let timer; // För att hantera tiden
 
 function saveName(faction) {
-  const playerName = faction === 'alliance'
-      ? document.getElementById('player-name-alliance').value
-      : document.getElementById('player-name-horde').value;
-
-  if (playerName.trim() === "") {
-    alert("Vänligen ange ett namn.");
-    return;
+  let nameInput;
+  if (faction === 'alliance') {
+    nameInput = document.getElementById('player-name-alliance').value;
+  } else if (faction === 'horde') {
+    nameInput = document.getElementById('player-name-horde').value;
   }
 
-  localStorage.setItem("playerName", playerName);
-  localStorage.setItem("faction", faction); // Spara fraktionen
-  window.location.href = "gameplay.html";
+  if (nameInput.trim() !== "") {
+    localStorage.setItem("playerName", nameInput);
+    window.location.href = "gameplay.html";
+  } else {
+    alert("Vänligen skriv in ett namn");
+  }
 }
 
 // Starta spelet
@@ -105,21 +106,67 @@ function endGame(won) {
   location.href = "index.html"; // Tillbaka till startsidan
 }
 
-window.onload = function () {
-  const lettersContainer = document.getElementById("letters");
-
-  lettersContainer.addEventListener("click", function (event) {
-    if (event.target.classList.contains("letter")) {
-      // Om den redan är markerad, avmarkera den
-      if (event.target.classList.contains("clicked")) {
-        event.target.classList.remove("clicked");
-      } else {
-        // Annars avmarkera alla andra och markera den klickade
-        document.querySelectorAll(".letter").forEach(letter => {
-          letter.classList.remove("clicked");
-        });
-        event.target.classList.add("clicked");
-      }
-    }
-  });
+// Kör när sidan laddas
+window.onload = () => {
+  startGame();
+  document.getElementById("checkWordBtn").onclick = checkWord;
+  document.getElementById("useHintBtn").onclick = useHint;
 };
+
+lettersContainer.addEventListener("click", function (event) {
+    if (event.target.classList.contains("letter")) {
+        // Om den redan är markerad, avmarkera den
+        if (event.target.classList.contains("clicked")) {
+            event.target.classList.remove("clicked");
+        } else {
+            // Annars avmarkera alla andra och markera den klickade
+            document.querySelectorAll(".letter").forEach(letter => {
+                letter.classList.remove("clicked");
+            });
+            event.target.classList.add("clicked");
+        }
+    }
+    ;
+
+// Get the button element
+    const button = document.getElementById('getword');
+
+// Add an onclick event listener
+    button.addEventListener('click', getOneWord);
+
+    async function getOneWord() {
+        let response = await fetch("api/getrandomword");
+        let data = await response.json();
+        let word = data.word.toUpperCase();
+        console.log(word);
+        let shuffledWord = shuffleWord(word).toUpperCase();
+        console.log(shuffledWord);
+
+        const wordContainer = document.getElementById("wordBox");
+
+        wordContainer.innerHTML = shuffledWord;
+    }
+
+    function shuffleWord(word) {
+        // Omvandla ordet till en array av bokstäver
+        let letters = word.split("");
+
+        // shuffla bokstäver med Fisher-Yates algoritm
+        for (let i = letters.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1)); // slumpmässigt index
+            [letters[i], letters[j]] = [letters[j], letters[i]]; // Byt plats
+        }
+
+        // returnera det shufflade ordet
+        return letters.join("");
+    }
+
+// calculate area
+    function calc(x, y) {
+        return x * y;
+    }
+
+    function calculateArea(length, height) {
+        return length * height;
+    }
+});
