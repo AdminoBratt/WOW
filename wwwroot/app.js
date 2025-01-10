@@ -1,188 +1,165 @@
-// Globala "variabler
-//const words = [];
+// Globala variabler
 let scrambledLetters = ""; // Blandade bokstäver
-let guessedWords = []; // Lista över gissade ord
+let guessedWord = ""; // Det spelaren gissar
+let wordToGuess = ""; // Rätt ord
 let score = 0; // Poäng
-let timeLeft = 60; // Tidsbegränsning i sekunder
-let timer; // För att hantera tiden
+let timeLeft = 45; // Total tid
+let timer; // Timer-instans
 
+// Hämta ett ord och visa scrambled letters
 async function getOneWord() {
-    let response = await fetch("api/getrandomword");
-    let data = await response.json();
-    let word = data.word.toUpperCase();
-    console.log(word);
-    words = [word];
-    scrambledLetters = shuffleWord(word).toUpperCase();
-    console.log(words, scrambledLetters);
+    const response = await fetch("api/getrandomword");
+    const data = await response.json();
+    wordToGuess = data.word.toUpperCase(); // Spara det rätta ordet
+    scrambledLetters = shuffleWord(wordToGuess).toUpperCase(); // Shufflade bokstäver
+    console.log(`Rätt ord är: ${wordToGuess}`); // Logga ordet i konsolen
 
-    const wordContainer = document.getElementById("word-box");
-
-    // Generera understreck för ordet
-    let underlines = generateUnderlines(word);
-
-    wordContainer.innerHTML = `
-        <h2>Ord att lösa</h2>
-        <p class="underscore">${underlines}</p>
-        <p class="shuffled-word">Shufflade bokstäver: ${scrambledLetters}</p>
-        `;
+    // Uppdatera gränssnittet
+    document.querySelector(".underscore").textContent = generateUnderlines(wordToGuess);
+    document.querySelector(".shuffled-word").textContent = `Shufflade bokstäver: ${scrambledLetters}`;
+    populateLetterButtons(scrambledLetters);
 }
 
+// Shuffla bokstäverna
 function shuffleWord(word) {
-    // Omvandla ordet till en array av bokstäver
     let letters = word.split("");
-
-    // shuffla bokstäver med Fisher-Yates algoritm
     for (let i = letters.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1)); // slumpmässigt index
-        [letters[i], letters[j]] = [letters[j], letters[i]]; // Byt plats
+        const j = Math.floor(Math.random() * (i + 1));
+        [letters[i], letters[j]] = [letters[j], letters[i]];
     }
-
-    // returnera det shufflade ordet
     return letters.join("");
 }
 
-function generateUnderlines(word){
+// Skapa understreck för ordet
+function generateUnderlines(word) {
     return word.split("").map(() => "_").join(" ");
 }
 
-function saveName(faction) {
-  let nameInput;
-  if (faction === 'alliance') {
-    nameInput = document.getElementById('player-name-alliance').value;
-  } else if (faction === 'horde') {
-    nameInput = document.getElementById('player-name-horde').value;
-  }
+// Skapa dynamiska bokstavsknappar
+function populateLetterButtons(letters) {
+    const lettersContainer = document.getElementById("letters");
+    lettersContainer.innerHTML = ""; // Töm tidigare bokstäver
+    letters.split("").forEach(letter => {
+        const button = document.createElement("button");
+        button.textContent = letter;
+        button.classList.add("letter");
+        button.addEventListener("click", () => handleLetterClick(button));
+        lettersContainer.appendChild(button);
+    });
+}
+// Hantera klick på en bokstav
+function handleLetterClick(button) {
+    const letter = button.textContent;
+    if (guessedWord.length < wordToGuess.length) {
+        guessedWord += letter; // Lägg till bokstaven i spelarens gissning
+        updateUnderscoreDisplay();
+        button.disabled = true; // Inaktivera knappen
+    }
 
-  if (nameInput.trim() !== "") {
-    localStorage.setItem("playerName", nameInput);
-    startGame(); // spelet startar
-    window.location.href = "gameplay.html";
-  } else {
-    alert("Vänligen skriv in ett namn");
-  }
+    if (guessedWord.length === wordToGuess.length) {
+        checkWord();
+    }
+}
+
+// Uppdatera visningen av understreck
+function updateUnderscoreDisplay() {
+    const underscores = guessedWord
+        .split("")
+        .concat("_".repeat(wordToGuess.length - guessedWord.length).split(""))
+        .join(" ");
+    document.querySelector(".underscore").textContent = underscores;
+}
+
+// Kontrollera om gissningen är korrekt
+function checkWord() {
+    if (guessedWord === wordToGuess) {
+        score += guessedWord.length * 10; // Lägg till poäng
+        alert("Rätt ord!");
+        endGame(true);
+    } else {
+        alert("Fel ord!");
+        resetGame();
+    }
 }
 
 // Starta spelet
 async function startGame() {
-   await getOneWord();
-  // Välj ord och mixa bokstäver
-  //scrambledLetters = words.join('').split('').sort(() => Math.random() - 0.5).join('');
-  // Visa orden och blandade bokstäver
-  document.getElementById("letters").innerText = scrambledLetters;
-  document.getElementById("words").innerHTML = words.map(word => `<p>${"_ ".repeat(word.length)} (${word.length})</p>`).join(''); // Visa ord som ska gissas
-  // Starta timer
-  startTimer();
+    guessedWord = ""; // Töm spelarens gissning
+    await getOneWord(); // Hämta ett ord från API
+    document.querySelector(".underscore").textContent = generateUnderlines(wordToGuess); // Visa understreck
+    startTimer(); // Starta timern
 }
 
-// Kontrollera gissning
-function checkWord() {
-  const input = document.getElementById("guess").value.trim().toLowerCase();
-  if (words.includes(input) && !guessedWords.includes(input)) {
-    guessedWords.push(input);
-    score += input.length + 10; // Bokstavspoäng + bonus
-    updateGame(input);
-    alert("Rätt ord!");
-  } else {
-    alert("Fel eller redan gissat ord!");
-  }
-  document.getElementById("guess").value = ""; // Töm inmatningsfältet
-}
-
-function updateGame(word) {
-  // Ta bort bokstäver för det gissade ordet
-  for (let char of word) {
-    scrambledLetters = scrambledLetters.replace(char, '');
-  }
-  document.getElementById("letters").innerText = scrambledLetters;
-
-  // Uppdatera poäng och ordstatus
-  document.getElementById("score").innerText = `Poäng: ${score}`;
-  document.getElementById("words").innerHTML = words.map(w =>
-      guessedWords.includes(w) ? `<p>${w} (${w.length})</p>` : `<p>${"_ ".repeat(w.length)}(${w.length})</p>`
-  ).join('');
-
-  // Kontrollera om spelet är klart
-  if (guessedWords.length === words.length) {
-    endGame(true);
-  }
-}
-
-// Starta timer
+// Starta timern
 function startTimer() {
-  timer = setInterval(() => {
-    timeLeft--;
-    document.getElementById("timer").innerText = `Tid kvar: ${timeLeft}s`;
-    if (timeLeft <= 0) {
-      endGame(false);
-    }
-  }, 1000);
-}
+    const timerElement = document.getElementById("epic-time-left");
+    clearInterval(timer); // Rensa eventuell tidigare timer
+    timeLeft = 45; // Återställ tiden
+    timer = setInterval(() => {
+        if (timeLeft > 0) {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
 
-// Stoppa timer
-function stopTimer() {
-  clearInterval(timer);
-}
-
-// Ge en hjälpande bokstav
-function useHint() {
-  if (scrambledLetters.length > 0) {
-    const hintLetter = scrambledLetters[0];
-    scrambledLetters = scrambledLetters.slice(1);
-    document.getElementById("letters").innerText = scrambledLetters;
-    timeLeft -= 5; // Dra av tid för hjälp
-    alert(`En bokstav: ${hintLetter}`);
-  } else {
-    alert("Inga fler bokstäver kvar!");
-  }
-}
-
-function endGame(won) {
-  stopTimer();
-  if (won) {
-    alert(`Grattis! Du klarade alla ord! Slutpoäng: ${score}`);
-  } else {
-    alert(`Tiden är slut! Din poäng: ${score}`);
-  }
-  // Starta om spelet eller navigera till en annan sida
-  location.href = "index.html"; // Tillbaka till startsidan
-}
-
-// Kör när sidan laddas
-window.onload = () => {
-  startGame();
-  document.getElementById("checkWordBtn").onclick = checkWord;
-  document.getElementById("useHintBtn").onclick = useHint;
-};
-
-lettersContainer.addEventListener("click", function (event) {
-    if (event.target.classList.contains("letter")) {
-        // Om den redan är markerad, avmarkera den
-        if (event.target.classList.contains("clicked")) {
-            event.target.classList.remove("clicked");
+            // Ändra färg och animera när tiden är låg
+            if (timeLeft <= 10) {
+                timerElement.style.color = "red";
+                timerElement.style.animation = "flash 1s infinite";
+            }
         } else {
-            // Annars avmarkera alla andra och markera den klickade
-            document.querySelectorAll(".letter").forEach(letter => {
-                letter.classList.remove("clicked");
-            });
-            event.target.classList.add("clicked");
+            clearInterval(timer);
+            alert("Tiden är slut!");
+            endGame(false);
         }
+    }, 1000);
+}
+
+// Avsluta spelet
+function endGame(won) {
+    clearInterval(timer);
+    if (won) {
+        alert(`Grattis! Du vann med poängen ${score}!`);
+    } else {
+        alert("Tyvärr, du förlorade!");
     }
-    ;
+    resetGame();
+}
 
-// Get the button element
-    const button = document.getElementById('getword');
+// Återställ spelet
+function resetGame() {
+    guessedWord = "";
+    document.querySelector(".underscore").textContent = generateUnderlines(wordToGuess);
+    populateLetterButtons(scrambledLetters);
+}
 
-// Add an onclick event listener
-    button.addEventListener('click', getOneWord);
+// Hantera tangentbordsinmatning
+document.addEventListener("keydown", (event) => {
+    const guessedLetter = event.key.toUpperCase();
+    if (scrambledLetters.includes(guessedLetter) && guessedWord.length < wordToGuess.length) {
+        const button = Array.from(document.querySelectorAll(".letter")).find(
+            el => el.textContent === guessedLetter && !el.disabled
+        );
+        if (button) handleLetterClick(button);
+    }
+});
 
+// Hantera namn och fraktion
+function saveName(faction) {
+    const nameInput = faction === 'alliance'
+        ? document.getElementById('player-name-alliance').value
+        : document.getElementById('player-name-horde').value;
 
-
-// calculate area
-    function calc(x, y) {
-        return x * y;
+    if (nameInput.trim() === "") {
+        alert("Vänligen ange ett namn.");
+        return;
     }
 
-    function calculateArea(length, height) {
-        return length * height;
-    }
+    localStorage.setItem("playerName", nameInput);
+    localStorage.setItem("faction", faction);
+    window.location.href = "gameplay.html";
+}
+
+// Kör spelet när sidan laddas
+document.getElementById("startEpicTimerBtn").addEventListener("click", () => {
+    document.getElementById("startEpicTimerBtn").style.display = "none"; // Dölj startknappen
+    startGame();
 });
