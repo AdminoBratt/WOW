@@ -1,33 +1,75 @@
-// Globala variabler
-const words = ["apple", "banana", "cherry"];
+// Globala "variabler
+//const words = [];
 let scrambledLetters = ""; // Blandade bokstäver
 let guessedWords = []; // Lista över gissade ord
 let score = 0; // Poäng
 let timeLeft = 60; // Tidsbegränsning i sekunder
 let timer; // För att hantera tiden
 
-function saveName(faction) {
-  const playerName = faction === 'alliance'
-      ? document.getElementById('player-name-alliance').value
-      : document.getElementById('player-name-horde').value;
+async function getOneWord() {
+    let response = await fetch("api/getrandomword");
+    let data = await response.json();
+    let word = data.word.toUpperCase();
+    console.log(word);
+    words = [word];
+    scrambledLetters = shuffleWord(word).toUpperCase();
+    console.log(words, scrambledLetters);
 
-  if (playerName.trim() === "") {
-    alert("Vänligen ange ett namn.");
-    return;
+    const wordContainer = document.getElementById("word-box");
+
+    // Generera understreck för ordet
+    let underlines = generateUnderlines(word);
+
+    wordContainer.innerHTML = `
+        <h2>Ord att lösa</h2>
+        <p class="underscore">${underlines}</p>
+        <p class="shuffled-word">Shufflade bokstäver: ${scrambledLetters}</p>
+        `;
+}
+
+function shuffleWord(word) {
+    // Omvandla ordet till en array av bokstäver
+    let letters = word.split("");
+
+    // shuffla bokstäver med Fisher-Yates algoritm
+    for (let i = letters.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1)); // slumpmässigt index
+        [letters[i], letters[j]] = [letters[j], letters[i]]; // Byt plats
+    }
+
+    // returnera det shufflade ordet
+    return letters.join("");
+}
+
+function generateUnderlines(word){
+    return word.split("").map(() => "_").join(" ");
+}
+
+function saveName(faction) {
+  let nameInput;
+  if (faction === 'alliance') {
+    nameInput = document.getElementById('player-name-alliance').value;
+  } else if (faction === 'horde') {
+    nameInput = document.getElementById('player-name-horde').value;
   }
 
-  localStorage.setItem("playerName", playerName);
-  localStorage.setItem("faction", faction); // Spara fraktionen
-  window.location.href = "gameplay.html";
+  if (nameInput.trim() !== "") {
+    localStorage.setItem("playerName", nameInput);
+    startGame(); // spelet startar
+    window.location.href = "gameplay.html";
+  } else {
+    alert("Vänligen skriv in ett namn");
+  }
 }
 
 // Starta spelet
-function startGame() {
+async function startGame() {
+   await getOneWord();
   // Välj ord och mixa bokstäver
-  scrambledLetters = words.join('').split('').sort(() => Math.random() - 0.5).join('');
+  //scrambledLetters = words.join('').split('').sort(() => Math.random() - 0.5).join('');
   // Visa orden och blandade bokstäver
   document.getElementById("letters").innerText = scrambledLetters;
-  document.getElementById("words").innerHTML = words.map(word => `<p>_ `.repeat(word.length) + `(${word.length})</p>`).join('');
+  document.getElementById("words").innerHTML = words.map(word => `<p>${"_ ".repeat(word.length)} (${word.length})</p>`).join(''); // Visa ord som ska gissas
   // Starta timer
   startTimer();
 }
@@ -111,3 +153,36 @@ window.onload = () => {
   document.getElementById("checkWordBtn").onclick = checkWord;
   document.getElementById("useHintBtn").onclick = useHint;
 };
+
+lettersContainer.addEventListener("click", function (event) {
+    if (event.target.classList.contains("letter")) {
+        // Om den redan är markerad, avmarkera den
+        if (event.target.classList.contains("clicked")) {
+            event.target.classList.remove("clicked");
+        } else {
+            // Annars avmarkera alla andra och markera den klickade
+            document.querySelectorAll(".letter").forEach(letter => {
+                letter.classList.remove("clicked");
+            });
+            event.target.classList.add("clicked");
+        }
+    }
+    ;
+
+// Get the button element
+    const button = document.getElementById('getword');
+
+// Add an onclick event listener
+    button.addEventListener('click', getOneWord);
+
+
+
+// calculate area
+    function calc(x, y) {
+        return x * y;
+    }
+
+    function calculateArea(length, height) {
+        return length * height;
+    }
+});
