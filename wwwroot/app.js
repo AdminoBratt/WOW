@@ -121,9 +121,10 @@ button.addEventListener('click', getOneWord);
 
 async function getOneWord() {
   let response = await fetch("api/getrandomword");
-  let word = await response.json();
+  let data = await response.json();
+  let word = data.word.toUpperCase();
   console.log(word);
-  let shuffledWord = shuffleWord(word);
+  let shuffledWord = shuffleWord(word).toUpperCase();
   console.log(shuffledWord);
   
   const wordContainer = document.getElementById("wordBox");
@@ -132,7 +133,17 @@ async function getOneWord() {
 }
 
 function shuffleWord(word) {
-  // todo
+  // Omvandla ordet till en array av bokstäver
+  let letters = word.split("");
+  
+  // shuffla bokstäver med Fisher-Yates algoritm
+  for (let i = letters.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1)); // slumpmässigt index
+    [letters[i], letters[j]] = [letters[j], letters[i]]; // Byt plats
+  }
+  
+  // returnera det shufflade ordet
+  return letters.join("");
 }
 
 // calculate area
