@@ -395,6 +395,8 @@ h2 {
     top: 400px; /* Justera till en passande position */
     left: 50%; /* Centrerar knappen horisontellt */
     transform: translateX(-50%); /* För att centrera */
+    color: gold; /* Matcha med din design */
+    background: rgba(0, 0, 0, 0.7); /* Svart transparent bakgrund */
     z-index: 20; /* Gör att knappen ligger ovanför bilden */
 }
 
@@ -448,5 +450,6 @@ h2 {
     object-fit: cover; /* Se till att bilden täcker hela utrymmet utan att deformeras */
     border-radius: 15px; /* Rundade hörn på bilden */
     position: relative; /* Gör att bilden ligger ovanpå den suddiga bakgrunden */
-    z-index: 1; /* Se till att bilden är framför den suddiga bakgrunden */
+    z-index: 1;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.7);
 }
