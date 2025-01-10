@@ -415,8 +415,6 @@ h2 {
 }
 
 
-
-
 .restartgame {
     position: absolute;
     top: 150px;
@@ -425,32 +423,24 @@ h2 {
     width: 850px;
     height: 500px; /* Justera höjden som du önskar */
     z-index: 2; /* Gör att .restartgame är framför den suddiga bakgrunden */
-    overflow: hidden; /* Se till att inget går utanför */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-
 .restartgame::before {
     content: ""; /* Skapar ett pseudo-element */
-    position: fixed; /* Fäst bakgrunden till hela skärmen */
-    top: 0;
-    left: 0;
-    width: 100vw; /* Täck hela skärmens bredd */
-    height: 100vh; /* Täck hela skärmens höjd */
-    background: url('img/bg.png'); /* Sätt din bakgrundsbild här */
-    background-size: 100% 100%; /* Gör bakgrunden mycket större */
-    background-position: center; /* Centrera bakgrundsbilden */
-    filter: blur(15px); /* Behåll den nuvarande suddigheten */
-    z-index: -1; /* Se till att den suddiga bakgrunden hamnar bakom allt innehåll */
+    position: absolute; /* Fäst bakgrunden relativt till .restartgame */
+    top: -30%;
+    left: -55%;
+    width: 210%; /* Täcker samma bredd som .restartgame */
+    height: 210%; /* Täcker samma höjd som .restartgame */
+    background: url('img/bg.png'); /* Bakgrundsbilden */
+    background-size: cover; /* Täck hela .restartgame med bakgrunden */
+    background-position: center; /* Centrera bakgrunden */
+    filter: blur(15px); /* Sudda bakgrunden */
+    z-index: -1; /* Se till att bakgrunden hamnar bakom .restartgame */
 }
-
-
-
-
-
-
 
 .restartgame img {
     width: 100%; /* Gör så att bilden täcker hela .restartgame-container */
