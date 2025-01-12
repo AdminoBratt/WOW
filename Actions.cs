@@ -13,18 +13,35 @@ public class Actions
         db = database.Connection();
         
         
-        app.MapGet("/api/getrandomword", FetchWord);
+        app.MapGet("/api/getrandomword/{round}", FetchWord);
     
-        async Task<Word> FetchWord()
+        async Task<Word> FetchWord(int round)
         {
-            await using var cmd = db.CreateCommand("Select ord from svenska_ord order by random() limit 1");
-            await using var reader = await cmd.ExecuteReaderAsync();
+            string query;
+            if (round == 1)
             {
-                if (await reader.ReadAsync())
-                {
-                    return new Word(reader.GetString(0));
-                }
+                // Första rundan: ord med max 5 bokstäver
+                query = "SELECT ord FROM svenska_ord WHERE LENGTH(ord) <= 5 ORDER BY random() LIMIT 1";
             }
+            else if (round == 2)
+            {
+                query = "SELECT ord FROM svenska_ord WHERE LENGTH(ord) <= 7 ORDER BY random() LIMIT 1";
+
+            }
+            else
+            {
+                query = "SELECT ord FROM svenska_ord WHERE LENGTH(ord) >= 7 ORDER BY random() LIMIT 1";
+
+            }
+            
+            await using var cmd = db.CreateCommand(query);
+            await using var reader = await cmd.ExecuteReaderAsync();
+            
+            if (await reader.ReadAsync())
+            {
+                return new Word(reader.GetString(0));
+            }
+            
             throw new InvalidOperationException("Inga ord hittades i databasen."); // Felhantering
 
         }

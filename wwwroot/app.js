@@ -13,7 +13,9 @@ const requiredCorrectWords = 3;
 
 // Hämta ett ord och visa scrambled letters
 async function getOneWord() {
-    const response = await fetch("api/getrandomword");
+    let round = currentRound;
+    
+    const response = await fetch(`/api/getrandomword/${round}`);
     const data = await response.json();
     wordToGuess = data.word.toUpperCase(); // Spara det rätta ordet
     scrambledLetters = shuffleWord(wordToGuess).toUpperCase(); // Shufflade bokstäver
