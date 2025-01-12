@@ -6,6 +6,10 @@ let score = 0; // Poäng
 let totalScore = 0;
 let timeLeft = 45; // Total tid
 let timer; // Timer-instans
+let currentRound = 1;
+let guessedWordsThisRound = 0;
+const totalRounds = 3;
+const requiredCorrectWords = 3;
 
 // Hämta ett ord och visa scrambled letters
 async function getOneWord() {
@@ -73,29 +77,56 @@ function updateUnderscoreDisplay() {
 
 // Kontrollera om gissningen är korrekt
 function checkWord() {
-    if (guessedWord === wordToGuess && timeLeft !== 0) {
+    if (guessedWord === wordToGuess && timeLeft > 0) {
         score += guessedWord.length + 10; // Lägg till poäng
         totalScore += score; // Uppdatera totalpoängen
-        updateUnderscoreDisplay();
+        guessedWordsThisRound++; // öka antal gissade ord för denna runda
+        updateScoreDisplay();
         alert("Rätt ord!");
-        //endGame(true);
-        continueGame(); // fortsätt till nästa ord
-    }else if (timeLeft === 0) {
-        alert("Tiden är slut!");
-        endGame(true);
-    } else {
+        guessedWord = ""; // återställ spelarens gissning
+
+        if (guessedWordsThisRound === requiredCorrectWords) {
+            alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!")
+        }
+        continueGame();
+    } else if (guessedWord !== wordToGuess && guessedWord.length === wordToGuess.length) {
         alert("Fel ord!");
-        resetGame();
+        resetGame(); // återställ gissningen för att försöka igen
     }
+}
+
+// avsluta en runda
+function endRound() {
+    clearInterval(timer);
+    totalScore += score; // lägg till rundans poäng till totalpoäng
+    updateScoreDisplay(); // uppdatera visning av poäng
+    
+    if (guessedWordsThisRound >= requiredCorrectWords){
+        if (currentRound < totalRounds){
+            alert(`Runda ${currentRound} klar! Du går vidare till nästa runda.`)
+            currentRound++;
+            guessedWordsThisRound = 0;
+            startGame();
+        }else{
+            endGame(true); // Alla rundor klara, vinst
+        }
+    }else{
+        endGame(false); // förlust om spelaren inte klarar 3 ord
+    }
+}
+
+// Uppdatera visningen av rundan
+function updateRoundDisplay() {
+    document.getElementById("round").textContent = `Runda: ${currentRound}`;
 }
 
 // Starta spelet
 async function startGame() {
     guessedWord = ""; // Töm spelarens gissning
-    totalScore = 0; // starta om totalpoäng
-    updateUnderscoreDisplay(); // visa poäng som 0
+    guessedWordsThisRound = 0; // nollställ gissade ord
+    updateRoundDisplay();
+    updateScoreDisplay(); // visa poäng som 0
     await getOneWord(); // Hämta ett ord från API
-    document.querySelector(".underscore").textContent = generateUnderlines(wordToGuess); // Visa understreck
     startTimer(); // Starta timern
 }
 
@@ -125,7 +156,8 @@ function startTimer() {
         } else {
             clearInterval(timer);
             alert("Tiden är slut!");
-            endGame(true);
+            endRound();
+            //endGame(true);
         }
     }, 1000);
 }
@@ -142,9 +174,12 @@ function endGame(won) {
     } else {
         alert("Tyvärr, du förlorade!");
     }
-    resetGame();
+    guessedWord = "";
+    currentRound = 1;
+    guessedWordsThisRound = 0;
     totalScore = 0;
     updateScoreDisplay();
+    document.getElementById("startEpicTimerBtn").style.display = "block";
 }
 
 // Återställ spelet

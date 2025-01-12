@@ -22,6 +22,7 @@
   <section class="game">
     <div id="word-box">
       <h2>Ord att lösa</h2>
+      <p id="round">Runda 1</p>
       <p class="underscore"></p> <!-- Här fylls bokstäverna i -->
       <p class="shuffled-word"></p> <!-- Här fylls bokstäverna i -->
     </div>
@@ -34,7 +35,6 @@
   </section>
 </main>
 </main>
-<script src="app.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const playerName = localStorage.getItem("playerName");
