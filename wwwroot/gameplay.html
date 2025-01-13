@@ -29,21 +29,22 @@
       <p class="shuffled-word"></p> <!-- Här fylls bokstäverna i -->
     </div>
     <div id="letters">
-      
     </div>
     
+    <p id="score">Poäng: 0</p>
   </section>
+  
+  
   <button id="useHintBtn">Ledtråd?</button>
 </main>
 
 
 <div class="restartgame" style="display: none; justify-content: center; align-items: center;">
   <img src="img/bg.png"  alt="Restart Game bild"/>
-    <p id="score">Poäng: 0</p>
+    
     <button id="newGameBtn">Nästa Runda</button>
   </div>
 
-</div>
 <script>
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -68,7 +69,7 @@
     }
 
     // Globala variabler
-    let timeLeft = 45;
+    let timeLeft = 5;
     let timerRunning = false;
     let timer;
     let score = 0; // Startpoäng
@@ -100,7 +101,7 @@
     // Nästa runda-logik
     document.getElementById("newGameBtn").addEventListener("click", () => {
       // Återställ spelets tillstånd
-      timeLeft = 45;
+      timeLeft = 5;
       document.getElementById("epic-time-left").textContent = timeLeft;
       timerRunning = false;
 

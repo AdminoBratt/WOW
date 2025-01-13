@@ -231,6 +231,8 @@ document.getElementById("startEpicTimerBtn").addEventListener("click", function(
     }, 500);
 });
 
+
+
 // Funktion för att starta spelet (fixad och komplett)
 async function startGame() {
     console.log("Spelet har startat!");
