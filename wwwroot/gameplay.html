@@ -84,6 +84,7 @@
           if (timeLeft <= 0) {
             clearInterval(timer);
             timerRunning = false;
+            time
 
             // Uppdatera och visa poängen
             score += 10; // Exempel: lägg till 10 poäng varje gång
@@ -104,11 +105,11 @@
       timeLeft = 5;
       document.getElementById("epic-time-left").textContent = timeLeft;
       timerRunning = false;
+      startTimer()
 
       // Dölj restartgame och knappen
       document.querySelector(".restartgame").style.display = "none";
       document.getElementById("newGameBtn").style.display = "none";
-      document.getElementById("score").style.display = "none";
     });
 
     // Kontrollera ord och hantera poäng
