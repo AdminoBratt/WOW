@@ -394,21 +394,23 @@ h2 {
 #startEpicTimerBtn {
     display: block;
     margin: 10px auto;
-    margin-top: -70px;
+    margin-top: 50px;
     padding: 8px 12px; /* Mindre storlek */
-    font-size: 1em; /* Justera textstorleken */
+    font-size: 3em; /* Justera textstorleken */
     font-weight: bold;
     color: #ffffff;
     background: linear-gradient(135deg, #004A9E, #5a2f0c); /* Gradient för djup */
     border: 2px solid #ffffff;
     border-radius: 8px; /* Mjuka hörn */
     cursor: pointer;
+    height: auto;
     width: auto; /* Anpassa bredden efter text */
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover-effekter */
     position: relative;
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Lätt skugga för dimension */
+    z-index: 1000;
 }
 
 /* Hover-effekt */
@@ -440,6 +442,29 @@ h2 {
 #startEpicTimerBtn:active {
     transform: scale(0.95); /* Gör knappen mindre vid klick */
     box-shadow: 0px 0px 8px 2px rgba(255, 255, 255, 0.4); /* Minskad ljuseffekt */
+}
+
+/* Blur-effekt över hela sidan */
+#blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(10px); /* Blur på hela sidan */
+    background: rgba(0, 0, 0, 0.7); /* Mörk bakgrund */
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease-out; /* Lägg till en fade-out effekt */
+    opacity: 1; /* Standardläge */
+}
+
+.no-blur {
+    backdrop-filter: none !important;
+    background: transparent !important;
+    pointer-events: none; /* Låter användaren interagera med sidan under */
 }
 
 
