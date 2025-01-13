@@ -548,7 +548,7 @@ button.letter:hover {
     top: 200px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 50; 
+    z-index: 15; 
     display: none;
     font-size: 2em; 
     font-weight: bold; 

@@ -31,7 +31,6 @@
     </div>
     <button id="checkWordBtn">Kontrollera ord</button>
     <button id="useHintBtn">Ledtråd?</button>
-    <p id="score">Poäng: 0</p>
   </section>
 </main>
 
@@ -41,6 +40,7 @@
 </div>
 
 <button id="newGameBtn" style="display: none;">Nästa runda</button>
+<p id="score">Poäng: 0</p>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -88,6 +88,8 @@
             // Visa restart-bilden
             document.querySelector(".restartgame").style.display = "flex";
             document.getElementById("newGameBtn").style.display = "block";
+            document.getElementById('score').style.display = 'block';
+
           } else {
             timeLeft--;
           }
@@ -105,7 +107,9 @@
       // Dölj restartgame och knappen
       document.querySelector(".restartgame").style.display = "none";
       document.getElementById("newGameBtn").style.display = "none";
-      
+      document.getElementById('score').style.display = 'block';
+
+
     });
   });
 
