@@ -10,6 +10,9 @@ let currentRound = 1;
 let guessedWordsThisRound = 0;
 const totalRounds = 3;
 const requiredCorrectWords = 3;
+let hintUsed = false;
+document.getElementById("useHintBtn").addEventListener("click", hint);
+
 
 // Hämta ett ord och visa scrambled letters
 async function getOneWord() {
@@ -84,22 +87,28 @@ function handleLetterClick(button) {
 
 // Uppdatera visningen av understreck
 function updateUnderscoreDisplay() {
-    const underscores = guessedWord
+    const underscores = wordToGuess
         .split("")
-        .concat("_".repeat(wordToGuess.length - guessedWord.length).split(""))
+        .map((char, index) => (guessedWord[index] || (index === 0 && hintLetter) || "_")) // Visa första bokstaven om hint används
         .join(" ");
     document.querySelector(".underscore").textContent = underscores;
 }
 
+
 // Kontrollera om gissningen är korrekt
 function checkWord() {
     if (guessedWord === wordToGuess && timeLeft > 0) {
-        score += guessedWord.length + 10; // Lägg till poäng
+        let roundScore = guessedWord.length;
+        if (!hintUsed) {
+            roundScore += 10; // Lägg till 10 poäng om ingen hint användes
+        }
+        score += roundScore; // Lägg till poäng för rundan
         totalScore += score; // Uppdatera totalpoängen
-        guessedWordsThisRound++; // öka antal gissade ord för denna runda
+        guessedWordsThisRound++; // Öka antal gissade ord för denna runda
         updateScoreDisplay();
-        //alert("Rätt ord!");
-        guessedWord = ""; // återställ spelarens gissning
+
+        hintUsed = false; // Återställ flaggan för nästa ord
+        guessedWord = ""; // Återställ spelarens gissning
 
         if (guessedWordsThisRound === requiredCorrectWords) {
             alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!")
@@ -107,9 +116,10 @@ function checkWord() {
         continueGame();
     } else if (guessedWord !== wordToGuess && guessedWord.length === wordToGuess.length) {
         alert("Fel ord!");
-        resetGame(); // återställ gissningen för att försöka igen
+        resetGame(); // Återställ gissningen för att försöka igen
     }
 }
+
 
 // avsluta en runda
 function endRound() {
@@ -279,3 +289,16 @@ document.addEventListener("keydown", (event) => {
     }
     
 });
+
+
+function hint() {
+    
+    const hintLetter = wordToGuess[0]; // Första bokstaven i ordet
+    
+    if (!guessedWord.includes(hintLetter)) {
+        guessedWord = hintLetter + guessedWord.slice(1); // Sätt första bokstaven som en ledtråd
+        hintUsed = true;
+    }
+    updateUnderscoreDisplay(); // Uppdatera displayen med ledtråden
+}
+    
