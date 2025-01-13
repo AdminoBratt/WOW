@@ -84,7 +84,7 @@ function checkWord() {
         totalScore += score; // Uppdatera totalpoängen
         guessedWordsThisRound++; // öka antal gissade ord för denna runda
         updateScoreDisplay();
-        alert("Rätt ord!");
+        //alert("Rätt ord!");
         guessedWord = ""; // återställ spelarens gissning
 
         if (guessedWordsThisRound === requiredCorrectWords) {
