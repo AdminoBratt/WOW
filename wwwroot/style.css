@@ -303,8 +303,9 @@ main {
 body.multiplayer-page {
     background-image: url('img/gameplay.png');
     background-position: center;
-    background-size: cover;
     background-repeat: no-repeat;
+    background-size: 100vw 150vh;
+    overflow: hidden;
 }
 
 
