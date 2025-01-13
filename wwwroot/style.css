@@ -15,7 +15,7 @@ h1 {
 body.index-page {
     background-image: url('img/index.jpg');
     background-position: center;
-    background-size: cover;
+    background-size: 280vw 280vh;
     background-repeat: no-repeat;
     background-color: #b30000;
     overflow: hidden;
@@ -289,7 +289,6 @@ main {
     width: 600px;
     margin-top: 20px;
     padding: 15px;
-    width: 100%;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 15px;
     border: 2px solid #fff;
@@ -532,18 +531,6 @@ button.letter:hover {
 }
 
 
-.soon {
-    margin: 200px 20px 20px 500px;
-    padding: 10px;
-    font-size: 3em;
-    width: 20%;
-    background: rgba(0, 0, 0, 0.5);
-    color: #e4dcd4;
-    text-align: center;
-    background-size: cover;
-
-}
-
 #game-buttons {
     display: flex;
     flex-direction: column;
@@ -557,8 +544,6 @@ button.letter:hover {
     padding: 10px 15px;
     font-size: 1em;
 }
-
-
 
 
 #timer button {
@@ -592,21 +577,6 @@ button.letter:hover {
     z-index: 20; /* Gör att knappen ligger ovanför bilden */
 }
 
-
-#score {
-    position: absolute; /* Placera absolut i förhållande till närmaste positionerade element */
-    top: 200px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 15; 
-    display: none;
-    font-size: 2em; 
-    font-weight: bold; 
-    color: gold;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px 20px; 
-    border-radius: 10px; 
-}
 
 
 .restartgame {

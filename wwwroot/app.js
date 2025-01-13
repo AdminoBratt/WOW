@@ -14,7 +14,7 @@ const requiredCorrectWords = 3;
 // Hämta ett ord och visa scrambled letters
 async function getOneWord() {
     let round = currentRound;
-    
+
     const response = await fetch(`/api/getrandomword/${round}`);
     const data = await response.json();
     wordToGuess = data.word.toUpperCase(); // Spara det rätta ordet
@@ -23,7 +23,7 @@ async function getOneWord() {
 
     // Uppdatera gränssnittet
     document.querySelector(".underscore").textContent = generateUnderlines(wordToGuess);
-    
+
     populateLetterButtons(scrambledLetters);
 }
 
@@ -57,32 +57,16 @@ function populateLetterButtons(letters) {
 // Hantera klick på en bokstav
 function handleLetterClick(button) {
     const letter = button.textContent;
-
-    // Om bokstaven redan är vald, ta bort den
-    if (button.classList.contains("selected")) {
-        guessedWord = guessedWord.slice(0, guessedWord.lastIndexOf(letter))
-            + guessedWord.slice(guessedWord.lastIndexOf(letter) + 1);
-        button.disabled = false; // Aktivera knappen igen
-        button.classList.remove("selected");
-        updateUnderscoreDisplay(); // Uppdatera understrecken
-        return; // Avsluta funktionen
-    }
-
-    // Lägg till bokstaven om plats finns
     if (guessedWord.length < wordToGuess.length) {
-        guessedWord += letter; // Lägg till bokstaven
+        guessedWord += letter; // Lägg till bokstaven i spelarens gissning
+        updateUnderscoreDisplay();
         button.disabled = true; // Inaktivera knappen
-        button.classList.add("selected"); // Markera knappen som vald
-        updateUnderscoreDisplay(); // Uppdatera understrecken
     }
 
-    // Kontrollera om ordet är klart
     if (guessedWord.length === wordToGuess.length) {
-        checkWord(); // Kontrollera ordet
+        checkWord();
     }
 }
-
-
 
 // Uppdatera visningen av understreck
 function updateUnderscoreDisplay() {
@@ -105,6 +89,8 @@ function checkWord() {
 
         if (guessedWordsThisRound === requiredCorrectWords) {
             alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!")
+            
+            //istället för en alert ska det vara den bilden
         }
         continueGame();
     } else if (guessedWord !== wordToGuess && guessedWord.length === wordToGuess.length) {
@@ -118,7 +104,7 @@ function endRound() {
     clearInterval(timer);
     totalScore += score; // lägg till rundans poäng till totalpoäng
     updateScoreDisplay(); // uppdatera visning av poäng
-    
+
     if (guessedWordsThisRound >= requiredCorrectWords){
         if (currentRound < totalRounds){
             alert(`Runda ${currentRound} klar! Du går vidare till nästa runda.`)
