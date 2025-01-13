@@ -60,16 +60,33 @@ function populateLetterButtons(letters) {
 // Hantera klick på en bokstav
 function handleLetterClick(button) {
     const letter = button.textContent;
+
+    // Om bokstaven redan är vald, ta bort den
+    if (button.classList.contains("selected")) {
+        guessedWord = guessedWord.slice(0, guessedWord.lastIndexOf(letter))
+            + guessedWord.slice(guessedWord.lastIndexOf(letter) + 1);
+        button.disabled = false; // Aktivera knappen igen
+        button.classList.remove("selected");
+        updateUnderscoreDisplay(); // Uppdatera understrecken
+        return; // Avsluta funktionen
+    }
+
+    // Lägg till bokstaven om plats finns
     if (guessedWord.length < wordToGuess.length) {
         guessedWord += letter; // Lägg till bokstaven i spelarens gissning
         updateUnderscoreDisplay();
         button.disabled = true; // Inaktivera knappen
+        button.classList.add("selected"); // Markera knappen som vald
+        updateUnderscoreDisplay(); // Uppdatera understrecken
     }
 
+    // Kontrollera om ordet är klart
     if (guessedWord.length === wordToGuess.length) {
         checkWord();
     }
 }
+
+
 
 // Uppdatera visningen av understreck
 function updateUnderscoreDisplay() {
@@ -226,10 +243,15 @@ function saveName(faction) {
     window.location.href = "gameplay.html";
 }
 
-// Kör spelet när sidan laddas
-document.getElementById("startEpicTimerBtn").addEventListener("click", () => {
-    document.getElementById("startEpicTimerBtn").style.display = "none"; // Dölj startknappen
-    startGame();
+document.getElementById("startEpicTimerBtn").addEventListener("click", function() {
+    const blurOverlay = document.getElementById("blur-overlay");
+
+    // Ta bort blur-effekten och starta spelet
+    blurOverlay.style.opacity = "0";
+    setTimeout(() => {
+        blurOverlay.style.display = "none";
+        startGame();  // OBS: Kallar den korrekta startGame()-funktionen
+    }, 500);
 });
 
 
