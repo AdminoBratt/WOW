@@ -52,6 +52,7 @@
     const faction = localStorage.getItem("faction");
     const playerImage = document.getElementById("playerImage");
 
+    // Validera spelarens namn
     if (playerName) {
       document.getElementById("playerNameDisplay").innerText = playerName;
     } else {
@@ -59,7 +60,7 @@
       window.location.href = "index.html";
     }
 
-    // Ändra bilden baserat på fraktion
+    // Ändra bild baserat på fraktion
     if (faction === "alliance") {
       playerImage.src = "img/character-female.png";
       playerImage.alt = "Alliance Character";
@@ -70,63 +71,54 @@
 
     // Globala variabler
     let timeLeft = 5;
-    let timerRunning = false;
-    let timer;
-    let score = 0; // Startpoäng
+    let timer = null;
+    let score = 0;
+
+    // Uppdatera UI för poäng
+    const updateScore = (points) => {
+      score += points;
+      document.getElementById("score").textContent = `Poäng: ${score}`;
+    };
+
+    // Starta timer-funktion
+    const startTimer = () => {
+      if (timer) return; // Förhindra att flera timers startas
+
+      timer = setInterval(() => {
+        const timerDisplay = document.getElementById("epic-time-left");
+        timerDisplay.textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+          clearInterval(timer); // Stoppa timern
+          timer = null; // Återställ timer-referens
+          showRestartGame(); // Visa "Nästa Runda"
+          updateScore(10); // Ge poäng för rundan
+        } else {
+          timeLeft--;
+        }
+      }, 1000);
+    };
+
+    // Hantera nästa runda
+    const nextRound = () => {
+      timeLeft = 5; // Återställ tid
+      document.getElementById("epic-time-left").textContent = timeLeft;
+      document.querySelector(".restartgame").style.display = "none"; // Dölj restart-sektionen
+      startTimer(); // Starta timern igen
+    };
+
+    // Visa "Nästa Runda"-sektionen
+    const showRestartGame = () => {
+      document.querySelector(".restartgame").style.display = "flex";
+    };
 
     // Starta timer-knappen
     document.getElementById("startEpicTimerBtn").addEventListener("click", () => {
-      if (!timerRunning) {
-        timerRunning = true;
-        timer = setInterval(() => {
-          document.getElementById("epic-time-left").textContent = timeLeft;
-
-          if (timeLeft <= 0) {
-            clearInterval(timer);
-            timerRunning = false;
-            time
-
-            // Uppdatera och visa poängen
-            score += 10; // Exempel: lägg till 10 poäng varje gång
-            document.getElementById("score").textContent = `Poäng: ${score}`;
-
-            // Visa restart-bilden
-            document.querySelector(".restartgame").style.display = "flex";
-          } else {
-            timeLeft--;
-          }
-        }, 1000);
-      }
+      startTimer();
     });
 
-    // Nästa runda-logik
-    document.getElementById("newGameBtn").addEventListener("click", () => {
-      // Återställ spelets tillstånd
-      timeLeft = 5;
-      document.getElementById("epic-time-left").textContent = timeLeft;
-      timerRunning = false;
-      startTimer()
-
-      // Dölj restartgame och knappen
-      document.querySelector(".restartgame").style.display = "none";
-      document.getElementById("newGameBtn").style.display = "none";
-    });
-
-    // Kontrollera ord och hantera poäng
-    function checkWord() {
-      const guessedWord = document.querySelector(".underscore").textContent.replace(/\s+/g, '');
-      const wordToGuess = "DEMO"; // Exempel: ordet som ska gissas
-      const restartElement = document.querySelector(".restartgame");
-
-      if (guessedWord === wordToGuess) {
-        const points = guessedWord.length * 10; // Poäng = längden på ordet * 10
-        score += points; // Lägg till poängen
-        document.getElementById("score").textContent = `Poäng: ${score}`;
-        restartElement.style.display = "flex";
-      } else {
-        restartElement.style.display = "flex";
-      }
-    }
+    // Nästa runda-knappen
+    document.getElementById("newGameBtn").addEventListener("click", nextRound);
   });
 
 </script>
