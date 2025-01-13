@@ -279,3 +279,38 @@ document.addEventListener("keydown", (event) => {
     }
     
 });
+
+/* // Hantera klick på en bokstav och markera korrekt gissad bokstav som grön
+function handleLetterClick(button) {
+    const letter = button.textContent;
+
+    // Om bokstaven redan är vald, ta bort den
+    if (button.classList.contains("selected")) {
+        guessedWord = guessedWord.slice(0, guessedWord.lastIndexOf(letter))
+            + guessedWord.slice(guessedWord.lastIndexOf(letter) + 1);
+        button.disabled = false; // Aktivera knappen igen
+        button.classList.remove("selected");
+        button.style.backgroundColor = ""; // Återställ färgen
+        updateUnderscoreDisplay(); // Uppdatera understrecken
+        return; // Avsluta funktionen
+    }
+
+    // Lägg till bokstaven om plats finns
+    if (guessedWord.length < wordToGuess.length) {
+        guessedWord += letter; // Lägg till bokstaven i spelarens gissning
+        updateUnderscoreDisplay();
+        button.disabled = true; // Inaktivera knappen
+        button.classList.add("selected"); // Markera knappen som vald
+
+        // Kontrollera om bokstaven är på rätt plats
+        if (wordToGuess[guessedWord.length - 1] === letter) {
+            button.style.backgroundColor = "green"; // Markera korrekt bokstav med grönt
+        } else {
+            button.style.backgroundColor = "red"; // Markera fel bokstav med rött
+        }
+
+        if (guessedWord.length === wordToGuess.length) {
+            checkWord();
+        }
+    }
+}*/
