@@ -14,10 +14,11 @@ h1 {
 
 body.index-page {
     background-image: url('img/index.jpg');
-    background-position: center;
-    background-size: cover;
+    background-position: 25% center;
+    background-size: 280vw 280vh;
     background-repeat: no-repeat;
     background-color: #b30000;
+    overflow: hidden;
 }
 
 
@@ -51,11 +52,15 @@ header {
 body.chooseStyle-page {
     background-image: url('img/choose-style.jpg');
     background-position: center;
-    background-size: cover;
+    background-size: 180vw 280vh;
     background-repeat: no-repeat;
     color: #fff;
+    overflow: hidden;
 }
 
+.choose-style{
+    margin-top: 80px;
+}
 
 .chooseStyle {
     display: flex;
@@ -110,6 +115,7 @@ body.createCharacter-page {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    overflow: hidden;
 }
 
 .character-selection {
@@ -232,7 +238,7 @@ body.gameplay-page {
 
 
 
-#timer {
+/* #timer {
     position: absolute;
     top: -130px;
     left: 50%;
@@ -241,7 +247,7 @@ body.gameplay-page {
     font-size: 2em;
     font-weight: bold;
     color: #fff;
-}
+} */
 
 /* Main Section */
 main {
@@ -256,7 +262,7 @@ main {
 #word-box {
     width: 600px;
     margin-top: 50px;
-    padding: 20px;
+    padding: 15px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 15px;
     border: 2px solid #fff;
@@ -264,14 +270,17 @@ main {
 }
 
 #letters {
+    width: 600px;
     margin-top: 20px;
     padding: 15px;
-    width: 100%;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 15px;
     border: 2px solid #fff;
     font-size: 1.5em;
     color: #000;
+    display: flex; /* Gör bokstavsknapparna vågräta */
+    justify-content: center; /* Centrera bokstäverna */
+    gap: 10px; /* Lägg till mellanrum mellan bokstäverna */
 }
 
 #letters h2 {
@@ -279,9 +288,6 @@ main {
     font-size: 1.2em;
     color: #fff;
 }
-
-
-
 
 body.multiplayer-page {
     background-image: url('img/gameplay.png');
@@ -345,10 +351,14 @@ h2 {
     font-size: 4rem;
 }
 #timer-container {
+    position: absolute; /* Fixera timern högst upp */
+    top: -50px;       /* 10 pixlar från toppen */
+    left: 50%;       /* Centrera horisontellt */
+    transform: translateX(-50%); /* Korrigerar centreringen */
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px; /* Avstånd från andra element */
+    z-index: 1000;   /* Håller timern över allt annat innehåll */
 }
 
 #epic-timer {
@@ -361,6 +371,7 @@ h2 {
 #startEpicTimerBtn {
     display: block;
     margin: 10px auto;
+    margin-top: -50px;
     padding: 8px 12px; /* Mindre storlek */
     font-size: 1em; /* Justera textstorleken */
     font-weight: bold;
@@ -445,11 +456,7 @@ h2 {
     100% { opacity: 1; }
 }
 
-#letters {
-    display: flex; /* Gör bokstavsknapparna vågräta */
-    justify-content: center; /* Centrera bokstäverna */
-    gap: 10px; /* Lägg till mellanrum mellan bokstäverna */
-}
+
 
 button.letter {
     padding: 10px 15px; /* Ändra storlek på knapparna */
