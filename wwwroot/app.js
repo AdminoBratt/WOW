@@ -6,6 +6,21 @@ let score = 0; // Poäng
 let timeLeft = 45; // Total tid
 let timer; // Timer-instans
 
+// Funktion för att visa restart-bilden
+function showRestartGame() {
+    // Hämta restartgame-elementet
+    const restartElement = document.querySelector('.restartgame');
+
+    // Gör restart-bilden synlig
+    restartElement.style.display = 'flex'; // Flex för att använda din centreringslayout
+}
+
+// Lägg till eventlistener för omstartsknappen
+document.querySelector('.restartgame img').addEventListener('click', function() {
+    // Logik för att starta om spelet
+    location.reload(); // Laddar om sidan för att börja om spelet
+});
+
 // Hämta ett ord och visa scrambled letters
 async function getOneWord() {
     const response = await fetch("api/getrandomword");
@@ -47,6 +62,7 @@ function populateLetterButtons(letters) {
         lettersContainer.appendChild(button);
     });
 }
+
 // Hantera klick på en bokstav
 function handleLetterClick(button) {
     const letter = button.textContent;
@@ -74,11 +90,9 @@ function updateUnderscoreDisplay() {
 function checkWord() {
     if (guessedWord === wordToGuess) {
         score += guessedWord.length * 10; // Lägg till poäng
-        alert("Rätt ord!");
-        endGame(true);
+        showRestartGame(); // Visa restart-bilden istället för alert
     } else {
-        alert("Fel ord!");
-        resetGame();
+        showRestartGame(); // Visa restart-bilden även vid fel
     }
 }
 
@@ -94,7 +108,7 @@ async function startGame() {
 function startTimer() {
     const timerElement = document.getElementById("epic-time-left");
     clearInterval(timer); // Rensa eventuell tidigare timer
-    timeLeft = 45; // Återställ tiden
+    timeLeft = 5; // Återställ tiden
     timer = setInterval(() => {
         if (timeLeft > 0) {
             timeLeft--;
@@ -107,8 +121,7 @@ function startTimer() {
             }
         } else {
             clearInterval(timer);
-            alert("Tiden är slut!");
-            endGame(false);
+            showRestartGame(); // Visa restart-bilden när tiden är slut
         }
     }, 1000);
 }
@@ -116,19 +129,7 @@ function startTimer() {
 // Avsluta spelet
 function endGame(won) {
     clearInterval(timer);
-    if (won) {
-        alert(`Grattis! Du vann med poängen ${score}!`);
-    } else {
-        alert("Tyvärr, du förlorade!");
-    }
-    resetGame();
-}
-
-// Återställ spelet
-function resetGame() {
-    guessedWord = "";
-    document.querySelector(".underscore").textContent = generateUnderlines(wordToGuess);
-    populateLetterButtons(scrambledLetters);
+    showRestartGame(); // Visa restart-bilden oavsett resultat
 }
 
 // Hantera tangentbordsinmatning

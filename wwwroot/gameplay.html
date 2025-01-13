@@ -34,33 +34,10 @@
     <p id="score">Poäng: 0</p>
   </section>
 </main>
-<script src="app.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const playerName = localStorage.getItem("playerName");
-    const faction = localStorage.getItem("faction");
-    const playerImage = document.getElementById("playerImage");
 
-    if (playerName) {
-      document.getElementById("playerNameDisplay").innerText = playerName;
-    } else {
-      alert("Namn saknas! Återvänd till startsidan.");
-      window.location.href = "index.html";
-    }
-
-    // Ändra bilden baserat på fraktion
-    if (faction === "alliance") {
-      playerImage.src = "img/character-female.png";
-      playerImage.alt = "Alliance Character";
-    } else if (faction === "horde") {
-      playerImage.src = "img/character-orc.png";
-      playerImage.alt = "Horde Character";
-    }
-  });
-</script>
-
-<div class="restartgame" style="display: none;">
-  <img src="img/bg.png" alt="Restart Game" style="max-width: 100%; height: auto;" />
+<!-- Restart Game Section -->
+<div class="restartgame" style="display: none; justify-content: center; align-items: center;">
+  <img src="img/bg.png" alt="Restart Game" style="max-width: 100%; height: auto; cursor: pointer;" />
 </div>
 
 <button id="newGameBtn" style="display: none;">Nästa runda</button>
@@ -74,8 +51,10 @@
     if (playerName) {
       document.getElementById("playerNameDisplay").innerText = playerName;
     } else {
-      alert("Namn saknas! Återvänd till startsidan.");
-      window.location.href = "index.html";
+      // Visa restart-bilden om namn saknas
+      const restartElement = document.querySelector('.restartgame');
+      restartElement.style.display = 'flex';
+      return;
     }
 
     // Ändra bilden baserat på fraktion
@@ -87,30 +66,30 @@
       playerImage.alt = "Horde Character";
     }
 
-    // Start-timer-logik
-    let startTime = 3;
-    let timerRunning = false;
-    let interval;
+    // Hantera restart-logik
+    document.querySelector('.restartgame img').addEventListener('click', function() {
+      location.reload();
+    });
 
-    document.getElementById("startTimerBtn").addEventListener("click", () => {
+    // Timer och spelets logik
+    let timeLeft = 5;
+    let timerRunning = false;
+    let timer;
+
+    document.getElementById("startEpicTimerBtn").addEventListener("click", () => {
       if (!timerRunning) {
         timerRunning = true;
-        interval = setInterval(() => {
-          document.querySelector("#timer p").textContent = startTime;
+        timer = setInterval(() => {
+          document.getElementById("epic-time-left").textContent = timeLeft;
 
-          if (startTime <= 0) {
-            clearInterval(interval);
+          if (timeLeft <= 0) {
+            clearInterval(timer);
             timerRunning = false;
-
-            // Visa restartgame-bilden, knappen och poängen när timern är slut
-            document.querySelector(".restartgame").style.display = "block";
+            // Visa restart-bilden
+            document.querySelector(".restartgame").style.display = "flex";
             document.getElementById("newGameBtn").style.display = "block";
-            document.querySelector("#score").style.display = "block";
-            document.querySelector(".restartgame img").style.filter = "none"; // Tar bort eventuella filter
-            document.querySelector(".restartgame img").style.transform = "none"; // Tar bort skalning
-
           } else {
-            startTime--;
+            timeLeft--;
           }
         }, 1000);
       }
@@ -119,17 +98,30 @@
     // Nästa runda-logik
     document.getElementById("newGameBtn").addEventListener("click", () => {
       // Återställ spelets tillstånd
-      startTime = 45;
-      document.querySelector("#timer p").textContent = startTime;
+      timeLeft = 5;
+      document.getElementById("epic-time-left").textContent = timeLeft;
       timerRunning = false;
 
       // Dölj restartgame och knappen
       document.querySelector(".restartgame").style.display = "none";
       document.getElementById("newGameBtn").style.display = "none";
-      document.querySelector("#score").style.display = "none";
+      
     });
   });
+
+  // Kontrollera ord och hantera poäng
+  function checkWord() {
+    const guessedWord = document.querySelector(".underscore").textContent.replace(/\s+/g, '');
+    const wordToGuess = "DEMO"; // Exempel: ordet som ska gissas
+    const restartElement = document.querySelector(".restartgame");
+
+    if (guessedWord === wordToGuess) {
+      document.getElementById("score").textContent = `Poäng: ${guessedWord.length * 10}`;
+      restartElement.style.display = "flex";
+    } else {
+      restartElement.style.display = "flex";
+    }
+  }
 </script>
-<script src="js/gameplay.js"></script>
 </body>
 </html>
