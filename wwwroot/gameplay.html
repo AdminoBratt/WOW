@@ -28,11 +28,8 @@
     </div>
     <div id="letters">
       <h2>Bokstäver</h2>
-      <p><span class="letter">A</span> <span class="letter">G</span> <span class="letter">T</span> <span class="letter">I</span> <span class="letter">L</span> <span class="letter">G</span></p>
     </div>
-    <button id="checkWordBtn">Kontrollera ord</button>
     <button id="useHintBtn">Ledtråd?</button>
-    <p id="score">Poäng: 0</p>
   </section>
 </main>
 
@@ -41,7 +38,7 @@
   <img src="img/bg.png" alt="Restart Game" style="max-width: 100%; height: auto; cursor: pointer;" />
 </div>
 
-<button id="newGameBtn" style="display: none;">Nästa runda</button>
+<button id="newGameBtn" style="display: none;">Börja om</button>
 <p id="score">Poäng: 0</p>
 
 </main>
@@ -75,9 +72,10 @@
     });
 
     // Timer och spelets logik
-    let timeLeft = 5;
+    let timeLeft = 45;
     let timerRunning = false;
     let timer;
+    let score = 0;  // Poängvariabel
 
     document.getElementById("startEpicTimerBtn").addEventListener("click", () => {
       if (!timerRunning) {
@@ -92,7 +90,6 @@
             document.querySelector(".restartgame").style.display = "flex";
             document.getElementById("newGameBtn").style.display = "block";
             document.getElementById('score').style.display = 'block';
-
           } else {
             timeLeft--;
           }
@@ -103,16 +100,15 @@
     // Nästa runda-logik
     document.getElementById("newGameBtn").addEventListener("click", () => {
       // Återställ spelets tillstånd
-      timeLeft = 5;
+      timeLeft = 45;
       document.getElementById("epic-time-left").textContent = timeLeft;
       timerRunning = false;
+      score = 0;  // Nollställ poäng när nästa runda börjar
 
       // Dölj restartgame och knappen
       document.querySelector(".restartgame").style.display = "none";
       document.getElementById("newGameBtn").style.display = "none";
-      document.getElementById('score').style.display = 'block';
-
-
+      document.getElementById('score').style.display = 'none';  // Dölj poängen tills nästa runda
     });
   });
 
@@ -123,7 +119,8 @@
     const restartElement = document.querySelector(".restartgame");
 
     if (guessedWord === wordToGuess) {
-      document.getElementById("score").textContent = `Poäng: ${guessedWord.length * 10}`;
+      const points = guessedWord.length * 10; // Poäng = längden på ordet * 10
+      document.getElementById("score").textContent = `Poäng: ${points}`;
       restartElement.style.display = "flex";
     } else {
       restartElement.style.display = "flex";

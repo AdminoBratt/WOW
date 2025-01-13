@@ -239,29 +239,3 @@ document.getElementById("startEpicTimerBtn").addEventListener("click", () => {
     document.getElementById("startEpicTimerBtn").style.display = "none"; // Dölj startknappen
     startGame();
 });
-
-document.addEventListener("keydown", (event) => {
-    // Om Backspace trycks ner, ångra senaste bokstaven
-    if (event.key === "Backspace") {
-        if (guessedWord.length > 0) {
-            // Ta bort senaste bokstaven från gissningen
-            const lastLetter = guessedWord[guessedWord.length - 1];
-            guessedWord = guessedWord.slice(0, -1);
-
-            // Hitta den tillhörande knappen och återaktivera den
-            const button = Array.from(document.querySelectorAll(".letter")).find(
-                el => el.textContent === lastLetter && el.disabled
-            );
-            if (button) {
-                button.disabled = false; // Aktivera knappen igen
-                button.classList.remove("selected"); // Ta bort markeringsklass
-            }
-
-            // Uppdatera visningen av understreck
-            updateUnderscoreDisplay();
-        }
-        event.preventDefault(); // Förhindra standardfunktion för Backspace
-        return;
-    }
-    
-});
