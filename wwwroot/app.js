@@ -183,6 +183,7 @@ function startTimer() {
         } else {
             clearInterval(timer);
             alert("Tiden är slut!");
+            alert(`Rätt ord var: ${wordToGuess}`)
             endRound();
             //endGame(true);
         }
@@ -199,7 +200,7 @@ function endGame(won) {
     if (won) {
         alert(`Grattis! Du fick ${totalScore} poäng!`);
     } else {
-        alert("Tyvärr, du förlorade!");
+        alert(`Du kom till runda ${currentRound} och fick ${totalScore} poäng`);
     }
     guessedWord = "";
     currentRound = 1;

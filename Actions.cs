@@ -21,11 +21,11 @@ public class Actions
             if (round == 1)
             {
                 // Första rundan: ord med max 5 bokstäver
-                query = "SELECT ord FROM svenska_ord WHERE LENGTH(ord) <= 5 ORDER BY random() LIMIT 1";
+                query = "SELECT ord FROM svenska_ord WHERE LENGTH(ord) <= 4 ORDER BY random() LIMIT 1";
             }
             else if (round == 2)
             {
-                query = "SELECT ord FROM svenska_ord WHERE LENGTH(ord) <= 7 ORDER BY random() LIMIT 1";
+                query = "SELECT ord FROM svenska_ord WHERE LENGTH(ord) <= 6 ORDER BY random() LIMIT 1";
 
             }
             else
