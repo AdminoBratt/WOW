@@ -57,10 +57,24 @@ function populateLetterButtons(letters) {
 // Hantera klick på en bokstav
 function handleLetterClick(button) {
     const letter = button.textContent;
+
+    // Om bokstaven redan är vald, ta bort den
+    if (button.classList.contains("selected")) {
+        guessedWord = guessedWord.slice(0, guessedWord.lastIndexOf(letter))
+            + guessedWord.slice(guessedWord.lastIndexOf(letter) + 1);
+        button.disabled = false; // Aktivera knappen igen
+        button.classList.remove("selected");
+        updateUnderscoreDisplay(); // Uppdatera understrecken
+        return; // Avsluta funktionen
+    }
+
+    // Lägg till bokstaven om plats finns
     if (guessedWord.length < wordToGuess.length) {
         guessedWord += letter; // Lägg till bokstaven i spelarens gissning
         updateUnderscoreDisplay();
         button.disabled = true; // Inaktivera knappen
+        button.classList.add("selected"); // Markera knappen som vald
+        updateUnderscoreDisplay(); // Uppdatera understrecken
     }
 
     if (guessedWord.length === wordToGuess.length) {
@@ -239,3 +253,29 @@ async function startGame() {
     await getOneWord(); // Hämta ett nytt ord och visa bokstäverna
     startTimer();  // Starta timern korrekt
 }
+
+document.addEventListener("keydown", (event) => {
+    // Om Backspace trycks ner, ångra senaste bokstaven
+    if (event.key === "Backspace") {
+        if (guessedWord.length > 0) {
+            // Ta bort senaste bokstaven från gissningen
+            const lastLetter = guessedWord[guessedWord.length - 1];
+            guessedWord = guessedWord.slice(0, -1);
+
+            // Hitta den tillhörande knappen och återaktivera den
+            const button = Array.from(document.querySelectorAll(".letter")).find(
+                el => el.textContent === lastLetter && el.disabled
+            );
+            if (button) {
+                button.disabled = false; // Aktivera knappen igen
+                button.classList.remove("selected"); // Ta bort markeringsklass
+            }
+
+            // Uppdatera visningen av understreck
+            updateUnderscoreDisplay();
+        }
+        event.preventDefault(); // Förhindra standardfunktion för Backspace
+        return;
+    }
+    
+});
