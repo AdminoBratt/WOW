@@ -234,8 +234,24 @@ function saveName(faction) {
     window.location.href = "gameplay.html";
 }
 
-// Kör spelet när sidan laddas
-document.getElementById("startEpicTimerBtn").addEventListener("click", () => {
-    document.getElementById("startEpicTimerBtn").style.display = "none"; // Dölj startknappen
-    startGame();
+document.getElementById("startEpicTimerBtn").addEventListener("click", function() {
+    const blurOverlay = document.getElementById("blur-overlay");
+
+    // Ta bort blur-effekten och starta spelet
+    blurOverlay.style.opacity = "0";
+    setTimeout(() => {
+        blurOverlay.style.display = "none";
+        startGame();  // OBS: Kallar den korrekta startGame()-funktionen
+    }, 500);
 });
+
+// Funktion för att starta spelet (fixad och komplett)
+async function startGame() {
+    console.log("Spelet har startat!");
+    guessedWord = ""; // Töm spelarens gissning
+    guessedWordsThisRound = 0; // Nollställ gissade ord
+    updateRoundDisplay(); // Uppdatera rundans visning
+    updateScoreDisplay(); // Uppdatera poängvisning
+    await getOneWord(); // Hämta ett nytt ord och visa bokstäverna
+    startTimer();  // Starta timern korrekt
+}

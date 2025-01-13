@@ -8,6 +8,9 @@
   <script src="app.js" defer></script>
 </head>
 <body class="gameplay-page">
+<div id="blur-overlay">
+  <button id="startEpicTimerBtn">Starta Timer</button>
+</div>
 <header>
   <p id="playerName"><span id="playerNameDisplay"></span>!</p>
   <div id="player-one">
@@ -21,26 +24,18 @@
 <main>
   <section class="game">
     <div id="word-box">
-      <h2>Ord att lösa</h2>
+      <h2 class="solve-word">Ord att lösa</h2>
       <p id="round">Runda 1</p>
       <p class="underscore"></p> <!-- Här fylls bokstäverna i -->
       <p class="shuffled-word"></p> <!-- Här fylls bokstäverna i -->
     </div>
     <div id="letters">
-      <h2>Bokstäver</h2>
+      
     </div>
-    <button id="useHintBtn">Ledtråd?</button>
+    
+    <p id="score">Poäng: 0</p>
   </section>
-</main>
-
-<!-- Restart Game Section -->
-<div class="restartgame" style="display: none; justify-content: center; align-items: center;">
-  <img src="img/bg.png" alt="Restart Game" style="max-width: 100%; height: auto; cursor: pointer;" />
-</div>
-
-<button id="newGameBtn" style="display: none;">Börja om</button>
-<p id="score">Poäng: 0</p>
-
+  <button id="useHintBtn">Ledtråd?</button>
 </main>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -51,10 +46,8 @@
     if (playerName) {
       document.getElementById("playerNameDisplay").innerText = playerName;
     } else {
-      // Visa restart-bilden om namn saknas
-      const restartElement = document.querySelector('.restartgame');
-      restartElement.style.display = 'flex';
-      return;
+      alert("Namn saknas! Återvänd till startsidan.");
+      window.location.href = "index.html";
     }
 
     // Ändra bilden baserat på fraktion
