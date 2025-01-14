@@ -80,24 +80,30 @@ function handleLetterClick(button) {
         updateUnderscoreDisplay(); // Uppdatera understrecken
     }
 
+    // Kontrollera om ordet är klart
     if (guessedWord.length === wordToGuess.length) {
         checkWord();
     }
 }
 
+
+
 // Uppdatera visningen av understreck
 function updateUnderscoreDisplay() {
-    const underscores = wordToGuess
+    const underscores = guessedWord
         .split("")
-        .map((char, index) => (guessedWord[index] || (index === 0 && hintLetter) || "_")) // Visa första bokstaven om hint används
+        .concat("_".repeat(wordToGuess.length - guessedWord.length).split(""))
         .join(" ");
     document.querySelector(".underscore").textContent = underscores;
 }
 
-
 // Kontrollera om gissningen är korrekt
+// Kontrollera om gissningen är korrekt eller baklänges
 function checkWord() {
+    const reversedWord = wordToGuess.split("").reverse().join(""); // Skapa baklängesversion av ordet
+
     if (guessedWord === wordToGuess && timeLeft > 0) {
+        // Vanlig korrekt gissning
         let roundScore = guessedWord.length;
         if (!hintUsed) {
             roundScore += 10; // Lägg till 10 poäng om ingen hint användes
@@ -111,7 +117,22 @@ function checkWord() {
         guessedWord = ""; // Återställ spelarens gissning
 
         if (guessedWordsThisRound === requiredCorrectWords) {
-            alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!")
+            alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!");
+        }
+        continueGame();
+    } else if (guessedWord === reversedWord && timeLeft > 0) {
+        // Extra twist: Om gissningen är baklänges
+        score += 50; // Ge 50 extra poäng
+        totalScore += score; // Uppdatera totalpoängen
+        guessedWordsThisRound++; // Öka antal gissade ord för denna runda
+        updateScoreDisplay();
+        showEasterEgg(); // Visa "easter egg"-animation eller text
+
+        hintUsed = false; // Återställ flaggan för nästa ord
+        guessedWord = ""; // Återställ spelarens gissning
+
+        if (guessedWordsThisRound === requiredCorrectWords) {
+            alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!");
         }
         continueGame();
     } else if (guessedWord !== wordToGuess && guessedWord.length === wordToGuess.length) {
@@ -120,6 +141,17 @@ function checkWord() {
     }
 }
 
+// Funktion för att visa "easter egg" visuellt
+function showEasterEgg() {
+    const easterEggElement = document.getElementById("easter-egg");
+    easterEggElement.style.display = "block"; // Visa "easter egg"
+    easterEggElement.textContent = "Easter Egg! Du gissade ordet baklänges!";
+
+    // Gör så att det försvinner efter några sekunder
+    setTimeout(() => {
+        easterEggElement.style.display = "none"; // Göm efter 3 sekunder
+    }, 3000);
+}
 
 // avsluta en runda
 function endRound() {
@@ -253,17 +285,18 @@ document.getElementById("startEpicTimerBtn").addEventListener("click", function(
     }, 500);
 });
 
-// Funktion för att starta spelet (fixad och komplett)
-async function startGame() {
-    console.log("Spelet har startat!");
-    guessedWord = ""; // Töm spelarens gissning
-    guessedWordsThisRound = 0; // Nollställ gissade ord
-    updateRoundDisplay(); // Uppdatera rundans visning
-    updateScoreDisplay(); // Uppdatera poängvisning
-    await getOneWord(); // Hämta ett nytt ord och visa bokstäverna
-    startTimer();  // Starta timern korrekt
-}
 
+function hint() {
+    
+    const hintLetter = wordToGuess[0]; // Första bokstaven i ordet
+    
+    if (!guessedWord.includes(hintLetter)) {
+        guessedWord = hintLetter + guessedWord.slice(1); // Sätt första bokstaven som en ledtråd
+        hintUsed = true;
+    }
+    updateUnderscoreDisplay(); // Uppdatera displayen med ledtråden
+}
+    
 document.addEventListener("keydown", (event) => {
     // Om Backspace trycks ner, ångra senaste bokstaven
     if (event.key === "Backspace") {
@@ -289,16 +322,3 @@ document.addEventListener("keydown", (event) => {
     }
     
 });
-
-
-function hint() {
-    
-    const hintLetter = wordToGuess[0]; // Första bokstaven i ordet
-    
-    if (!guessedWord.includes(hintLetter)) {
-        guessedWord = hintLetter + guessedWord.slice(1); // Sätt första bokstaven som en ledtråd
-        hintUsed = true;
-    }
-    updateUnderscoreDisplay(); // Uppdatera displayen med ledtråden
-}
-    
