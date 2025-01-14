@@ -8,6 +8,9 @@
   <script src="app.js" defer></script>
 </head>
 <body class="gameplay-page">
+<div id="blur-overlay">
+  <button id="startEpicTimerBtn">Starta Timer</button>
+</div>
 <header>
   <p id="playerName"><span id="playerNameDisplay"></span>!</p>
   <div id="player-one">
@@ -15,13 +18,13 @@
   </div>
   <div id="timer-container">
     <p id="epic-time-left">45</p>
-    <button id="startEpicTimerBtn">Starta Timer</button>
+    
   </div>
 </header>
 <main>
   <section class="game">
     <div id="word-box">
-      <h2>Ord att lösa</h2>
+      <h2 class="solve-word">Ord att lösa</h2>
       <p id="round">Runda 1</p>
       <p class="underscore"></p> <!-- Här fylls bokstäverna i -->
       <p class="shuffled-word"></p> <!-- Här fylls bokstäverna i -->
@@ -29,11 +32,10 @@
     <div id="letters">
       
     </div>
-    <button id="checkWordBtn">Kontrollera ord</button>
-    <button id="useHintBtn">Ledtråd?</button>
+    
     <p id="score">Poäng: 0</p>
   </section>
-</main>
+  <button id="useHintBtn">Ledtråd?</button>
 </main>
 <script>
   document.addEventListener("DOMContentLoaded", () => {

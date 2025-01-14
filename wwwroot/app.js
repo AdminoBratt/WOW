@@ -58,54 +58,34 @@ function populateLetterButtons(letters) {
     });
 }
 // Hantera klick på en bokstav
-// Hantera klick på en bokstav
 function handleLetterClick(button) {
     const letter = button.textContent;
+
+    // Om bokstaven redan är vald, ta bort den
+    if (button.classList.contains("selected")) {
+        guessedWord = guessedWord.slice(0, guessedWord.lastIndexOf(letter))
+            + guessedWord.slice(guessedWord.lastIndexOf(letter) + 1);
+        button.disabled = false; // Aktivera knappen igen
+        button.classList.remove("selected");
+        updateUnderscoreDisplay(); // Uppdatera understrecken
+        return; // Avsluta funktionen
+    }
+
+    // Lägg till bokstaven om plats finns
     if (guessedWord.length < wordToGuess.length) {
         guessedWord += letter; // Lägg till bokstaven i spelarens gissning
         updateUnderscoreDisplay();
         button.disabled = true; // Inaktivera knappen
-        button.style.display = 'none'; // Dölja knappen i gränssnittet
+        button.classList.add("selected"); // Markera knappen som vald
+        updateUnderscoreDisplay(); // Uppdatera understrecken
     }
 
+    // Kontrollera om ordet är klart
     if (guessedWord.length === wordToGuess.length) {
         checkWord();
     }
 }
 
-// Hantera tangentbordsinmatning (inkl. backspace)
-document.addEventListener("keydown", (event) => {
-    const guessedLetter = event.key.toUpperCase();
-    if (scrambledLetters.includes(guessedLetter) && guessedWord.length < wordToGuess.length) {
-        const button = Array.from(document.querySelectorAll(".letter")).find(
-            el => el.textContent === guessedLetter && !el.disabled
-        );
-        if (button) handleLetterClick(button);
-    }
-
-    // Om Backspace trycks ner, ångra senaste bokstaven
-    if (event.key === "Backspace") {
-        if (guessedWord.length > 0) {
-            // Ta bort senaste bokstaven från gissningen
-            const lastLetter = guessedWord[guessedWord.length - 1];
-            guessedWord = guessedWord.slice(0, -1);
-
-            // Hitta den tillhörande knappen och återaktivera den
-            const button = Array.from(document.querySelectorAll(".letter")).find(
-                el => el.textContent === lastLetter && el.disabled
-            );
-            if (button) {
-                button.disabled = false; // Aktivera knappen igen
-                button.style.display = 'inline-block'; // Gör knappen synlig igen
-            }
-
-            // Uppdatera visningen av understreck
-            updateUnderscoreDisplay();
-        }
-        event.preventDefault(); // Förhindra standardfunktion för Backspace
-        return;
-    }
-});
 
 
 // Uppdatera visningen av understreck
@@ -280,4 +260,29 @@ function hint() {
     }
     updateUnderscoreDisplay(); // Uppdatera displayen med ledtråden
 }
+    
+document.addEventListener("keydown", (event) => {
+    // Om Backspace trycks ner, ångra senaste bokstaven
+    if (event.key === "Backspace") {
+        if (guessedWord.length > 0) {
+            // Ta bort senaste bokstaven från gissningen
+            const lastLetter = guessedWord[guessedWord.length - 1];
+            guessedWord = guessedWord.slice(0, -1);
 
+            // Hitta den tillhörande knappen och återaktivera den
+            const button = Array.from(document.querySelectorAll(".letter")).find(
+                el => el.textContent === lastLetter && el.disabled
+            );
+            if (button) {
+                button.disabled = false; // Aktivera knappen igen
+                button.classList.remove("selected"); // Ta bort markeringsklass
+            }
+
+            // Uppdatera visningen av understreck
+            updateUnderscoreDisplay();
+        }
+        event.preventDefault(); // Förhindra standardfunktion för Backspace
+        return;
+    }
+    
+});

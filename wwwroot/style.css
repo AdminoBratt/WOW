@@ -14,10 +14,11 @@ h1 {
 
 body.index-page {
     background-image: url('img/index.jpg');
-    background-position: center;
-    background-size: cover;
+    background-position: 25% center;
+    background-size: 280vw 280vh;
     background-repeat: no-repeat;
     background-color: #b30000;
+    overflow: hidden;
 }
 
 
@@ -51,11 +52,15 @@ header {
 body.chooseStyle-page {
     background-image: url('img/choose-style.jpg');
     background-position: center;
-    background-size: cover;
+    background-size: 180vw 280vh;
     background-repeat: no-repeat;
     color: #fff;
+    overflow: hidden;
 }
 
+.choose-style{
+    margin-top: 80px;
+}
 
 .chooseStyle {
     display: flex;
@@ -110,10 +115,11 @@ body.createCharacter-page {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    overflow: hidden;
 }
 
 .character-selection {
-    margin-top: -210px;
+    margin-top: -250px;
     display: flex;
     justify-content: space-between;
     padding: 50px;
@@ -196,6 +202,7 @@ body.gameplay-page {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    overflow: hidden;
 }
 
 #player-one {
@@ -214,8 +221,8 @@ body.gameplay-page {
 
 #playerName {
     text-align: center;
-    padding: 10px;
-    font-size: 1em;
+    padding: 3px;
+    font-size: 24px;
     border: 3px solid #fff; /* Vit kantlinje */
     border-radius: 15px;  /* Rundade hörn */
     background: rgba(0, 0, 0, 0.7); /* Halvtransparent bakgrund */
@@ -230,9 +237,23 @@ body.gameplay-page {
     text-overflow: ellipsis; /* Lägger till '...' om texten blir för lång */
 }
 
+#score {
+    position: absolute;    
+    top: 300px;            
+    left: 100px;             
+    font-size: 1.5em;
+    color: white;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); 
+    border-radius: 10px;
+    border: 2px solid gold;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+}
 
 
-#timer {
+
+/* #timer {
     position: absolute;
     top: -130px;
     left: 50%;
@@ -241,7 +262,7 @@ body.gameplay-page {
     font-size: 2em;
     font-weight: bold;
     color: #fff;
-}
+} */
 
 /* Main Section */
 main {
@@ -255,8 +276,9 @@ main {
 
 #word-box {
     width: 600px;
-    margin-top: 50px;
-    padding: 20px;
+    height: 200px;
+    margin-top: -160px;
+    padding: 15px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 15px;
     border: 2px solid #fff;
@@ -264,14 +286,18 @@ main {
 }
 
 #letters {
+    width: 600px;
     margin-top: 20px;
     padding: 15px;
-    width: 100%;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 15px;
     border: 2px solid #fff;
     font-size: 1.5em;
     color: #000;
+    display: flex; /* Gör bokstavsknapparna vågräta */
+    justify-content: center; /* Centrera bokstäverna */
+    gap: 10px; /* Lägg till mellanrum mellan bokstäverna */
+    position: fixed;
 }
 
 #letters h2 {
@@ -280,14 +306,12 @@ main {
     color: #fff;
 }
 
-
-
-
 body.multiplayer-page {
     background-image: url('img/gameplay.png');
     background-position: center;
-    background-size: cover;
     background-repeat: no-repeat;
+    background-size: 100vw 150vh;
+    overflow: hidden;
 }
 
 
@@ -313,6 +337,11 @@ h2 {
     font-size: 2em;
     color: #2a2a2a;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.solve-word{
+    margin-top: 5px;
+    font-family: 'Cinzel', serif;
 }
 
 #guess {
@@ -343,12 +372,17 @@ h2 {
 
 .underscore {
     font-size: 4rem;
+    margin-top: -10px; 
 }
 #timer-container {
+    position: absolute; /* Fixera timern högst upp */
+    top: -90px;       /* 10 pixlar från toppen */
+    left: 50%;       /* Centrera horisontellt */
+    transform: translateX(-50%); /* Korrigerar centreringen */
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px; /* Avstånd från andra element */
+    z-index: 1000;   /* Håller timern över allt annat innehåll */
 }
 
 #epic-timer {
@@ -361,20 +395,23 @@ h2 {
 #startEpicTimerBtn {
     display: block;
     margin: 10px auto;
+    margin-top: 50px;
     padding: 8px 12px; /* Mindre storlek */
-    font-size: 1em; /* Justera textstorleken */
+    font-size: 3em; /* Justera textstorleken */
     font-weight: bold;
     color: #ffffff;
     background: linear-gradient(135deg, #004A9E, #5a2f0c); /* Gradient för djup */
     border: 2px solid #ffffff;
     border-radius: 8px; /* Mjuka hörn */
     cursor: pointer;
+    height: auto;
     width: auto; /* Anpassa bredden efter text */
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover-effekter */
     position: relative;
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Lätt skugga för dimension */
+    z-index: 1000;
 }
 
 /* Hover-effekt */
@@ -406,6 +443,29 @@ h2 {
 #startEpicTimerBtn:active {
     transform: scale(0.95); /* Gör knappen mindre vid klick */
     box-shadow: 0px 0px 8px 2px rgba(255, 255, 255, 0.4); /* Minskad ljuseffekt */
+}
+
+/* Blur-effekt över hela sidan */
+#blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(10px); /* Blur på hela sidan */
+    background: rgba(0, 0, 0, 0.7); /* Mörk bakgrund */
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease-out; /* Lägg till en fade-out effekt */
+    opacity: 1; /* Standardläge */
+}
+
+.no-blur {
+    backdrop-filter: none !important;
+    background: transparent !important;
+    pointer-events: none; /* Låter användaren interagera med sidan under */
 }
 
 
@@ -445,11 +505,7 @@ h2 {
     100% { opacity: 1; }
 }
 
-#letters {
-    display: flex; /* Gör bokstavsknapparna vågräta */
-    justify-content: center; /* Centrera bokstäverna */
-    gap: 10px; /* Lägg till mellanrum mellan bokstäverna */
-}
+
 
 button.letter {
     padding: 10px 15px; /* Ändra storlek på knapparna */
@@ -465,4 +521,8 @@ button.letter:hover {
     background-color: #004A9E; /* Blå bakgrund vid hover */
     color: #fff; /* Vit text vid hover */
     cursor: pointer;
+}
+
+#useHintBtn {
+    margin-top: 200px;
 }
