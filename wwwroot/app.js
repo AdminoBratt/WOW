@@ -10,6 +10,9 @@ let currentRound = 1;
 let guessedWordsThisRound = 0;
 const totalRounds = 3;
 const requiredCorrectWords = 3;
+let hintUsed = false;
+document.getElementById("useHintBtn").addEventListener("click", hint);
+
 
 // Hämta ett ord och visa scrambled letters
 async function getOneWord() {
@@ -232,17 +235,24 @@ function saveName(faction) {
     window.location.href = "gameplay.html";
 }
 
-document.getElementById("startEpicTimerBtn").addEventListener("click", function() {
-    const blurOverlay = document.getElementById("blur-overlay");
-
-    // Ta bort blur-effekten och starta spelet
-    blurOverlay.style.opacity = "0";
-    setTimeout(() => {
-        blurOverlay.style.display = "none";
-        startGame();  // OBS: Kallar den korrekta startGame()-funktionen
-    }, 500);
+// Kör spelet när sidan laddas
+document.getElementById("startEpicTimerBtn").addEventListener("click", () => {
+    document.getElementById("startEpicTimerBtn").style.display = "none"; // Dölj startknappen
+    startGame();
 });
 
+
+function hint() {
+    
+    const hintLetter = wordToGuess[0]; // Första bokstaven i ordet
+    
+    if (!guessedWord.includes(hintLetter)) {
+        guessedWord = hintLetter + guessedWord.slice(1); // Sätt första bokstaven som en ledtråd
+        hintUsed = true;
+    }
+    updateUnderscoreDisplay(); // Uppdatera displayen med ledtråden
+}
+    
 // Funktion för att starta spelet (fixad och komplett)
 async function startGame() {
     console.log("Spelet har startat!");
