@@ -262,7 +262,7 @@ body.gameplay-page {
     font-size: 2em;
     font-weight: bold;
     color: #fff;
-}
+} */
 
 /* Main Section */
 main {
@@ -306,9 +306,6 @@ main {
     color: #fff;
 }
 
-
-
-
 body.multiplayer-page {
     background-image: url('img/gameplay.png');
     background-position: center;
@@ -345,6 +342,7 @@ h2 {
 
 .solve-word{
     margin-top: 5px;
+    font-family: 'Cinzel', serif;
 }
 
 #guess {
@@ -528,6 +526,21 @@ button.letter:hover {
 
 #useHintBtn {
     margin-top: 200px;
+}
+#easter-egg {
+    display: none; /* Döljer elementet från början */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: yellow;
+    color: red;
+    font-size: 2rem;
+    padding: 20px;
+    border: 5px solid red;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 1000; /* Se till att det visas över andra element */
 }
 
 

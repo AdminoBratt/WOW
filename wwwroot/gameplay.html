@@ -18,6 +18,7 @@
   </div>
   <div id="timer-container">
     <p id="epic-time-left">45</p>
+    
   </div>
 </header>
 <main>
@@ -29,18 +30,21 @@
       <p class="shuffled-word"></p> <!-- Här fylls bokstäverna i -->
     </div>
     <div id="letters">
+      
     </div>
-
+    <div id="easter-egg"></div>
     <p id="score">Poäng: 0</p>
-    <!-- Döljer finalScore under spelets gång -->
-    <p id="finalScore" style="display: none;">Slutpoäng: 0</p>
+    <p id="high-score-1"></p>
+    <p id="high-score-2"></p>
+    <p id="high-score-3"></p>
   </section>
-
   <button id="useHintBtn">Ledtråd?</button>
 </main>
 
 <div class="restartgame" style="display: none; justify-content: center; align-items: center;">
   <img src="img/bg.png" alt="Restart Game bild" />
+  <p>klar! Du går vidare till nästa runda</p>
+  <p id="finalScore">Poäng: 0</p>
   <button id="newGameBtn">Nästa Runda</button>
 </div>
 
@@ -50,7 +54,6 @@
     const faction = localStorage.getItem("faction");
     const playerImage = document.getElementById("playerImage");
 
-    // Validera spelarens namn
     if (playerName) {
       document.getElementById("playerNameDisplay").innerText = playerName;
     } else {
@@ -58,7 +61,7 @@
       window.location.href = "index.html";
     }
 
-    // Ändra bild baserat på fraktion
+    // Ändra bilden baserat på fraktion
     if (faction === "alliance") {
       playerImage.src = "img/character-female.png";
       playerImage.alt = "Alliance Character";
