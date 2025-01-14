@@ -80,30 +80,26 @@ function handleLetterClick(button) {
         updateUnderscoreDisplay(); // Uppdatera understrecken
     }
 
-    // Kontrollera om ordet är klart
     if (guessedWord.length === wordToGuess.length) {
         checkWord();
     }
 }
 
-
-
 // Uppdatera visningen av understreck
 function updateUnderscoreDisplay() {
-    const underscores = guessedWord
+    const underscores = wordToGuess
         .split("")
-        .concat("_".repeat(wordToGuess.length - guessedWord.length).split(""))
+        .map((char, index) => (guessedWord[index] || (index === 0 && hintLetter) || "_")) // Visa första bokstaven om hint används
         .join(" ");
     document.querySelector(".underscore").textContent = underscores;
 }
 
+
 // Kontrollera om gissningen är korrekt
-// Kontrollera om gissningen är korrekt eller baklänges
 function checkWord() {
     const reversedWord = wordToGuess.split("").reverse().join(""); // Skapa baklängesversion av ordet
 
     if (guessedWord === wordToGuess && timeLeft > 0) {
-        // Vanlig korrekt gissning
         let roundScore = guessedWord.length;
         if (!hintUsed) {
             roundScore += 10; // Lägg till 10 poäng om ingen hint användes
@@ -331,16 +327,26 @@ document.getElementById("startEpicTimerBtn").addEventListener("click", function(
 
 
 function hint() {
-    
     const hintLetter = wordToGuess[0]; // Första bokstaven i ordet
-    
+
+    // Kolla om bokstaven redan används i gissningen
     if (!guessedWord.includes(hintLetter)) {
         guessedWord = hintLetter + guessedWord.slice(1); // Sätt första bokstaven som en ledtråd
         hintUsed = true;
+
+        // Hitta och ta bort den första knappen med hintLetter
+        const button = Array.from(document.querySelectorAll(".letter")).find(
+            el => el.textContent === hintLetter && !el.disabled
+        );
+        if (button) {
+            button.disabled = true; // Inaktivera knappen
+            button.classList.add("selected"); // Markera som vald
+            button.style.backgroundColor = "gray"; // Ändra färg så att den ser inaktiverad ut
+        }
     }
     updateUnderscoreDisplay(); // Uppdatera displayen med ledtråden
 }
-    
+
 document.addEventListener("keydown", (event) => {
     // Om Backspace trycks ner, ångra senaste bokstaven
     if (event.key === "Backspace") {
@@ -366,3 +372,37 @@ document.addEventListener("keydown", (event) => {
     }
     
 });
+
+ // Hantera klick på en bokstav och markera korrekt gissad bokstav som grön
+function handleLetterClick(button) {
+    const letter = button.textContent;
+
+    // Om bokstaven redan är vald, ta bort den
+    if (button.classList.contains("selected")) {
+        guessedWord = guessedWord.slice(0, guessedWord.lastIndexOf(letter))
+            + guessedWord.slice(guessedWord.lastIndexOf(letter) + 1);
+        button.disabled = false; // Aktivera knappen igen
+        button.classList.remove("selected");
+        button.style.backgroundColor = ""; // Återställ färgen
+        updateUnderscoreDisplay(); // Uppdatera understrecken
+        return; // Avsluta funktionen
+    }
+
+    // Lägg till bokstaven om plats finns
+    if (guessedWord.length < wordToGuess.length) {
+        guessedWord += letter; // Lägg till bokstaven i spelarens gissning
+        updateUnderscoreDisplay();
+        button.disabled = true; // Inaktivera knappen
+        button.classList.add("selected"); // Markera knappen som vald
+
+        // Kontrollera om bokstaven är på rätt plats
+        if (wordToGuess[guessedWord.length - 1] === letter) {
+            button.style.backgroundColor = "green"; // Markera korrekt bokstav med grönt
+        }
+
+        if (guessedWord.length === wordToGuess.length) {
+            checkWord();
+        }
+    }
+}
+
