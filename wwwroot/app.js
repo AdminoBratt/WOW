@@ -10,6 +10,9 @@ let currentRound = 1;
 let guessedWordsThisRound = 0;
 const totalRounds = 3;
 const requiredCorrectWords = 3;
+let hintUsed = false;
+document.getElementById("useHintBtn").addEventListener("click", hint);
+
 
 // Hämta ett ord och visa scrambled letters
 async function getOneWord() {
@@ -243,6 +246,18 @@ document.getElementById("startEpicTimerBtn").addEventListener("click", function(
     }, 500);
 });
 
+
+function hint() {
+    
+    const hintLetter = wordToGuess[0]; // Första bokstaven i ordet
+    
+    if (!guessedWord.includes(hintLetter)) {
+        guessedWord = hintLetter + guessedWord.slice(1); // Sätt första bokstaven som en ledtråd
+        hintUsed = true;
+    }
+    updateUnderscoreDisplay(); // Uppdatera displayen med ledtråden
+}
+    
 // Funktion för att starta spelet (fixad och komplett)
 async function startGame() {
     console.log("Spelet har startat!");
