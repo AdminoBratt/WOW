@@ -280,7 +280,7 @@ document.addEventListener("keydown", (event) => {
     
 });
 
- // Hantera klick på en bokstav och markera korrekt gissad bokstav som grön
+// Hantera klick på en bokstav och ta bort korrekt gissad bokstav från fältet
 function handleLetterClick(button) {
     const letter = button.textContent;
 
@@ -299,15 +299,17 @@ function handleLetterClick(button) {
     if (guessedWord.length < wordToGuess.length) {
         guessedWord += letter; // Lägg till bokstaven i spelarens gissning
         updateUnderscoreDisplay();
-        button.disabled = true; // Inaktivera knappen
-        button.classList.add("selected"); // Markera knappen som vald
 
         // Kontrollera om bokstaven är på rätt plats
         if (wordToGuess[guessedWord.length - 1] === letter) {
             button.style.backgroundColor = "green"; // Markera korrekt bokstav med grönt
+            setTimeout(() => button.remove(), 300); // Ta bort knappen efter kort fördröjning
         } else {
             button.style.backgroundColor = "red"; // Markera fel bokstav med rött
         }
+
+        button.disabled = true; // Inaktivera knappen
+        button.classList.add("selected"); // Markera knappen som vald
 
         if (guessedWord.length === wordToGuess.length) {
             checkWord();
