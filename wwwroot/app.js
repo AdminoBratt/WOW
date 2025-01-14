@@ -102,7 +102,7 @@ function showMessage(message, color) {
         messageBox = document.createElement('div');
         messageBox.id = 'messageBox';
         messageBox.style.position = 'fixed';
-        messageBox.style.top = '50%';
+        messageBox.style.top = '30%';
         messageBox.style.left = '50%';
         messageBox.style.transform = 'translate(-50%, -50%)';
         messageBox.style.padding = '20px';
@@ -137,7 +137,7 @@ function showMessage(message, color) {
         setTimeout(() => {
             messageBox.remove();
         }, 500);
-    }, 500);
+    }, 1500);
 }
 
 
