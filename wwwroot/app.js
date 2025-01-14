@@ -186,10 +186,13 @@ function updateScoreDisplay() {
 function endGame(won) {
     clearInterval(timer);
     if (won) {
-        alert(`Grattis! Du fick ${totalScore} poäng!`);
+        messageElement.textContent = `Grattis! Du fick ${totalScore} poäng!`;
+        messageElement.style.color = 'green';
     } else {
-        alert("Tyvärr, du förlorade!");
+        messageElement.textContent = 'Tyvärr, du förlorade!';
+        messageElement.style.color = 'red';
     }
+
     guessedWord = "";
     currentRound = 1;
     guessedWordsThisRound = 0;

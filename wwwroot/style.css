@@ -568,13 +568,35 @@ button.letter:hover {
 
 
 #newGameBtn {
-    position: absolute; /* Byt till absolute om inte redan satt */
-    top: 300px; /* Justera till en passande position */
-    left: 50%; /* Centrerar knappen horisontellt */
-    transform: translateX(-50%); /* För att centrera */
-    color: gold; /* Matcha med din design */
-    background: rgba(0, 0, 0, 0.7); /* Svart transparent bakgrund */
-    z-index: 20; /* Gör att knappen ligger ovanför bilden */
+    position: absolute; 
+    top: 300px; 
+    left: 23%; 
+    transform: translateX(-50%);
+    color: white; 
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    border: 2px solid gold;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7); 
+    z-index: 20;
+}
+
+
+#finalScore {
+    position: relative;
+    top: -50px; 
+    left: -76%;  
+    font-size: 2em;
+    width: 100px;
+    height: 50px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    border: 2px solid gold;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+    padding: 10px 150px; 
+    z-index: 10; 
+    background-color: rgba(0, 0, 0, 0.7); 
 }
 
 
@@ -582,10 +604,10 @@ button.letter:hover {
 .restartgame {
     position: absolute;
     top: 150px;
-    left: 50%;
+    left: 64%;
     transform: translateX(-50%); 
-    width: 850px;
-    height: 500px; 
+    width: 750px;
+    height: 450px; 
     z-index: 2; 
     display: flex;
     justify-content: center;
@@ -595,8 +617,8 @@ button.letter:hover {
 .restartgame::before {
     content: ""; 
     position: absolute; 
-    top: -30%;
-    left: -55%;
+    top: -40%;
+    left: -75%;
     width: 210%; 
     height: 210%; 
     background: url('img/bg.png'); 
@@ -615,3 +637,4 @@ button.letter:hover {
     z-index: 1;
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.7);
 }
+

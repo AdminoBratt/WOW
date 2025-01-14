@@ -41,7 +41,7 @@
 
 <div class="restartgame" style="display: none; justify-content: center; align-items: center;">
   <img src="img/bg.png"  alt="Restart Game bild"/>
-    
+    <p id="finalScore">Dina poäng: 0</p>
     <button id="newGameBtn">Nästa Runda</button>
   </div>
 
@@ -68,9 +68,12 @@
       playerImage.src = "img/character-orc.png";
       playerImage.alt = "Horde Character";
     }
+    
+    
+    
 
     // Globala variabler
-    let timeLeft = 5;
+    let timeLeft = 2;
     let timer = null;
     let score = 0;
 
@@ -101,7 +104,7 @@
 
     // Hantera nästa runda
     const nextRound = () => {
-      timeLeft = 5; // Återställ tid
+      timeLeft = 2; // Återställ tid
       document.getElementById("epic-time-left").textContent = timeLeft;
       document.querySelector(".restartgame").style.display = "none"; // Dölj restart-sektionen
       startTimer(); // Starta timern igen
@@ -110,6 +113,9 @@
     // Visa "Nästa Runda"-sektionen
     const showRestartGame = () => {
       document.querySelector(".restartgame").style.display = "flex";
+      const finalScoreDisplay = document.getElementById("finalScore");
+      finalScoreDisplay.textContent = `poäng:${score}`;
+      
     };
 
     // Starta timer-knappen
@@ -119,6 +125,7 @@
 
     // Nästa runda-knappen
     document.getElementById("newGameBtn").addEventListener("click", nextRound);
+    
   });
 
 </script>
