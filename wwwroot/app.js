@@ -92,9 +92,12 @@ function updateUnderscoreDisplay() {
 }
 
 // Kontrollera om gissningen är korrekt
+
+
+
 function showMessage(message, color) {
-    // Skapa eller hitta meddelandeelementet
     let messageBox = document.getElementById('messageBox');
+    
     if (!messageBox) {
         messageBox = document.createElement('div');
         messageBox.id = 'messageBox';
@@ -108,27 +111,36 @@ function showMessage(message, color) {
         messageBox.style.borderRadius = '10px';
         messageBox.style.textAlign = 'center';
         messageBox.style.zIndex = '1000';
-        messageBox.style.fontSize = '1.5rem';
+        messageBox.style.fontSize = '3rem'; // För en kraftigare textstorlek
         messageBox.style.color = color || 'black';
         messageBox.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         messageBox.style.opacity = '0'; // Börjar osynligt
         document.body.appendChild(messageBox);
     }
 
-    // Sätt meddelande och animera in
+    // Sätt texten och animerar in
     messageBox.textContent = message;
     messageBox.style.opacity = '1';
     messageBox.style.transform = 'translate(-50%, -50%) scale(1)';
 
-    // Animera ut och ta bort efter 2 sekunder
+    // Lägg till en stil för att få meddelandet att "explodera" eller "blinka" vid rätt svar
+    if (color === "green") {
+        messageBox.style.animation = 'pulse 1.5s ease infinite'; // Pulsanimering för rätt ord
+    } else if (color === "red") {
+        messageBox.style.animation = 'shake 0.5s ease forwards'; // Skakning för fel ord
+    }
+
+    // Animera ut och ta bort
     setTimeout(() => {
         messageBox.style.opacity = '0';
         messageBox.style.transform = 'translate(-50%, -50%) scale(0.8)';
         setTimeout(() => {
             messageBox.remove();
-        }, 500); // Vänta tills animationen är klar innan den tas bort
-    }, 2000);
+        }, 500);
+    }, 500);
 }
+
+
 
 function checkWord() {
     if (guessedWord === wordToGuess && timeLeft > 0) {
@@ -219,6 +231,7 @@ function startTimer() {
 
 function updateScoreDisplay() {
     document.getElementById("score").textContent = `Poäng: ${totalScore}`;
+    document.getElementById("finalScore").textContent = `Poäng: ${totalScore}`;
 }
 
 // Avsluta spelet
@@ -293,6 +306,13 @@ async function startGame() {
     updateRoundDisplay(); // Uppdatera rundans visning
     updateScoreDisplay(); // Uppdatera poängvisning
     await getOneWord(); // Hämta ett nytt ord och visa bokstäverna
+}
+
+
+// Uppdatera visning av poäng
+function updateScoreDisplay() {
+    document.getElementById("score").textContent = `Poäng: ${totalScore}`;
+    document.getElementById("finalScore").textContent = `Poäng: ${totalScore}`;
 }
 
 document.addEventListener("keydown", (event) => {

@@ -30,23 +30,21 @@
     </div>
     <div id="letters">
     </div>
-    
+
     <p id="score">Poäng: 0</p>
+    <!-- Döljer finalScore under spelets gång -->
+    <p id="finalScore" style="display: none;">Slutpoäng: 0</p>
   </section>
-  
-  
+
   <button id="useHintBtn">Ledtråd?</button>
 </main>
 
-
 <div class="restartgame" style="display: none; justify-content: center; align-items: center;">
-  <img src="img/bg.png"  alt="Restart Game bild"/>
-    <p id="finalScore">Poäng: 0</p>
-    <button id="newGameBtn">Nytt Spel</button>
-  </div>
+  <img src="img/bg.png" alt="Restart Game bild" />
+  <button id="newGameBtn">Nytt Spel</button>
+</div>
 
 <script>
-
   document.addEventListener("DOMContentLoaded", () => {
     const playerName = localStorage.getItem("playerName");
     const faction = localStorage.getItem("faction");
@@ -68,24 +66,17 @@
       playerImage.src = "img/character-orc.png";
       playerImage.alt = "Horde Character";
     }
-    
-    
-    
 
     // Globala variabler
-    let timeLeft = 12;
+    let timeLeft = 45;
     let timer = null;
-    let score = 0;
-    let totalScore = 0;
+    let score = 0;  // Aktuell poäng för denna runda
 
-    // Uppdatera UI för poäng
-    const updateScore = (points) => {
-      score += points;
-      totalScore += score;
-      document.getElementById("score").textContent = `Poäng:${score}`;
-      document.getElementById("finalScore").textContent = `Poäng:${score}`;
+    // Uppdatera både score och finalScore samtidigt
+    const updateScores = (points) => {
+      score += points;  // Lägg till poäng till den aktuella rundan
+      document.getElementById("score").textContent = `Poäng: ${score}`;  // Uppdatera den aktuella poängen
     };
-
 
     // Starta timer-funktion
     const startTimer = () => {
@@ -96,42 +87,38 @@
         timerDisplay.textContent = timeLeft;
 
         if (timeLeft <= 0) {
-            clearInterval(timer);
-            timer = null;
-            showRestartGame();
-            updateScore(10);
+          clearInterval(timer);
+          timer = null;
+          updateScores(10);  // Lägg till poäng när tiden är slut och uppdatera både score och finalScore
+          showRestartGame();  // Sedan visa resultatet
         } else {
-            timeLeft--;
+          timeLeft--;
         }
       }, 1000);
-    };
-
-    // Hantera nästa runda
-    const nextRound = () => {
-      timeLeft = 12; // Återställ tid
-      document.getElementById("epic-time-left").textContent = timeLeft;
-      document.querySelector(".restartgame").style.display = "none"; // Dölj restart-sektionen
-      startTimer(); // Starta timern igen
     };
 
     // Visa "Nästa Runda"-sektionen
     const showRestartGame = () => {
       document.querySelector(".restartgame").style.display = "flex";
-      document.getElementById("finalScore").textContent = `Poäng:${score}`;
+      // Visa finalScore i restartsektionen och dölja det under spelets gång
+      document.getElementById("finalScore").style.display = "block";
+      document.getElementById("finalMessage").textContent = `Slutpoäng: ${score}`;
     };
 
-
-
     // Starta timer-knappen
-    document.getElementById("startEpicTimerBtn").addEventListener("click", () => {
-      startTimer();
+    document.getElementById("startEpicTimerBtn").addEventListener("click", startTimer);
+
+    // Nytt Spel-knappen
+    document.getElementById("newGameBtn").addEventListener("click", () => {
+      timeLeft = 45; // Återställ tid
+      document.getElementById("epic-time-left").textContent = timeLeft;
+      document.querySelector(".restartgame").style.display = "none"; // Dölj restart-sektionen
+      document.getElementById("finalScore").style.display = "none";  // Dölja finalScore för nästa omgång
+      score = 0; // Nollställ poäng för den nya rundan
+      document.getElementById("score").textContent = `Poäng: ${score}`; // Uppdatera poäng
+      startTimer(); // Starta timern igen
     });
-
-    // Nästa runda-knappen
-    document.getElementById("newGameBtn").addEventListener("click", nextRound);
-    
   });
-
 </script>
 </body>
 </html>

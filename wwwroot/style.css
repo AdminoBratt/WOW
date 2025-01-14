@@ -570,7 +570,7 @@ button.letter:hover {
 #newGameBtn {
     position: absolute; 
     top: 300px; 
-    left: 23%; 
+    left: 50%; 
     transform: translateX(-50%);
     color: white; 
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
@@ -583,8 +583,8 @@ button.letter:hover {
 
 #finalScore {
     position: relative;
-    top: -50px; 
-    left: -76%;  
+    top: -170px; 
+    left: 20%;  
     font-size: 2em;
     width: 100px;
     height: 50px;
@@ -604,7 +604,7 @@ button.letter:hover {
 .restartgame {
     position: absolute;
     top: 150px;
-    left: 64%;
+    left: 50%;
     transform: translateX(-50%); 
     width: 750px;
     height: 450px; 
@@ -618,7 +618,7 @@ button.letter:hover {
     content: ""; 
     position: absolute; 
     top: -40%;
-    left: -75%;
+    left: -55%;
     width: 210%; 
     height: 210%; 
     background: url('img/bg.png'); 
@@ -637,4 +637,8 @@ button.letter:hover {
     z-index: 1;
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.7);
 }
+
+
+
+
 
