@@ -268,16 +268,7 @@ function hint() {
     updateUnderscoreDisplay(); // Uppdatera displayen med ledtråden
 }
     
-// Funktion för att starta spelet (fixad och komplett)
-async function startGame() {
-    console.log("Spelet har startat!");
-    guessedWord = ""; // Töm spelarens gissning
-    guessedWordsThisRound = 0; // Nollställ gissade ord
-    updateRoundDisplay(); // Uppdatera rundans visning
-    updateScoreDisplay(); // Uppdatera poängvisning
-    await getOneWord(); // Hämta ett nytt ord och visa bokstäverna
-    startTimer();  // Starta timern korrekt
-}
+
 
 document.addEventListener("keydown", (event) => {
     // Om Backspace trycks ner, ångra senaste bokstaven
