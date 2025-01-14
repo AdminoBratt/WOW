@@ -248,12 +248,22 @@ document.getElementById("startEpicTimerBtn").addEventListener("click", function(
 
 
 function hint() {
-    
     const hintLetter = wordToGuess[0]; // Första bokstaven i ordet
-    
+
+    // Kolla om bokstaven redan används i gissningen
     if (!guessedWord.includes(hintLetter)) {
         guessedWord = hintLetter + guessedWord.slice(1); // Sätt första bokstaven som en ledtråd
         hintUsed = true;
+
+        // Hitta och ta bort den första knappen med hintLetter
+        const button = Array.from(document.querySelectorAll(".letter")).find(
+            el => el.textContent === hintLetter && !el.disabled
+        );
+        if (button) {
+            button.disabled = true; // Inaktivera knappen
+            button.classList.add("selected"); // Markera som vald
+            button.style.backgroundColor = "gray"; // Ändra färg så att den ser inaktiverad ut
+        }
     }
     updateUnderscoreDisplay(); // Uppdatera displayen med ledtråden
 }
