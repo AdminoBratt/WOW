@@ -569,7 +569,7 @@ button.letter:hover {
 
 #newGameBtn {
     position: absolute; /* Byt till absolute om inte redan satt */
-    top: 400px; /* Justera till en passande position */
+    top: 300px; /* Justera till en passande position */
     left: 50%; /* Centrerar knappen horisontellt */
     transform: translateX(-50%); /* För att centrera */
     color: gold; /* Matcha med din design */
