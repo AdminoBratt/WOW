@@ -110,6 +110,7 @@ function checkWord() {
         }
         score += roundScore; // Lägg till poäng för rundan
         totalScore += score; // Uppdatera totalpoängen
+        localStorage.setItem("totalScore", totalScore);
         guessedWordsThisRound++; // Öka antal gissade ord för denna runda
         updateScoreDisplay();
 
@@ -157,6 +158,7 @@ function showEasterEgg() {
 function endRound() {
     clearInterval(timer);
     totalScore += score; // lägg till rundans poäng till totalpoäng
+    localStorage.setItem("totalScore", totalScore);
     updateScoreDisplay(); // uppdatera visning av poäng
     
     if (guessedWordsThisRound >= requiredCorrectWords){
@@ -214,10 +216,47 @@ function startTimer() {
         } else {
             clearInterval(timer);
             alert("Tiden är slut!");
+            alert(`Rätt ord var: ${wordToGuess}`)
             endRound();
             //endGame(true);
         }
     }, 1000);
+}
+
+async function saveHighscore() {
+    const playerName = localStorage.getItem("playerName");
+    const faction = localStorage.getItem("faction");
+    totalScore = parseInt(localStorage.getItem("totalScore"));
+    
+    if (!playerName || !faction) {
+        alert("Spelarnamn eller faction saknas. Kan inte spara highscore");
+        return;
+    }
+    
+    try {
+        const response = await fetch("api/savehighscore", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                playerName: playerName,
+                faction: faction,
+                score: totalScore,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Misslyckades med att spara highscore");
+        }
+
+        const result = await response.text();
+        console.log(result);
+        alert("Highscore sparat");
+    }catch(error) {
+        console.error("Fel vid sparande av highscore:", error);
+        alert("Ett fel uppstod när highscore skulle sparas.");
+    }
 }
 
 function updateScoreDisplay() {
@@ -226,17 +265,22 @@ function updateScoreDisplay() {
 
 // Avsluta spelet
 function endGame(won) {
+    localStorage.setItem("totalScore", totalScore);
     clearInterval(timer);
+    
     if (won) {
         alert(`Grattis! Du fick ${totalScore} poäng!`);
+        saveHighscore(totalScore);
     } else {
-        alert("Tyvärr, du förlorade!");
+        alert(`Du kom till runda ${currentRound} och fick ${totalScore} poäng`);
+        saveHighscore(totalScore);
     }
     guessedWord = "";
     currentRound = 1;
     guessedWordsThisRound = 0;
     totalScore = 0;
     updateScoreDisplay();
+    localStorage.setItem("totalScore", totalScore);
     document.getElementById("startEpicTimerBtn").style.display = "block";
 }
 
