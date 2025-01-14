@@ -41,8 +41,8 @@
 
 <div class="restartgame" style="display: none; justify-content: center; align-items: center;">
   <img src="img/bg.png"  alt="Restart Game bild"/>
-    <p id="finalScore">Dina poäng: 0</p>
-    <button id="newGameBtn">Nästa Runda</button>
+    <p id="finalScore">Poäng: 0</p>
+    <button id="newGameBtn">Nytt Spel</button>
   </div>
 
 <script>
@@ -73,15 +73,19 @@
     
 
     // Globala variabler
-    let timeLeft = 2;
+    let timeLeft = 12;
     let timer = null;
     let score = 0;
+    let totalScore = 0;
 
     // Uppdatera UI för poäng
     const updateScore = (points) => {
       score += points;
-      document.getElementById("score").textContent = `Poäng: ${score}`;
+      totalScore += score;
+      document.getElementById("score").textContent = `Poäng:${score}`;
+      document.getElementById("finalScore").textContent = `Poäng:${score}`;
     };
+
 
     // Starta timer-funktion
     const startTimer = () => {
@@ -92,19 +96,19 @@
         timerDisplay.textContent = timeLeft;
 
         if (timeLeft <= 0) {
-          clearInterval(timer); // Stoppa timern
-          timer = null; // Återställ timer-referens
-          showRestartGame(); // Visa "Nästa Runda"
-          updateScore(10); // Ge poäng för rundan
+            clearInterval(timer);
+            timer = null;
+            showRestartGame();
+            updateScore(10);
         } else {
-          timeLeft--;
+            timeLeft--;
         }
       }, 1000);
     };
 
     // Hantera nästa runda
     const nextRound = () => {
-      timeLeft = 2; // Återställ tid
+      timeLeft = 12; // Återställ tid
       document.getElementById("epic-time-left").textContent = timeLeft;
       document.querySelector(".restartgame").style.display = "none"; // Dölj restart-sektionen
       startTimer(); // Starta timern igen
@@ -113,10 +117,10 @@
     // Visa "Nästa Runda"-sektionen
     const showRestartGame = () => {
       document.querySelector(".restartgame").style.display = "flex";
-      const finalScoreDisplay = document.getElementById("finalScore");
-      finalScoreDisplay.textContent = `poäng:${score}`;
-      
+      document.getElementById("finalScore").textContent = `Poäng:${score}`;
     };
+
+
 
     // Starta timer-knappen
     document.getElementById("startEpicTimerBtn").addEventListener("click", () => {

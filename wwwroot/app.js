@@ -92,24 +92,63 @@ function updateUnderscoreDisplay() {
 }
 
 // Kontrollera om gissningen är korrekt
+function showMessage(message, color) {
+    // Skapa eller hitta meddelandeelementet
+    let messageBox = document.getElementById('messageBox');
+    if (!messageBox) {
+        messageBox = document.createElement('div');
+        messageBox.id = 'messageBox';
+        messageBox.style.position = 'fixed';
+        messageBox.style.top = '50%';
+        messageBox.style.left = '50%';
+        messageBox.style.transform = 'translate(-50%, -50%)';
+        messageBox.style.padding = '20px';
+        messageBox.style.backgroundColor = '#fff';
+        messageBox.style.border = '2px solid #000';
+        messageBox.style.borderRadius = '10px';
+        messageBox.style.textAlign = 'center';
+        messageBox.style.zIndex = '1000';
+        messageBox.style.fontSize = '1.5rem';
+        messageBox.style.color = color || 'black';
+        messageBox.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        messageBox.style.opacity = '0'; // Börjar osynligt
+        document.body.appendChild(messageBox);
+    }
+
+    // Sätt meddelande och animera in
+    messageBox.textContent = message;
+    messageBox.style.opacity = '1';
+    messageBox.style.transform = 'translate(-50%, -50%) scale(1)';
+
+    // Animera ut och ta bort efter 2 sekunder
+    setTimeout(() => {
+        messageBox.style.opacity = '0';
+        messageBox.style.transform = 'translate(-50%, -50%) scale(0.8)';
+        setTimeout(() => {
+            messageBox.remove();
+        }, 500); // Vänta tills animationen är klar innan den tas bort
+    }, 2000);
+}
+
 function checkWord() {
     if (guessedWord === wordToGuess && timeLeft > 0) {
         score += guessedWord.length + 10; // Lägg till poäng
         totalScore += score; // Uppdatera totalpoängen
         guessedWordsThisRound++; // öka antal gissade ord för denna runda
         updateScoreDisplay();
-        //alert("Rätt ord!");
+        showMessage("Rätt ord!", "green"); // Nytt meddelande
         guessedWord = ""; // återställ spelarens gissning
 
         if (guessedWordsThisRound === requiredCorrectWords) {
-            alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!")
+            showMessage("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!", "blue");
         }
         continueGame();
     } else if (guessedWord !== wordToGuess && guessedWord.length === wordToGuess.length) {
-        alert("Fel ord!");
+        showMessage("Fel ord!", "red"); // Nytt meddelande
         resetGame(); // återställ gissningen för att försöka igen
     }
 }
+
 
 // avsluta en runda
 function endRound() {
