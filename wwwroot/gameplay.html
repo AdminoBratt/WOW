@@ -43,9 +43,9 @@
 
 <div class="restartgame" style="display: none; justify-content: center; align-items: center;">
   <img src="img/bg.png" alt="Restart Game bild" />
-  <p>klar! Du går vidare till nästa runda</p>
-  <p id="finalScore">Poäng: 0</p>
-  <button id="newGameBtn">Nästa Runda</button>
+  <p id="finalScore">Poäng:0</p>
+  <button id="newGameBtn">Starta</button>
+  <p id="gåvidare">tiden tog slut! Du går vidare till nästa runda</p>
 </div>
 
 <script>
@@ -71,7 +71,7 @@
     }
 
     // Globala variabler
-    let timeLeft = 45;
+    let timeLeft =45;
     let timer = null;
     let score = 0;  // Aktuell poäng för denna runda
 
@@ -105,7 +105,8 @@
       document.querySelector(".restartgame").style.display = "flex";
       // Visa finalScore i restartsektionen och dölja det under spelets gång
       document.getElementById("finalScore").style.display = "block";
-      document.getElementById("finalMessage").textContent = `Slutpoäng: ${score}`;
+      document.getElementById("finalMessage").textContent = `Slutpoäng:${score}`;
+      document.getElementById("gåvidare").style.display = "none";
     };
 
     // Starta timer-knappen

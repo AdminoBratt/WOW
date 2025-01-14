@@ -187,6 +187,7 @@ function checkWord() {
     } else if (guessedWord !== wordToGuess && guessedWord.length === wordToGuess.length) {
         showMessage("Fel ord!", "red"); // Nytt meddelande
         resetGame(); // återställ gissningen för att försöka igen
+        
     }
 }
 
@@ -205,13 +206,12 @@ function showEasterEgg() {
 // avsluta en runda
 function endRound() {
     clearInterval(timer);
-    totalScore += score; // lägg till rundans poäng till totalpoäng
+    totalScore += score; // Lägg till rundans poäng till totalpoäng
     localStorage.setItem("totalScore", totalScore);
-    updateScoreDisplay(); // uppdatera visning av poäng
-    
+    updateScoreDisplay(); // Uppdatera visning av poäng
+
     if (guessedWordsThisRound >= requiredCorrectWords){
         if (currentRound < totalRounds){
-            alert(`Runda ${currentRound} klar! Du går vidare till nästa runda.`)
             currentRound++;
             guessedWordsThisRound = 0;
             startGame();
@@ -219,9 +219,13 @@ function endRound() {
             endGame(true); // Alla rundor klara, vinst
         }
     }else{
-        endGame(false); // förlust om spelaren inte klarar 3 ord
+        endGame(false); // Förlust om spelaren inte klarar 3 ord
     }
+
+    // Visa resultatet av spelet när rundan är över.
+    showRestartGame();
 }
+
 
 // Uppdatera visningen av rundan
 function updateRoundDisplay() {
@@ -254,8 +258,6 @@ function startTimer() {
             }
         } else {
             clearInterval(timer);
-            alert("Tiden är slut!");
-            alert(`Rätt ord var: ${wordToGuess}`)
             endRound();
             //endGame(true);
         }
@@ -300,7 +302,7 @@ async function saveHighscore() {
 
 function updateScoreDisplay() {
     document.getElementById("score").textContent = `Poäng: ${totalScore}`;
-    document.getElementById("finalScore").textContent = `Poäng: ${totalScore}`;
+    document.getElementById("finalScore").textContent = `Poäng:${totalScore}`;
 }
 
 // Avsluta spelet
@@ -396,7 +398,7 @@ async function startGame() {
 // Uppdatera visning av poäng
 function updateScoreDisplay() {
     document.getElementById("score").textContent = `Poäng: ${totalScore}`;
-    document.getElementById("finalScore").textContent = `Poäng: ${totalScore}`;
+    document.getElementById("finalScore").textContent = `Poäng:${totalScore}`;
 }
 
 document.addEventListener("keydown", (event) => {

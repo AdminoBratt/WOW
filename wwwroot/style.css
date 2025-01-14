@@ -580,24 +580,50 @@ button.letter:hover {
 }
 
 
+#gåvidare {
+    position: relative;
+    top: -40px;
+    left: -128%;
+    
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    border: 2px solid gold;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+    z-index: 150;
+    background-color: rgba(0, 0, 0, 0.7);
+    white-space: nowrap; /* Texten stannar på en rad */
+
+}
+
+
+
 #newGameBtn {
-    position: absolute; 
-    top: 300px; 
-    left: 50%; 
+    position: absolute;
+    top: 310px;
+    left: 0%; /* Centrerar knappen horisontellt */
     transform: translateX(-50%);
-    color: white; 
+    color: white;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
     border: 2px solid gold;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
-    background-color: rgba(0, 0, 0, 0.7); 
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
     z-index: 20;
+
+    /* Öka knappens storlek */
+    width: 200px; /* Bredd */
+    height: 70px; /* Höjd */
+    font-size: 1.5em; /* Större text */
+    padding: 15px; /* Extra utrymme inuti knappen */
+    border-radius: 15px; /* Rundade hörn för en snyggare stil */
 }
 
 
 #finalScore {
     position: relative;
-    top: -170px; 
-    left: 20%;  
+    top: -160px; 
+    left: -76%;  
     font-size: 2em;
     width: 100px;
     height: 50px;
@@ -617,7 +643,7 @@ button.letter:hover {
 .restartgame {
     position: absolute;
     top: 150px;
-    left: 50%;
+    left: 75%;
     transform: translateX(-50%); 
     width: 750px;
     height: 450px; 
@@ -631,7 +657,7 @@ button.letter:hover {
     content: ""; 
     position: absolute; 
     top: -40%;
-    left: -55%;
+    left: -100%;
     width: 210%; 
     height: 210%; 
     background: url('img/bg.png'); 
@@ -650,7 +676,6 @@ button.letter:hover {
     z-index: 1;
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.7);
 }
-
 
 
 
