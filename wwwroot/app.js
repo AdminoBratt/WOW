@@ -87,31 +87,66 @@ function handleLetterClick(button) {
 
 // Uppdatera visningen av understreck
 function updateUnderscoreDisplay() {
-    const underscores = guessedWord
+    const underscores = wordToGuess
         .split("")
-        .concat("_".repeat(wordToGuess.length - guessedWord.length).split(""))
+        .map((char, index) => (guessedWord[index] || (index === 0 && hintLetter) || "_")) // Visa första bokstaven om hint används
         .join(" ");
     document.querySelector(".underscore").textContent = underscores;
 }
 
+
 // Kontrollera om gissningen är korrekt
 function checkWord() {
+    const reversedWord = wordToGuess.split("").reverse().join(""); // Skapa baklängesversion av ordet
+
     if (guessedWord === wordToGuess && timeLeft > 0) {
-        score += guessedWord.length + 10; // Lägg till poäng
+        let roundScore = guessedWord.length;
+        if (!hintUsed) {
+            roundScore += 10; // Lägg till 10 poäng om ingen hint användes
+        }
+        score += roundScore; // Lägg till poäng för rundan
         totalScore += score; // Uppdatera totalpoängen
-        guessedWordsThisRound++; // öka antal gissade ord för denna runda
+        guessedWordsThisRound++; // Öka antal gissade ord för denna runda
         updateScoreDisplay();
-        //alert("Rätt ord!");
-        guessedWord = ""; // återställ spelarens gissning
+
+        hintUsed = false; // Återställ flaggan för nästa ord
+        guessedWord = ""; // Återställ spelarens gissning
 
         if (guessedWordsThisRound === requiredCorrectWords) {
-            alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!")
+            alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!");
+        }
+        continueGame();
+    } else if (guessedWord === reversedWord && timeLeft > 0) {
+        // Extra twist: Om gissningen är baklänges
+        score += 50; // Ge 50 extra poäng
+        totalScore += score; // Uppdatera totalpoängen
+        guessedWordsThisRound++; // Öka antal gissade ord för denna runda
+        updateScoreDisplay();
+        showEasterEgg(); // Visa "easter egg"-animation eller text
+
+        hintUsed = false; // Återställ flaggan för nästa ord
+        guessedWord = ""; // Återställ spelarens gissning
+
+        if (guessedWordsThisRound === requiredCorrectWords) {
+            alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!");
         }
         continueGame();
     } else if (guessedWord !== wordToGuess && guessedWord.length === wordToGuess.length) {
         alert("Fel ord!");
-        resetGame(); // återställ gissningen för att försöka igen
+        resetGame(); // Återställ gissningen för att försöka igen
     }
+}
+
+// Funktion för att visa "easter egg" visuellt
+function showEasterEgg() {
+    const easterEggElement = document.getElementById("easter-egg");
+    easterEggElement.style.display = "block"; // Visa "easter egg"
+    easterEggElement.textContent = "Easter Egg! Du gissade ordet baklänges!";
+
+    // Gör så att det försvinner efter några sekunder
+    setTimeout(() => {
+        easterEggElement.style.display = "none"; // Göm efter 3 sekunder
+    }, 3000);
 }
 
 // avsluta en runda
@@ -267,8 +302,6 @@ function hint() {
     }
     updateUnderscoreDisplay(); // Uppdatera displayen med ledtråden
 }
-    
-
 
 document.addEventListener("keydown", (event) => {
     // Om Backspace trycks ner, ångra senaste bokstaven
