@@ -320,8 +320,6 @@ function handleLetterClick(button) {
         // Kontrollera om bokstaven är på rätt plats
         if (wordToGuess[guessedWord.length - 1] === letter) {
             button.style.backgroundColor = "green"; // Markera korrekt bokstav med grönt
-        } else {
-            button.style.backgroundColor = "red"; // Markera fel bokstav med rött
         }
 
         if (guessedWord.length === wordToGuess.length) {
@@ -329,3 +327,4 @@ function handleLetterClick(button) {
         }
     }
 }
+
