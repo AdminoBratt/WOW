@@ -45,6 +45,28 @@ public class Actions
             throw new InvalidOperationException("Inga ord hittades i databasen."); // Felhantering
 
         }
+        
+        app.MapPost("/api/savehighscore", async (HighScoreRequest request) =>
+        {
+            string query = "INSERT INTO highscore (player_name, faction, score) VALUES (@name, @faction, @score)";
+            
+            
+            await using var cmd = db.CreateCommand(query);
+            cmd.Parameters.AddWithValue("@name", request.PlayerName);
+            cmd.Parameters.AddWithValue("@faction", request.Faction);
+            cmd.Parameters.AddWithValue("@score", request.Score);
+            Console.WriteLine($"Name: {request.PlayerName}, Faction: {request.Faction}, Score: {request.Score}");
+            
+            int rowsAffected = await cmd.ExecuteNonQueryAsync();
+            if (rowsAffected > 0)
+            {
+                return Results.Ok("Highscore sparat");
+            }
+            else
+            {
+                return Results.BadRequest("Kunde inte spara highscore.");
+            }
+        });
     }
     }
     
