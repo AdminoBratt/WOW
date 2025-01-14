@@ -280,7 +280,7 @@ document.addEventListener("keydown", (event) => {
     
 });
 
-/* // Hantera klick på en bokstav och markera korrekt gissad bokstav som grön
+ // Hantera klick på en bokstav och markera korrekt gissad bokstav som grön
 function handleLetterClick(button) {
     const letter = button.textContent;
 
@@ -313,4 +313,4 @@ function handleLetterClick(button) {
             checkWord();
         }
     }
-}*/
+}
