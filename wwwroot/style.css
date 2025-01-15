@@ -641,7 +641,7 @@ table th {
 #newGameBtn {
     position: absolute;
     top: 310px;
-    left: 0%; /* Centrerar knappen horisontellt */
+    left: 25%; /* Centrerar knappen horisontellt */
     transform: translateX(-50%);
     color: white;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
@@ -683,7 +683,7 @@ table th {
 .restartgame {
     position: absolute;
     top: 150px;
-    left: 75%;
+    left: 65%;
     transform: translateX(-50%); 
     width: 750px;
     height: 450px; 
@@ -697,7 +697,7 @@ table th {
     content: ""; 
     position: absolute; 
     top: -40%;
-    left: -100%;
+    left: -90%;
     width: 210%; 
     height: 210%; 
     background: url('img/bg.png'); 

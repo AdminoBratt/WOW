@@ -155,6 +155,7 @@ function showMessage(message, color) {
 function checkWord() {
     const reversedWord = wordToGuess.split("").reverse().join(""); // Skapa baklängesversion av ordet
 
+    // Om gissningen är korrekt
     if (guessedWord === wordToGuess && timeLeft > 0) {
         let roundScore = guessedWord.length;
         if (!hintUsed) {
@@ -169,33 +170,42 @@ function checkWord() {
         hintUsed = false; // Återställ flaggan för nästa ord
         guessedWord = ""; // Återställ spelarens gissning
 
+        // Visa meddelande för rätt ord
+        showMessage("Rätt ord!", "green");
+
+        // Kolla om spelaren har klarat 3 ord i denna runda
         if (guessedWordsThisRound === requiredCorrectWords) {
             showMessage("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!", "blue");
         }
         continueGame();
-    } else if (guessedWord === reversedWord && timeLeft > 0) {
-        // Extra twist: Om gissningen är baklänges
-        score += 50; // Ge 50 extra poäng
+    }
+    // Om gissningen är baklänges
+    else if (guessedWord === reversedWord && timeLeft > 0) {
+        score += 50; // Ge 50 extra poäng för baklängesordet
         totalScore += score; // Uppdatera totalpoängen
         guessedWordsThisRound++; // Öka antal gissade ord för denna runda
         updateScoreDisplay();
-        
-        showMessage("Rätt ord!", "green"); // Nytt meddelande
-        guessedWord = ""; // återställ spelarens gissning
+
+        // Visa meddelande för baklängesord
+        guessedWord = ""; // Återställ spelarens gissning
         showEasterEgg(); // Visa "easter egg"-animation eller text
 
         hintUsed = false; // Återställ flaggan för nästa ord
         guessedWord = ""; // Återställ spelarens gissning
 
+        // Kolla om spelaren har klarat 3 ord i denna runda
         if (guessedWordsThisRound === requiredCorrectWords) {
-            showMessage("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!");
+            showMessage("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!", "blue");
         }
         continueGame();
-    } else if (guessedWord !== wordToGuess && guessedWord.length === wordToGuess.length) {
-        showMessage("Fel ord!");
+    }
+    // Om gissningen är fel
+    else if (guessedWord !== wordToGuess && guessedWord.length === wordToGuess.length) {
+        showMessage("Fel ord!", "red");
         resetGame(); // Återställ gissningen för att försöka igen
     }
 }
+
 
 // Funktion för att visa "easter egg" visuellt
 function showEasterEgg() {
@@ -262,7 +272,7 @@ async function continueGame() {
 function startTimer() {
     const timerElement = document.getElementById("epic-time-left");
     clearInterval(timer); // Rensa eventuell tidigare timer
-    timeLeft = 25; // Återställ tiden
+    timeLeft = 15; // Återställ tiden
     timer = setInterval(() => {
         if (timeLeft > 0) {
             timeLeft--;
