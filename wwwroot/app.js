@@ -57,7 +57,8 @@ function populateLetterButtons(letters) {
         lettersContainer.appendChild(button);
     });
 }
-// Hantera klick på en bokstav
+
+// Hantera klick på en bokstav och markera korrekt gissad bokstav som grön
 function handleLetterClick(button) {
     const letter = button.textContent;
 
@@ -79,23 +80,22 @@ function handleLetterClick(button) {
         button.disabled = true; // Inaktivera knappen
         button.classList.add("selected"); // Markera knappen som vald
 
-        // Kontrollera om bokstaven är på rätt plats
-        if (wordToGuess[guessedWord.length - 1] === letter) {
-            button.style.backgroundColor = "green"; // Markera korrekt bokstav med grönt
+        if (wordToGuess.includes(letter)) {
+            button.style.backgroundColor = "gray";
         }
 
         if (guessedWord.length === wordToGuess.length) {
             checkWord();
         }
     }
-
 }
+
 
 // Uppdatera visningen av understreck
 function updateUnderscoreDisplay() {
     const underscores = wordToGuess
         .split("")
-        .map((char, index) => (guessedWord[index] || (index === 0 && hintLetter) || "_")) // Visa första bokstaven om hint används
+        .map((char, index) => (guessedWord[index] || (index === 0 && hintLetter) || "_"))
         .join(" ");
     document.querySelector(".underscore").textContent = underscores;
 }
@@ -153,9 +153,8 @@ function showMessage(message, color) {
 
 
 function checkWord() {
-    const reversedWord = wordToGuess.split("").reverse().join(""); // Skapa baklängesversion av ordet
+    const reversedWord = wordToGuess.split("").reverse().join("");
 
-    // Om gissningen är korrekt
     if (guessedWord === wordToGuess && timeLeft > 0) {
         let roundScore = guessedWord.length;
         if (!hintUsed) {
@@ -205,7 +204,6 @@ function checkWord() {
         resetGame(); // Återställ gissningen för att försöka igen
     }
 }
-
 
 // Funktion för att visa "easter egg" visuellt
 function showEasterEgg() {
@@ -285,6 +283,8 @@ function startTimer() {
             }
         } else {
             clearInterval(timer);
+            alert("Tiden är slut!");
+            alert(`Rätt ord var: ${wordToGuess}`)
             endRound();
             //endGame(true);
         }

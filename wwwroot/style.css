@@ -32,6 +32,7 @@ body.index-page {
     animation: gradientAnimation 5s ease infinite;
     animation-iteration-count: 1;
     overflow: hidden;
+    font-family: 'Friz Quadrata', serif;
 }
 
 
@@ -69,6 +70,7 @@ body.chooseStyle-page {
     background-repeat: no-repeat;
     color: #fff;
     overflow: hidden;
+    font-family: 'Friz Quadrata', serif;
 }
 
 .choose-style{
@@ -129,6 +131,7 @@ body.createCharacter-page {
     background-size: cover;
     background-repeat: no-repeat;
     overflow: hidden;
+    font-family: 'Friz Quadrata', serif;
 }
 
 .character-selection {
@@ -720,3 +723,32 @@ table th {
 
 
 
+
+
+body.viewhighscore-page {
+    background-image: url('img/highscore-background.jpg');
+    background-position: center;
+    overflow: hidden;
+}
+ 
+ .highscore {
+     font-size: 4rem;
+     margin-top: 30px;
+     color: #ffffff;
+     text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+     animation: glowText 2s ease-in-out infinite alternate;
+ }
+
+#highscoreTable {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)),
+    url('img/gameplay.png');
+}
+
+#highscoreTable td {
+    color: #ffffff; /* Ändrar textfärgen till cyan */
+}
+
+#highscoreTable thead {
+    background-color: #000000 !important; /* Viktigt för att tvinga över bakgrundsbilden */
+    z-index: 1;
+}
