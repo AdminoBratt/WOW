@@ -179,6 +179,7 @@ function checkWord() {
         totalScore += score; // Uppdatera totalpoängen
         guessedWordsThisRound++; // Öka antal gissade ord för denna runda
         updateScoreDisplay();
+        
         showMessage("Rätt ord!", "green"); // Nytt meddelande
         guessedWord = ""; // återställ spelarens gissning
         showEasterEgg(); // Visa "easter egg"-animation eller text
@@ -187,11 +188,11 @@ function checkWord() {
         guessedWord = ""; // Återställ spelarens gissning
 
         if (guessedWordsThisRound === requiredCorrectWords) {
-            alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!");
+            showMessage("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!");
         }
         continueGame();
     } else if (guessedWord !== wordToGuess && guessedWord.length === wordToGuess.length) {
-        alert("Fel ord!");
+        showMessage("Fel ord!");
         resetGame(); // Återställ gissningen för att försöka igen
     }
 }
@@ -210,30 +211,27 @@ function showEasterEgg() {
 
 // avsluta en runda
 function endRound() {
-    clearInterval(timer);
-    totalScore += score; // lägg till rundans poäng till totalpoäng
+    clearInterval(timer); // Stänger av timern
+    totalScore += score;  // Lägg till rundans poäng till totalpoängen
     localStorage.setItem("totalScore", totalScore);
-    updateScoreDisplay(); // uppdatera visning av poäng
-    
-    if (guessedWordsThisRound >= requiredCorrectWords){
-        if (currentRound < totalRounds){
-            currentRound++;
-            guessedWordsThisRound = 0;
-            showRestartGame();
-            
-        }else{
-            endGame(true); // Alla rundor klara, vinst
+    updateScoreDisplay(); // Uppdatera poäng
+
+    if (guessedWordsThisRound >= requiredCorrectWords) {
+        // Om spelaren klarar tillräckligt med ord
+        if (currentRound < totalRounds) {
+            currentRound++; // Öka rundan
+            guessedWordsThisRound = 0; // Nollställ gissade ord för nästa runda
+            continueGame(); // Starta nästa runda
+        } else {
+            endGame(true); // Spelet är klart
         }
-    }else{
-        endGame(false); // förlust om spelaren inte klarar 3 ord
+    } else {
+        endGame(false); // Förlorade spelet
     }
-    
-    
-    
-    
-    // Visa resultatet av spelet när rundan är över.
+
+    // Visa restart-skärmen när rundan är slut
     showRestartGame();
-    
+
     
 }
 
@@ -264,7 +262,7 @@ async function continueGame() {
 function startTimer() {
     const timerElement = document.getElementById("epic-time-left");
     clearInterval(timer); // Rensa eventuell tidigare timer
-    timeLeft = 45; // Återställ tiden
+    timeLeft = 25; // Återställ tiden
     timer = setInterval(() => {
         if (timeLeft > 0) {
             timeLeft--;
@@ -295,11 +293,16 @@ document.getElementById("startEpicTimerBtn").addEventListener("click", startTime
 
 // Nytt Spel-knappen
 document.getElementById("newGameBtn").addEventListener("click", () => {
+    // Återställ och förbered spelet för nästa runda
     document.getElementById("epic-time-left").textContent = timeLeft;
     document.querySelector(".restartgame").style.display = "none"; // Dölj restart-sektionen
-    document.getElementById("finalScore").style.display = "none";  // Dölja finalScore för nästa omgång
-    startTimer();
+    document.getElementById("finalScore").style.display = "none";  // Dölj finalScore för nästa omgång
+
+    // Starta nästa runda
+    startGame();
 });
+
+
 
 
 
@@ -350,11 +353,13 @@ function endGame(won) {
     clearInterval(timer);
     
     if (won) {
-        messageElement.textContent = `Grattis! Du fick ${totalScore} poäng!`;
+        showMessage(`Grattis! Du fick ${totalScore} poäng!`);
         messageElement.style.color = 'green';
+        saveHighscore();
     } else {
-        messageElement.textContent = 'Tyvärr, du förlorade!';
+        showMessage('Tyvärr, du förlorade!');
         messageElement.style.color = 'red';
+        saveHighscore();
     }
     guessedWord = "";
     currentRound = 1;
