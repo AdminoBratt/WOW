@@ -583,3 +583,16 @@ table th, table td {
 table th {
     background-color: #f2f2f2;
 }
+
+body.viewhighscore-page {
+    background-image: url('img/highscore-background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+ 
+ 
+ .highscore {
+     font-size: 4rem;
+     margin-top: 30px;
+     color: #000000;
+}
