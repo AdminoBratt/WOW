@@ -283,8 +283,8 @@ function startTimer() {
             }
         } else {
             clearInterval(timer);
-            alert("Tiden är slut!");
-            alert(`Rätt ord var: ${wordToGuess}`)
+            showMessage("Tiden är slut!");
+            showMessage(`Rätt ord var: ${wordToGuess}`)
             endRound();
             //endGame(true);
         }
@@ -364,12 +364,13 @@ function endGame(won) {
     
     if (won) {
         showMessage(`Grattis! Du fick ${totalScore} poäng!`);
+        saveHighscore();
         messageElement.style.color = 'green';
-        saveHighscore();
     } else {
-        showMessage('Tyvärr, du förlorade!');
-        messageElement.style.color = 'red';
+        showMessage(`Tiden är slut! Rätt ord var: ${wordToGuess}`);
         saveHighscore();
+        messageElement.style.color = 'red';
+        
     }
     guessedWord = "";
     currentRound = 1;
