@@ -57,7 +57,8 @@ function populateLetterButtons(letters) {
         lettersContainer.appendChild(button);
     });
 }
-// Hantera klick på en bokstav
+
+// Hantera klick på en bokstav och markera korrekt gissad bokstav som grön
 function handleLetterClick(button) {
     const letter = button.textContent;
 
@@ -67,6 +68,7 @@ function handleLetterClick(button) {
             + guessedWord.slice(guessedWord.lastIndexOf(letter) + 1);
         button.disabled = false; // Aktivera knappen igen
         button.classList.remove("selected");
+        button.style.backgroundColor = ""; // Återställ färgen
         updateUnderscoreDisplay(); // Uppdatera understrecken
         return; // Avsluta funktionen
     }
@@ -77,27 +79,81 @@ function handleLetterClick(button) {
         updateUnderscoreDisplay();
         button.disabled = true; // Inaktivera knappen
         button.classList.add("selected"); // Markera knappen som vald
-        updateUnderscoreDisplay(); // Uppdatera understrecken
-    }
 
-    if (guessedWord.length === wordToGuess.length) {
-        checkWord();
+        if (wordToGuess.includes(letter)) {
+            button.style.backgroundColor = "gray";
+        }
+
+        if (guessedWord.length === wordToGuess.length) {
+            checkWord();
+        }
     }
 }
+
 
 // Uppdatera visningen av understreck
 function updateUnderscoreDisplay() {
     const underscores = wordToGuess
         .split("")
-        .map((char, index) => (guessedWord[index] || (index === 0 && hintLetter) || "_")) // Visa första bokstaven om hint används
+        .map((char, index) => (guessedWord[index] || (index === 0 && hintLetter) || "_"))
         .join(" ");
     document.querySelector(".underscore").textContent = underscores;
 }
 
 
 // Kontrollera om gissningen är korrekt
+
+
+
+function showMessage(message, color) {
+    let messageBox = document.getElementById('messageBox');
+    
+    if (!messageBox) {
+        messageBox = document.createElement('div');
+        messageBox.id = 'messageBox';
+        messageBox.style.position = 'fixed';
+        messageBox.style.top = '30%';
+        messageBox.style.left = '50%';
+        messageBox.style.transform = 'translate(-50%, -50%)';
+        messageBox.style.padding = '20px';
+        messageBox.style.backgroundColor = '#fff';
+        messageBox.style.border = '2px solid #000';
+        messageBox.style.borderRadius = '10px';
+        messageBox.style.textAlign = 'center';
+        messageBox.style.zIndex = '1000';
+        messageBox.style.fontSize = '3rem'; // För en kraftigare textstorlek
+        messageBox.style.color = color || 'black';
+        messageBox.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        messageBox.style.opacity = '0'; // Börjar osynligt
+        document.body.appendChild(messageBox);
+    }
+
+    // Sätt texten och animerar in
+    messageBox.textContent = message;
+    messageBox.style.opacity = '1';
+    messageBox.style.transform = 'translate(-50%, -50%) scale(1)';
+
+    // Lägg till en stil för att få meddelandet att "explodera" eller "blinka" vid rätt svar
+    if (color === "green") {
+        messageBox.style.animation = 'pulse 1.5s ease infinite'; // Pulsanimering för rätt ord
+    } else if (color === "red") {
+        messageBox.style.animation = 'shake 0.5s ease forwards'; // Skakning för fel ord
+    }
+
+    // Animera ut och ta bort
+    setTimeout(() => {
+        messageBox.style.opacity = '0';
+        messageBox.style.transform = 'translate(-50%, -50%) scale(0.8)';
+        setTimeout(() => {
+            messageBox.remove();
+        }, 500);
+    }, 1500);
+}
+
+
+
 function checkWord() {
-    const reversedWord = wordToGuess.split("").reverse().join(""); // Skapa baklängesversion av ordet
+    const reversedWord = wordToGuess.split("").reverse().join("");
 
     if (guessedWord === wordToGuess && timeLeft > 0) {
         let roundScore = guessedWord.length;
@@ -113,27 +169,38 @@ function checkWord() {
         hintUsed = false; // Återställ flaggan för nästa ord
         guessedWord = ""; // Återställ spelarens gissning
 
+        // Visa meddelande för rätt ord
+        showMessage("Rätt ord!", "green");
+
+        // Kolla om spelaren har klarat 3 ord i denna runda
         if (guessedWordsThisRound === requiredCorrectWords) {
-            alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!");
+            showMessage("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!", "blue");
         }
         continueGame();
-    } else if (guessedWord === reversedWord && timeLeft > 0) {
-        // Extra twist: Om gissningen är baklänges
-        score += 50; // Ge 50 extra poäng
+    }
+    // Om gissningen är baklänges
+    else if (guessedWord === reversedWord && timeLeft > 0) {
+        score += 50; // Ge 50 extra poäng för baklängesordet
         totalScore += score; // Uppdatera totalpoängen
         guessedWordsThisRound++; // Öka antal gissade ord för denna runda
         updateScoreDisplay();
+
+        // Visa meddelande för baklängesord
+        guessedWord = ""; // Återställ spelarens gissning
         showEasterEgg(); // Visa "easter egg"-animation eller text
 
         hintUsed = false; // Återställ flaggan för nästa ord
         guessedWord = ""; // Återställ spelarens gissning
 
+        // Kolla om spelaren har klarat 3 ord i denna runda
         if (guessedWordsThisRound === requiredCorrectWords) {
-            alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!");
+            showMessage("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!", "blue");
         }
         continueGame();
-    } else if (guessedWord !== wordToGuess && guessedWord.length === wordToGuess.length) {
-        alert("Fel ord!");
+    }
+    // Om gissningen är fel
+    else if (guessedWord !== wordToGuess && guessedWord.length === wordToGuess.length) {
+        showMessage("Fel ord!", "red");
         resetGame(); // Återställ gissningen för att försöka igen
     }
 }
@@ -152,23 +219,28 @@ function showEasterEgg() {
 
 // avsluta en runda
 function endRound() {
-    clearInterval(timer);
-    totalScore += score; // lägg till rundans poäng till totalpoäng
+    clearInterval(timer); // Stänger av timern
+    totalScore += score;  // Lägg till rundans poäng till totalpoängen
     localStorage.setItem("totalScore", totalScore);
-    updateScoreDisplay(); // uppdatera visning av poäng
-    
-    if (guessedWordsThisRound >= requiredCorrectWords){
-        if (currentRound < totalRounds){
-            alert(`Runda ${currentRound} klar! Du går vidare till nästa runda.`)
-            currentRound++;
-            guessedWordsThisRound = 0;
-            startGame();
-        }else{
-            endGame(true); // Alla rundor klara, vinst
+    updateScoreDisplay(); // Uppdatera poäng
+
+    if (guessedWordsThisRound >= requiredCorrectWords) {
+        // Om spelaren klarar tillräckligt med ord
+        if (currentRound < totalRounds) {
+            currentRound++; // Öka rundan
+            guessedWordsThisRound = 0; // Nollställ gissade ord för nästa runda
+            continueGame(); // Starta nästa runda
+        } else {
+            endGame(true); // Spelet är klart
         }
-    }else{
-        endGame(false); // förlust om spelaren inte klarar 3 ord
+    } else {
+        endGame(false); // Förlorade spelet
     }
+
+    // Visa restart-skärmen när rundan är slut
+    showRestartGame();
+
+    
 }
 
 // Uppdatera visningen av rundan
@@ -211,13 +283,38 @@ function startTimer() {
             }
         } else {
             clearInterval(timer);
-            alert("Tiden är slut!");
-            alert(`Rätt ord var: ${wordToGuess}`)
+            showMessage("Tiden är slut!");
+            showMessage(`Rätt ord var: ${wordToGuess}`)
             endRound();
             //endGame(true);
         }
     }, 1000);
 }
+
+const showRestartGame = () => {
+    document.querySelector(".restartgame").style.display = "flex";
+    document.getElementById("finalScore").style.display = "block";
+    document.getElementById("gåvidare").style.display = "none";
+};
+
+
+document.getElementById("startEpicTimerBtn").addEventListener("click", startTimer);
+
+
+// Nytt Spel-knappen
+document.getElementById("newGameBtn").addEventListener("click", () => {
+    // Återställ och förbered spelet för nästa runda
+    document.getElementById("epic-time-left").textContent = timeLeft;
+    document.querySelector(".restartgame").style.display = "none"; // Dölj restart-sektionen
+    document.getElementById("finalScore").style.display = "none";  // Dölj finalScore för nästa omgång
+
+    // Starta nästa runda
+    startGame();
+});
+
+
+
+
 
 async function saveHighscore() {
     const playerName = localStorage.getItem("playerName");
@@ -257,6 +354,7 @@ async function saveHighscore() {
 
 function updateScoreDisplay() {
     document.getElementById("score").textContent = `Poäng: ${totalScore}`;
+    document.getElementById("finalScore").textContent = `Poäng:${totalScore}`;
 }
 
 // Avsluta spelet
@@ -265,11 +363,14 @@ function endGame(won) {
     clearInterval(timer);
     
     if (won) {
-        alert(`Grattis! Du fick ${totalScore} poäng!`);
-        saveHighscore(totalScore);
+        showMessage(`Grattis! Du fick ${totalScore} poäng!`);
+        saveHighscore();
+        messageElement.style.color = 'green';
     } else {
-        alert(`Du kom till runda ${currentRound} och fick ${totalScore} poäng`);
-        saveHighscore(totalScore);
+        showMessage(`Tiden är slut! Rätt ord var: ${wordToGuess}`);
+        saveHighscore();
+        messageElement.style.color = 'red';
+        
     }
     guessedWord = "";
     currentRound = 1;
@@ -347,6 +448,15 @@ function hint() {
     updateUnderscoreDisplay(); // Uppdatera displayen med ledtråden
 }
 
+
+viewHighscoresBtn.addEventListener("click", () => {
+    window.location.href = "viewhighscore.html";
+});
+
+
+
+
+
 document.addEventListener("keydown", (event) => {
     // Om Backspace trycks ner, ångra senaste bokstaven
     if (event.key === "Backspace") {
@@ -374,35 +484,3 @@ document.addEventListener("keydown", (event) => {
 });
 
  // Hantera klick på en bokstav och markera korrekt gissad bokstav som grön
-function handleLetterClick(button) {
-    const letter = button.textContent;
-
-    // Om bokstaven redan är vald, ta bort den
-    if (button.classList.contains("selected")) {
-        guessedWord = guessedWord.slice(0, guessedWord.lastIndexOf(letter))
-            + guessedWord.slice(guessedWord.lastIndexOf(letter) + 1);
-        button.disabled = false; // Aktivera knappen igen
-        button.classList.remove("selected");
-        button.style.backgroundColor = ""; // Återställ färgen
-        updateUnderscoreDisplay(); // Uppdatera understrecken
-        return; // Avsluta funktionen
-    }
-
-    // Lägg till bokstaven om plats finns
-    if (guessedWord.length < wordToGuess.length) {
-        guessedWord += letter; // Lägg till bokstaven i spelarens gissning
-        updateUnderscoreDisplay();
-        button.disabled = true; // Inaktivera knappen
-        button.classList.add("selected"); // Markera knappen som vald
-
-        // Kontrollera om bokstaven är på rätt plats
-        if (wordToGuess[guessedWord.length - 1] === letter) {
-            button.style.backgroundColor = "green"; // Markera korrekt bokstav med grönt
-        }
-
-        if (guessedWord.length === wordToGuess.length) {
-            checkWord();
-        }
-    }
-}
-

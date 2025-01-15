@@ -8,7 +8,10 @@
   <script src="app.js" defer></script>
 </head>
 <body class="gameplay-page">
-<audio id="background-music" src="/music/musik.mp3" loop autoplay></audio>
+<audio id="background-music" src="/music/dauntless-benjamin-botkin-main-version-28043-03-21.mp3" loop autoplay></audio>
+<!-- Music from #Uppbeat (free for Creators!):
+https://uppbeat.io/t/benjamin-botkin/dauntless
+License code: DD97MZWMYGTKVHQY-->
 
 <div id="blur-overlay">
   <button id="startEpicTimerBtn">Starta Timer</button>
@@ -41,7 +44,17 @@
     <p id="high-score-3"></p>
   </section>
   <button id="useHintBtn">Ledtråd?</button>
+  <button id="viewHighscoresBtn">Visa Highscore</button>
+
 </main>
+
+<div class="restartgame" style="display: none; justify-content: center; align-items: center;">
+  <img src="img/bg.png" alt="Restart Game bild" />
+  <p id="finalScore">Poäng:0</p>
+  <button id="newGameBtn">Starta</button>
+  <p id="gåvidare">tiden tog slut! Du går vidare till nästa runda</p>
+</div>
+
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const playerName = localStorage.getItem("playerName");
@@ -63,6 +76,8 @@
       playerImage.src = "img/character-orc.png";
       playerImage.alt = "Horde Character";
     }
+    
+   
   });
 </script>
 </body>

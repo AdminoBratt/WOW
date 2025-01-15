@@ -57,17 +57,57 @@ public class Actions
             cmd.Parameters.AddWithValue("@score", request.Score);
             Console.WriteLine($"Name: {request.PlayerName}, Faction: {request.Faction}, Score: {request.Score}");
             
-            int rowsAffected = await cmd.ExecuteNonQueryAsync();
-            if (rowsAffected > 0)
+            try
             {
-                return Results.Ok("Highscore sparat");
+                int rowsAffected = await cmd.ExecuteNonQueryAsync();
+                if (rowsAffected > 0)
+                {
+                    return Results.Ok("Highscore sparat");
+                }
+                else
+                {
+                    return Results.BadRequest("Kunde inte spara highscore.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return Results.BadRequest("Kunde inte spara highscore.");
-            }
+                Console.WriteLine($"Fel vid sparande av highscore: {ex.Message}");
+                return Results.Problem("Ett fel inträffade vid sparande av highscore.");
+            }   
         });
+        // Anslut till databasen
+        
+        // API för att hämta highscores
+        app.MapGet("/api/gethighscores", async () =>
+        {
+            string query = "SELECT player_name, faction, score FROM highscore ORDER BY score DESC LIMIT 10";
+
+            await using var cmd = db.CreateCommand(query);
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            var highscores = new List<HighScoreResponse>();
+            while (await reader.ReadAsync())
+            {
+                highscores.Add(new HighScoreResponse
+                {
+                    PlayerName = reader.GetString(0),
+                    Faction = reader.GetString(1),
+                    Score = reader.GetInt32(2)
+                });
+            }
+
+            return Results.Ok(highscores);
+        });
+    
+}
+}
+
+    public class HighScoreResponse
+    {
+        public string PlayerName { get; set; }
+        public string Faction { get; set; }
+        public int Score { get; set; }
     }
-    }
+    
     
     

@@ -3,12 +3,14 @@ body {
     padding: 0;
     color: #2e2e2e;
     background-color: #ffffff;
+    font-family: 'Friz Quadrata', serif;
 }
 
 h1 {
-    font-family: 'Cinzel', serif;
+    font-family: 'Morpheus', serif;
     color: #000000;
-    margin-top: 150px;
+    margin-top: 100px;
+    padding-bottom: 50px;
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
     animation: glowText 2s ease-in-out infinite alternate;
 }
@@ -31,6 +33,7 @@ body.index-page {
     animation: gradientAnimation 5s ease infinite;
     animation-iteration-count: 1;
     overflow: hidden;
+    font-family: 'Friz Quadrata', serif;
 }
 
 
@@ -68,6 +71,7 @@ body.chooseStyle-page {
     background-repeat: no-repeat;
     color: #fff;
     overflow: hidden;
+    font-family: 'Friz Quadrata', serif;
 }
 
 .choose-style{
@@ -128,6 +132,7 @@ body.createCharacter-page {
     background-size: cover;
     background-repeat: no-repeat;
     overflow: hidden;
+    font-family: 'Friz Quadrata', serif;
 }
 
 .character-selection {
@@ -552,4 +557,199 @@ button.letter:hover {
     border-radius: 10px;
     text-align: center;
     z-index: 1000; /* Se till att det visas över andra element */
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 20px;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+#game-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+  
+}
+
+#game-buttons button {
+    margin: 5px 0; /* Skapar mellanrum mellan knappar */
+    padding: 10px 15px;
+    font-size: 1em;
+}
+
+
+#timer button {
+    /* Avstånd från timerns siffror */
+    margin-top: -150px;
+    margin-bottom: 300px;
+    padding: 10px 20px; /* Samma padding som de andra knapparna */
+    font-size: 14px; /* Samma textstorlek som de andra knapparna */
+    background-color: #004A9E;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px; /* Fixera bredden */
+    text-align: center;
+
+}
+
+#timer button:hover {
+    background-color: #5a2f0c; /* Hover-effekt för bättre interaktivitet */
+}
+
+
+#gåvidare {
+    position: relative;
+    top: -40px;
+    left: -128%;
+    
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    border: 2px solid gold;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+    z-index: 150;
+    background-color: rgba(0, 0, 0, 0.7);
+    white-space: nowrap; /* Texten stannar på en rad */
+
+}
+
+
+
+#newGameBtn {
+    position: absolute;
+    top: 310px;
+    left: 25%; /* Centrerar knappen horisontellt */
+    transform: translateX(-50%);
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    border: 2px solid gold;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    z-index: 20;
+
+    /* Öka knappens storlek */
+    width: 200px; /* Bredd */
+    height: 70px; /* Höjd */
+    font-size: 1.5em; /* Större text */
+    padding: 15px; /* Extra utrymme inuti knappen */
+    border-radius: 15px; /* Rundade hörn för en snyggare stil */
+}
+
+
+#finalScore {
+    position: relative;
+    top: -160px; 
+    left: -76%;  
+    font-size: 2em;
+    width: 100px;
+    height: 50px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    border: 2px solid gold;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+    padding: 10px 150px; 
+    z-index: 10; 
+    background-color: rgba(0, 0, 0, 0.7); 
+}
+
+
+
+.restartgame {
+    position: absolute;
+    top: 150px;
+    left: 65%;
+    transform: translateX(-50%); 
+    width: 750px;
+    height: 450px; 
+    z-index: 2; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.restartgame::before {
+    content: ""; 
+    position: absolute; 
+    top: -40%;
+    left: -90%;
+    width: 210%; 
+    height: 210%; 
+    background: url('img/bg.png'); 
+    background-size: cover;
+    background-position: center;
+    filter: blur(15px);
+    z-index: -1; 
+}
+
+.restartgame img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover; 
+    border-radius: 15px; 
+    position: relative; 
+    z-index: 1;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+
+
+
+
+
+body.viewhighscore-page {
+    background-image: url('img/highscore-background.jpg');
+    background-position: center;
+    overflow: hidden;
+}
+ 
+ .highscore {
+     font-size: 4rem;
+     margin-top: 30px;
+     color: #ffffff;
+     text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+     animation: glowText 2s ease-in-out infinite alternate;
+ }
+
+#highscoreTable {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)),
+    url('img/gameplay.png');
+}
+
+#highscoreTable td {
+    color: #ffffff; /* Ändrar textfärgen till cyan */
+}
+
+#highscoreTable thead {
+    background-color: #000000 !important; /* Viktigt för att tvinga över bakgrundsbilden */
+    z-index: 1;
 }
