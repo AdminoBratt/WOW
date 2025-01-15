@@ -593,5 +593,11 @@ body.viewhighscore-page {
  .highscore {
      font-size: 4rem;
      margin-top: 30px;
-     color: #000000;
-}
+     color: #ffffff;
+     text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+     animation: glowText 2s ease-in-out infinite alternate;
+ }
+ 
+ #highscoreTable {
+     border : 2px solid #ff0000;
+ }
