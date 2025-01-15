@@ -73,57 +73,18 @@
     }
 
     // Globala variabler
-    let timeLeft =45;
-    let timer = null;
-    let score = 0;  // Aktuell poäng för denna runda
-
+    
+    
+    
+    
+    
     // Uppdatera både score och finalScore samtidigt
-    const updateScores = (points) => {
-      score += points;  // Lägg till poäng till den aktuella rundan
-      document.getElementById("score").textContent = `Poäng: ${score}`;  // Uppdatera den aktuella poängen
-    };
-
-    // Starta timer-funktion
-    const startTimer = () => {
-      if (timer) return; // Förhindra att flera timers startas
-
-      timer = setInterval(() => {
-        const timerDisplay = document.getElementById("epic-time-left");
-        timerDisplay.textContent = timeLeft;
-
-        if (timeLeft <= 0) {
-          clearInterval(timer);
-          timer = null;
-          updateScores(10);  // Lägg till poäng när tiden är slut och uppdatera både score och finalScore
-          showRestartGame();  // Sedan visa resultatet
-        } else {
-          timeLeft--;
-        }
-      }, 1000);
-    };
-
-    // Visa "Nästa Runda"-sektionen
-    const showRestartGame = () => {
-      document.querySelector(".restartgame").style.display = "flex";
-      // Visa finalScore i restartsektionen och dölja det under spelets gång
-      document.getElementById("finalScore").style.display = "block";
-      document.getElementById("finalMessage").textContent = `Slutpoäng:${score}`;
-      document.getElementById("gåvidare").style.display = "none";
-    };
-
-    // Starta timer-knappen
-    document.getElementById("startEpicTimerBtn").addEventListener("click", startTimer);
-
-    // Nytt Spel-knappen
-    document.getElementById("newGameBtn").addEventListener("click", () => {
-      timeLeft = 45; // Återställ tid
-      document.getElementById("epic-time-left").textContent = timeLeft;
-      document.querySelector(".restartgame").style.display = "none"; // Dölj restart-sektionen
-      document.getElementById("finalScore").style.display = "none";  // Dölja finalScore för nästa omgång
-      score = 0; // Nollställ poäng för den nya rundan
-      document.getElementById("score").textContent = `Poäng: ${score}`; // Uppdatera poäng
-      startTimer(); // Starta timern igen
-    });
+    
+    
+    
+    
+  
+   
   });
 </script>
 </body>

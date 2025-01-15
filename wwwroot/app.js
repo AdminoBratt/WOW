@@ -258,7 +258,6 @@ async function startGame() {
 
 async function continueGame() {
     guessedWord = ""; // Töm spelarens gissning
-    score = 0;
     await getOneWord(); // Hämta ett ord från API
     document.querySelector(".underscore").textContent = generateUnderlines(wordToGuess); // Visa understreck
     updateScoreDisplay();
@@ -286,6 +285,26 @@ function startTimer() {
         }
     }, 1000);
 }
+
+const showRestartGame = () => {
+    document.querySelector(".restartgame").style.display = "flex";
+    document.getElementById("finalScore").style.display = "block";
+    document.getElementById("finalMessage").textContent = `Slutpoäng:${score}`;
+    document.getElementById("gåvidare").style.display = "none";
+};
+
+
+document.getElementById("startEpicTimerBtn").addEventListener("click", startTimer);
+
+// Nytt Spel-knappen
+document.getElementById("newGameBtn").addEventListener("click", () => {
+    document.getElementById("epic-time-left").textContent = timeLeft;
+    document.querySelector(".restartgame").style.display = "none"; // Dölj restart-sektionen
+    document.getElementById("finalScore").style.display = "none";  // Dölja finalScore för nästa omgång
+    document.getElementById("score").textContent = `Poäng: ${score}`; // Uppdatera poäng
+});
+
+
 
 async function saveHighscore() {
     const playerName = localStorage.getItem("playerName");
@@ -346,6 +365,7 @@ function endGame(won) {
     guessedWordsThisRound = 0;
     totalScore = 0;
     updateScoreDisplay();
+    saveHighscore();
     localStorage.setItem("totalScore", totalScore);
     document.getElementById("startEpicTimerBtn").style.display = "block";
 }
