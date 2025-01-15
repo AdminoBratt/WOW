@@ -599,7 +599,17 @@ body.viewhighscore-page {
      text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
      animation: glowText 2s ease-in-out infinite alternate;
  }
- 
- #highscoreTable {
-     border : 2px solid #ff0000;
- }
+
+#highscoreTable {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)),
+    url('img/gameplay.png');
+}
+
+#highscoreTable td {
+    color: #ffffff; /* Ändrar textfärgen till cyan */
+}
+
+#highscoreTable thead {
+    background-color: #000000 !important; /* Viktigt för att tvinga över bakgrundsbilden */
+    z-index: 1;
+}
