@@ -587,7 +587,6 @@ table th {
 body.viewhighscore-page {
     background-image: url('img/highscore-background.jpg');
     background-position: center;
-    background-repeat: no-repeat;
     overflow: hidden;
 }
  
