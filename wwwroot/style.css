@@ -3,7 +3,6 @@ body {
     padding: 0;
     color: #2e2e2e;
     background-color: #ffffff;
-    font-family: 'Friz Quadrata', serif;
 }
 
 h1 {
@@ -32,6 +31,7 @@ body.index-page {
     animation: gradientAnimation 5s ease infinite;
     animation-iteration-count: 1;
     overflow: hidden;
+    font-family: 'Friz Quadrata', serif;
 }
 
 
@@ -69,6 +69,7 @@ body.chooseStyle-page {
     background-repeat: no-repeat;
     color: #fff;
     overflow: hidden;
+    font-family: 'Friz Quadrata', serif;
 }
 
 .choose-style{
@@ -129,6 +130,7 @@ body.createCharacter-page {
     background-size: cover;
     background-repeat: no-repeat;
     overflow: hidden;
+    font-family: 'Friz Quadrata', serif;
 }
 
 .character-selection {
