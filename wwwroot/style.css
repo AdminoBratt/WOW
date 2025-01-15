@@ -3,13 +3,23 @@ body {
     padding: 0;
     color: #2e2e2e;
     background-color: #ffffff;
-    font-family: 'Morpheus', serif;
 }
 
 h1 {
     font-family: 'Cinzel', serif;
-    color: #ffffff;
+    color: #000000;
     margin-top: 150px;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    animation: glowText 2s ease-in-out infinite alternate;
+}
+
+@keyframes glowText {
+    from {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    }
+    to {
+        text-shadow: 0 0 20px rgb(0, 0, 0);
+    }
 }
 
 body.index-page {
@@ -18,6 +28,8 @@ body.index-page {
     background-size: 280vw 280vh;
     background-repeat: no-repeat;
     background-color: #b30000;
+    animation: gradientAnimation 5s ease infinite;
+    animation-iteration-count: 1;
     overflow: hidden;
 }
 

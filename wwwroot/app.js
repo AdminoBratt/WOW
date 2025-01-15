@@ -80,10 +80,13 @@ function handleLetterClick(button) {
         updateUnderscoreDisplay(); // Uppdatera understrecken
     }
 
+    // Kontrollera om ordet är klart
     if (guessedWord.length === wordToGuess.length) {
         checkWord();
     }
 }
+
+
 
 // Uppdatera visningen av understreck
 function updateUnderscoreDisplay() {
@@ -160,11 +163,12 @@ function checkWord() {
         localStorage.setItem("totalScore", totalScore);
         guessedWordsThisRound++; // Öka antal gissade ord för denna runda
         updateScoreDisplay();
+
         hintUsed = false; // Återställ flaggan för nästa ord
         guessedWord = ""; // Återställ spelarens gissning
 
         if (guessedWordsThisRound === requiredCorrectWords) {
-            showMessage("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!");
+            alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!");
         }
         continueGame();
     } else if (guessedWord === reversedWord && timeLeft > 0) {
@@ -206,12 +210,13 @@ function showEasterEgg() {
 // avsluta en runda
 function endRound() {
     clearInterval(timer);
-    totalScore += score; // Lägg till rundans poäng till totalpoäng
+    totalScore += score; // lägg till rundans poäng till totalpoäng
     localStorage.setItem("totalScore", totalScore);
     updateScoreDisplay(); // Uppdatera visning av poäng
 
     if (guessedWordsThisRound >= requiredCorrectWords){
         if (currentRound < totalRounds){
+            alert(`Runda ${currentRound} klar! Du går vidare till nästa runda.`)
             currentRound++;
             guessedWordsThisRound = 0;
             startGame();
@@ -219,18 +224,36 @@ function endRound() {
             endGame(true); // Alla rundor klara, vinst
         }
     }else{
-        endGame(false); // Förlust om spelaren inte klarar 3 ord
+        endGame(false); // förlust om spelaren inte klarar 3 ord
     }
 
+    
+    
+    
+    
+    
     // Visa resultatet av spelet när rundan är över.
     showRestartGame();
 }
-
 
 // Uppdatera visningen av rundan
 function updateRoundDisplay() {
     document.getElementById("round").textContent = `Runda: ${currentRound}`;
 }
+
+// Starta spelet
+async function startGame() {
+    guessedWord = ""; // Töm spelarens gissning
+    guessedWordsThisRound = 0; // nollställ gissade ord
+    updateRoundDisplay();
+    updateScoreDisplay(); // visa poäng som 0
+    await getOneWord(); // Hämta ett ord från API
+    startTimer(); // Starta timern
+}
+
+
+
+
 
 
 async function continueGame() {
@@ -305,10 +328,12 @@ function updateScoreDisplay() {
     document.getElementById("finalScore").textContent = `Poäng:${totalScore}`;
 }
 
+
 // Avsluta spelet
 function endGame(won) {
     localStorage.setItem("totalScore", totalScore);
     clearInterval(timer);
+    
     if (won) {
         messageElement.textContent = `Grattis! Du fick ${totalScore} poäng!`;
         messageElement.style.color = 'green';
@@ -370,37 +395,30 @@ document.getElementById("startEpicTimerBtn").addEventListener("click", function(
     }, 500);
 });
 
-function hint() {
 
+function hint() {
+    
     const hintLetter = wordToGuess[0]; // Första bokstaven i ordet
+
+    // Kolla om bokstaven redan används i gissningen
 
     if (!guessedWord.includes(hintLetter)) {
         guessedWord = hintLetter + guessedWord.slice(1); // Sätt första bokstaven som en ledtråd
         hintUsed = true;
+
+        // Hitta och ta bort den första knappen med hintLetter
+        const button = Array.from(document.querySelectorAll(".letter")).find(
+            el => el.textContent === hintLetter && !el.disabled
+        );
+        if (button) {
+            button.disabled = true; // Inaktivera knappen
+            button.classList.add("selected"); // Markera som vald
+            button.style.backgroundColor = "gray"; // Ändra färg så att den ser inaktiverad ut
+        }
     }
     updateUnderscoreDisplay(); // Uppdatera displayen med ledtråden
 }
-
-// Funktion för att starta spelet (fixad och komplett)
-
-async function startGame() {
-    guessedWord = ""; // Töm spelarens gissning
-    guessedWordsThisRound = 0; // nollställ gissade ord
-    updateRoundDisplay();
-    updateScoreDisplay(); // visa poäng som 0
-    await getOneWord(); // Hämta ett ord från API
-    startTimer(); // Starta timern
-}
-
-
-
-
-// Uppdatera visning av poäng
-function updateScoreDisplay() {
-    document.getElementById("score").textContent = `Poäng: ${totalScore}`;
-    document.getElementById("finalScore").textContent = `Poäng:${totalScore}`;
-}
-
+    
 document.addEventListener("keydown", (event) => {
     // Om Backspace trycks ner, ångra senaste bokstaven
     if (event.key === "Backspace") {
@@ -424,5 +442,39 @@ document.addEventListener("keydown", (event) => {
         event.preventDefault(); // Förhindra standardfunktion för Backspace
         return;
     }
-
+    
 });
+
+ // Hantera klick på en bokstav och markera korrekt gissad bokstav som grön
+function handleLetterClick(button) {
+    const letter = button.textContent;
+
+    // Om bokstaven redan är vald, ta bort den
+    if (button.classList.contains("selected")) {
+        guessedWord = guessedWord.slice(0, guessedWord.lastIndexOf(letter))
+            + guessedWord.slice(guessedWord.lastIndexOf(letter) + 1);
+        button.disabled = false; // Aktivera knappen igen
+        button.classList.remove("selected");
+        button.style.backgroundColor = ""; // Återställ färgen
+        updateUnderscoreDisplay(); // Uppdatera understrecken
+        return; // Avsluta funktionen
+    }
+
+    // Lägg till bokstaven om plats finns
+    if (guessedWord.length < wordToGuess.length) {
+        guessedWord += letter; // Lägg till bokstaven i spelarens gissning
+        updateUnderscoreDisplay();
+        button.disabled = true; // Inaktivera knappen
+        button.classList.add("selected"); // Markera knappen som vald
+
+        // Kontrollera om bokstaven är på rätt plats
+        if (wordToGuess[guessedWord.length - 1] === letter) {
+            button.style.backgroundColor = "green"; // Markera korrekt bokstav med grönt
+        }
+
+        if (guessedWord.length === wordToGuess.length) {
+            checkWord();
+        }
+    }
+}
+
