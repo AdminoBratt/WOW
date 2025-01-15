@@ -395,9 +395,9 @@ function handleLetterClick(button) {
         button.disabled = true; // Inaktivera knappen
         button.classList.add("selected"); // Markera knappen som vald
 
-        // Kontrollera om bokstaven är på rätt plats
-        if (wordToGuess[guessedWord.length - 1] === letter) {
-            button.style.backgroundColor = "green"; // Markera korrekt bokstav med grönt
+        // gråmarkera gissade bokstäver
+        if (wordToGuess.includes(letter)) {
+            button.style.backgroundColor = "gray"; // Markera korrekt bokstav med grönt
         }
 
         if (guessedWord.length === wordToGuess.length) {
