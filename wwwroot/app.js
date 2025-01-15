@@ -95,9 +95,10 @@ function handleLetterClick(button) {
 function updateUnderscoreDisplay() {
     const underscores = wordToGuess
         .split("")
-        .map((char, index) => (guessedWord[index] || (index === 0 && hintLetter) || "_"))
+        .map((char, index) => guessedWord[index] || "_")
         .join(" ");
     document.querySelector(".underscore").textContent = underscores;
+    
 }
 
 
@@ -472,6 +473,7 @@ document.addEventListener("keydown", (event) => {
             if (button) {
                 button.disabled = false; // Aktivera knappen igen
                 button.classList.remove("selected"); // Ta bort markeringsklass
+                button.style.backgroundColor = ""; // Återställ knappens bakgrundsfärg
             }
 
             // Uppdatera visningen av understreck
@@ -480,7 +482,7 @@ document.addEventListener("keydown", (event) => {
         event.preventDefault(); // Förhindra standardfunktion för Backspace
         return;
     }
-    
 });
+
 
  // Hantera klick på en bokstav och markera korrekt gissad bokstav som grön
