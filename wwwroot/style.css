@@ -3,6 +3,7 @@ body {
     padding: 0;
     color: #2e2e2e;
     background-color: #ffffff;
+    font-family: 'Friz Quadrata', serif;
 }
 
 h1 {
@@ -24,7 +25,7 @@ h1 {
 
 body.index-page {
     background-image: url('img/index.jpg');
-    background-position: center;
+    background-position: 25% center;
     background-size: 280vw 280vh;
     background-repeat: no-repeat;
     background-color: #b30000;
@@ -321,7 +322,6 @@ main {
 body.multiplayer-page {
     background-image: url('img/gameplay.png');
     background-position: center;
-    background-size: cover;
     background-repeat: no-repeat;
     background-size: 100vw 150vh;
     overflow: hidden;
@@ -554,7 +554,35 @@ button.letter:hover {
     text-align: center;
     z-index: 1000; /* Se till att det visas över andra element */
 }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 20px;
+    padding: 0;
+}
 
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
 
 #game-buttons {
     display: flex;
