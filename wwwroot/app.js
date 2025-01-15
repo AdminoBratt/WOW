@@ -12,7 +12,6 @@ const totalRounds = 3;
 const requiredCorrectWords = 3;
 let hintUsed = false;
 document.getElementById("useHintBtn").addEventListener("click", hint);
-console.log("app.js laddat!");
 
 
 // Hämta ett ord och visa scrambled letters
@@ -58,6 +57,7 @@ function populateLetterButtons(letters) {
         lettersContainer.appendChild(button);
     });
 }
+
 // Hantera klick på en bokstav och markera korrekt gissad bokstav som grön
 function handleLetterClick(button) {
     const letter = button.textContent;
@@ -80,9 +80,9 @@ function handleLetterClick(button) {
         button.disabled = true; // Inaktivera knappen
         button.classList.add("selected"); // Markera knappen som vald
 
-        // Kontrollera om bokstaven är på rätt plats
-        if (wordToGuess[guessedWord.length - 1] === letter) {
-            button.style.backgroundColor = "green"; // Markera korrekt bokstav med grönt
+        // gråmarkera gissade bokstäver
+        if (wordToGuess.includes(letter)) {
+            button.style.backgroundColor = "gray"; // Markera korrekt bokstav med grönt
         }
 
         if (guessedWord.length === wordToGuess.length) {
@@ -388,4 +388,5 @@ document.addEventListener("keydown", (event) => {
     }
     
 });
+
 
