@@ -272,7 +272,7 @@ async function continueGame() {
 function startTimer() {
     const timerElement = document.getElementById("epic-time-left");
     clearInterval(timer); // Rensa eventuell tidigare timer
-    timeLeft = 15; // Återställ tiden
+    timeLeft = 45; // Återställ tiden
     timer = setInterval(() => {
         if (timeLeft > 0) {
             timeLeft--;
