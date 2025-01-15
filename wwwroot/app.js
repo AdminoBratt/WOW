@@ -167,8 +167,11 @@ function checkWord() {
         hintUsed = false; // Återställ flaggan för nästa ord
         guessedWord = ""; // Återställ spelarens gissning
 
+        
+        
+        
         if (guessedWordsThisRound === requiredCorrectWords) {
-            alert("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!");
+            showMessage("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!", "blue");
         }
         continueGame();
     } else if (guessedWord === reversedWord && timeLeft > 0) {
@@ -183,17 +186,14 @@ function checkWord() {
 
         hintUsed = false; // Återställ flaggan för nästa ord
         guessedWord = ""; // Återställ spelarens gissning
-
-        if (guessedWordsThisRound === requiredCorrectWords) {
-            showMessage("Du har klarat 3 ord. Fortsätt gissa tills tiden tar slut!", "blue");
-        }
-        continueGame();
-    } else if (guessedWord !== wordToGuess && guessedWord.length === wordToGuess.length) {
-        showMessage("Fel ord!", "red"); // Nytt meddelande
-        resetGame(); // återställ gissningen för att försöka igen
         
     }
 }
+
+
+
+
+
 
 // Funktion för att visa "easter egg" visuellt
 function showEasterEgg() {
@@ -216,7 +216,6 @@ function endRound() {
 
     if (guessedWordsThisRound >= requiredCorrectWords){
         if (currentRound < totalRounds){
-            alert(`Runda ${currentRound} klar! Du går vidare till nästa runda.`)
             currentRound++;
             guessedWordsThisRound = 0;
             startGame();
@@ -291,10 +290,12 @@ const showRestartGame = () => {
     document.getElementById("finalScore").style.display = "block";
     document.getElementById("finalMessage").textContent = `Slutpoäng:${score}`;
     document.getElementById("gåvidare").style.display = "none";
+    clearInterval(timer);
 };
 
 
 document.getElementById("startEpicTimerBtn").addEventListener("click", startTimer);
+
 
 // Nytt Spel-knappen
 document.getElementById("newGameBtn").addEventListener("click", () => {
