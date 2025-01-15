@@ -12,6 +12,7 @@ const totalRounds = 3;
 const requiredCorrectWords = 3;
 let hintUsed = false;
 document.getElementById("useHintBtn").addEventListener("click", hint);
+console.log("app.js laddat!");
 
 
 // Hämta ett ord och visa scrambled letters
@@ -57,7 +58,7 @@ function populateLetterButtons(letters) {
         lettersContainer.appendChild(button);
     });
 }
-// Hantera klick på en bokstav
+// Hantera klick på en bokstav och markera korrekt gissad bokstav som grön
 function handleLetterClick(button) {
     const letter = button.textContent;
 
@@ -67,6 +68,7 @@ function handleLetterClick(button) {
             + guessedWord.slice(guessedWord.lastIndexOf(letter) + 1);
         button.disabled = false; // Aktivera knappen igen
         button.classList.remove("selected");
+        button.style.backgroundColor = ""; // Återställ färgen
         updateUnderscoreDisplay(); // Uppdatera understrecken
         return; // Avsluta funktionen
     }
@@ -77,13 +79,18 @@ function handleLetterClick(button) {
         updateUnderscoreDisplay();
         button.disabled = true; // Inaktivera knappen
         button.classList.add("selected"); // Markera knappen som vald
-        updateUnderscoreDisplay(); // Uppdatera understrecken
-    }
 
-    if (guessedWord.length === wordToGuess.length) {
-        checkWord();
+        // Kontrollera om bokstaven är på rätt plats
+        if (wordToGuess[guessedWord.length - 1] === letter) {
+            button.style.backgroundColor = "green"; // Markera korrekt bokstav med grönt
+        }
+
+        if (guessedWord.length === wordToGuess.length) {
+            checkWord();
+        }
     }
 }
+
 
 // Uppdatera visningen av understreck
 function updateUnderscoreDisplay() {
@@ -347,6 +354,15 @@ function hint() {
     updateUnderscoreDisplay(); // Uppdatera displayen med ledtråden
 }
 
+
+viewHighscoresBtn.addEventListener("click", () => {
+    window.location.href = "viewhighscore.html";
+});
+
+
+
+
+
 document.addEventListener("keydown", (event) => {
     // Om Backspace trycks ner, ångra senaste bokstaven
     if (event.key === "Backspace") {
@@ -372,37 +388,4 @@ document.addEventListener("keydown", (event) => {
     }
     
 });
-
- // Hantera klick på en bokstav och markera korrekt gissad bokstav som grön
-function handleLetterClick(button) {
-    const letter = button.textContent;
-
-    // Om bokstaven redan är vald, ta bort den
-    if (button.classList.contains("selected")) {
-        guessedWord = guessedWord.slice(0, guessedWord.lastIndexOf(letter))
-            + guessedWord.slice(guessedWord.lastIndexOf(letter) + 1);
-        button.disabled = false; // Aktivera knappen igen
-        button.classList.remove("selected");
-        button.style.backgroundColor = ""; // Återställ färgen
-        updateUnderscoreDisplay(); // Uppdatera understrecken
-        return; // Avsluta funktionen
-    }
-
-    // Lägg till bokstaven om plats finns
-    if (guessedWord.length < wordToGuess.length) {
-        guessedWord += letter; // Lägg till bokstaven i spelarens gissning
-        updateUnderscoreDisplay();
-        button.disabled = true; // Inaktivera knappen
-        button.classList.add("selected"); // Markera knappen som vald
-
-        // Kontrollera om bokstaven är på rätt plats
-        if (wordToGuess[guessedWord.length - 1] === letter) {
-            button.style.backgroundColor = "green"; // Markera korrekt bokstav med grönt
-        }
-
-        if (guessedWord.length === wordToGuess.length) {
-            checkWord();
-        }
-    }
-}
 

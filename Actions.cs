@@ -67,7 +67,39 @@ public class Actions
                 return Results.BadRequest("Kunde inte spara highscore.");
             }
         });
+    
+        // Anslut till databasen
+        
+        // API för att hämta highscores
+        app.MapGet("/api/gethighscores", async () =>
+        {
+            string query = "SELECT player_name, faction, score FROM highscore ORDER BY score DESC LIMIT 10";
+
+            await using var cmd = db.CreateCommand(query);
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            var highscores = new List<HighScoreResponse>();
+            while (await reader.ReadAsync())
+            {
+                highscores.Add(new HighScoreResponse
+                {
+                    PlayerName = reader.GetString(0),
+                    Faction = reader.GetString(1),
+                    Score = reader.GetInt32(2)
+                });
+            }
+
+            return Results.Ok(highscores);
+        });
     }
+}
+
+public class HighScoreResponse
+{
+    public string PlayerName { get; set; }
+    public string Faction { get; set; }
+    public int Score { get; set; }
     }
+    
     
     
