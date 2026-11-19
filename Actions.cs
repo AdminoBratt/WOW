@@ -2,20 +2,15 @@ using Npgsql;
 
 namespace Wordapp;
 
-public class Actions
+public static class Actions
 {
-
-    Database database = new();
-    private NpgsqlDataSource db;
-
-    public Actions(WebApplication app)
+    // Registrerar spelets API-endpoints. NpgsqlDataSource hämtas via
+    // dependency injection i varje endpoint i stället för att skapas här.
+    public static WebApplication MapWordAppEndpoints(this WebApplication app)
     {
-        db = database.Connection();
-        
-        
         app.MapGet("/api/getrandomword/{round}", FetchWord);
     
-        async Task<Word> FetchWord(int round)
+        async Task<Word> FetchWord(int round, NpgsqlDataSource db)
         {
             string query;
             if (round == 1)
@@ -46,7 +41,7 @@ public class Actions
 
         }
         
-        app.MapPost("/api/savehighscore", async (HighScoreRequest request) =>
+        app.MapPost("/api/savehighscore", async (HighScoreRequest request, NpgsqlDataSource db) =>
         {
             string query = "INSERT INTO highscore (player_name, faction, score) VALUES (@name, @faction, @score)";
             
@@ -78,7 +73,7 @@ public class Actions
         // Anslut till databasen
         
         // API för att hämta highscores
-        app.MapGet("/api/gethighscores", async () =>
+        app.MapGet("/api/gethighscores", async (NpgsqlDataSource db) =>
         {
             string query = "SELECT player_name, faction, score FROM highscore ORDER BY score DESC LIMIT 10";
 
@@ -98,8 +93,9 @@ public class Actions
 
             return Results.Ok(highscores);
         });
-    
-}
+
+        return app;
+    }
 }
 
     public class HighScoreResponse
