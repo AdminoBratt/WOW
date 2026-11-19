@@ -4,6 +4,21 @@ using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Anslutningssträngen läses från konfigurationen (user-secrets, miljövariabel
+// eller appsettings.*.json) och checkas aldrig in i koden.
+var connectionString = builder.Configuration.GetConnectionString("WordCraftDb");
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new InvalidOperationException(
+        "Anslutningssträngen 'ConnectionStrings:WordCraftDb' saknas. " +
+        "Sätt den med 'dotnet user-secrets set \"ConnectionStrings:WordCraftDb\" \"...\"' " +
+        "eller miljövariabeln ConnectionStrings__WordCraftDb. Se README.md.");
+}
+
+// NpgsqlDataSource är trådsäker och hanterar connection pooling,
+// så en enda instans registreras som singleton och injiceras i endpoints.
+builder.Services.AddSingleton(_ => NpgsqlDataSource.Create(connectionString));
+
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 
@@ -52,9 +67,7 @@ static string GenerateUniqueClientId()
     return Convert.ToBase64String(bytes);
 }
 
-// Methods for processing routes from Actions class
-Actions actions = new(app);
+// Registrera API-endpoints (se Actions.cs)
+app.MapWordAppEndpoints();
 
 app.Run();
-
-
