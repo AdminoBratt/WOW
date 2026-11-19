@@ -416,15 +416,10 @@ function saveName(faction) {
     window.location.href = "gameplay.html";
 }
 
-document.getElementById("startEpicTimerBtn").addEventListener("click", function() {
-    const blurOverlay = document.getElementById("blur-overlay");
-
-    // Ta bort blur-effekten och starta spelet
-    blurOverlay.style.opacity = "0";
-    setTimeout(() => {
-        blurOverlay.style.display = "none";
-        startGame();  // OBS: Kallar den korrekta startGame()-funktionen
-    }, 500);
+// Kör spelet när sidan laddas
+document.getElementById("startEpicTimerBtn").addEventListener("click", () => {
+    document.getElementById("startEpicTimerBtn").style.display = "none"; // Dölj startknappen
+    startGame();
 });
 
 
